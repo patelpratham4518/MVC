@@ -1,0 +1,111 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="contractController" access="global">
+  
+  <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+  <aura:attribute name="contractList" type="List"/>
+  <aura:iteration items="{!v.contractList}" var="con">
+  <div class="slds-p-around--large">
+     <div class="slds-page-header" style="cursor:pointer;background:#8080807a;margin-bottom: 2px;" onclick="{!c.sectionOne}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left ">
+            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">Section 1</div>
+      </section>
+    </div>
+  
+    <div class="slds-hide slds-p-around--medium" aura:id="articleOne">
+     <div style="width:50%;float:left;padding:1%;">
+       <p title="">Tax Indentification No.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Tax_Identification_No__c}</p><br/>
+       <p>Purchasing Order&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Purchasing_Group__c}</p><br/>
+       <p title="">Shipping Address.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_Address__c}</p><br/>
+       <p title="">Shipping City.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_City__c}</p><br/>
+       <p title="">Shipping State.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_State__c}</p><br/>
+       <p title="">Shipping Country.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_Country__c}</p><br/>
+       <p title="">Shipping Pincode.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_Pincode__c}</p><br/>
+     </div>
+     <div style="width:50%;float:right;padding:1%;">
+        <p>Customer Name&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Customer_Name__r.Name}</p><br/>
+        <p title="">Billing Address.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_Address__c}</p><br/>
+        <p title="">Billing City.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_City__c}</p><br/>
+        <p title="">Billing State.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_State__c}</p><br/>
+        <p title="">Billing Country.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_Country__c}</p><br/>
+        <p title="">Billing Pincode.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_Pincode__c}</p><br/>
+        <p title=""></p><br/>
+     </div>
+    </div>
+      
+    <div class="slds-page-header" style="cursor: pointer;background:#8080807a;margin-bottom: 2px;" onclick="{!c.sectionTwo}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left">
+            <lightning:icon class="slds-show" aura:id="articleTwo" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleTwo" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">Section 2</div>
+      </section>
+    </div>
+
+    <div class="slds-hide slds-p-around--medium" aura:id="articleTwo">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
+          a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
+          passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+      
+    <div class="slds-page-header"  style="cursor: pointer;background:#8080807a;margin-bottom: 2px;" onclick="{!c.sectionThree}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left"> 
+            <lightning:icon class="slds-show" aura:id="articleThree" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleThree" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">Section 3</div>
+      </section>
+    </div>
+
+    <div aura:id="articleThree" class="slds-hide slds-p-around--medium">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
+          a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
+          passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>
+      
+    <div class="slds-page-header"  style="cursor: pointer;background:#8080807a;margin-bottom: 2px;" onclick="{!c.sectionFour}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left"> 
+            <lightning:icon class="slds-show" aura:id="articleFour" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleFour" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">Section 4</div>
+      </section>
+    </div>
+
+    <div aura:id="articleFour" class="slds-hide slds-p-around--medium">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
+          a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
+          passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>  
+    
+    <div class="slds-page-header"  style="cursor: pointer;background:#8080807a;margin-bottom: 2px;" onclick="{!c.sectionFive}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left"> 
+            <lightning:icon class="slds-show" aura:id="articleFive" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleFive" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">Section 5</div>
+      </section>
+    </div>
+
+    <div aura:id="articleFive" class="slds-hide slds-p-around--medium">
+      <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's 
+          standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make 
+          a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, 
+          remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum 
+          passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+    </div>  
+  </div>
+  </aura:iteration>
+</aura:component>

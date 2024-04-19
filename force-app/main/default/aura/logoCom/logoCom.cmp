@@ -1,0 +1,10 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" >
+	 <div class="slds-page-header">
+             <div class="slds-media__figure">
+                   <span title="Description of icon when needed">
+                        <img src="{!$Resource.merckWhite}" style="width:200px;height:80px;"/>
+                    </span>
+              </div>
+                  
+        </div>
+</aura:component>

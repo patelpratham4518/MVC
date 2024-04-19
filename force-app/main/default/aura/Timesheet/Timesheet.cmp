@@ -1,0 +1,386 @@
+<aura:component controller="intranetController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+	
+	<!--aura attributes declared here-->
+	<aura:attribute name="clientList" type="List"/>
+    <aura:attribute name="projectList" type="List"/>
+    <aura:attribute name="moduleList" type="List"/>
+    <aura:attribute name="taskList" type="List"/>
+    <aura:attribute name="timeSheetList" type="List"/>
+    <aura:attribute name="employeeList" type="List"/>
+    <aura:attribute name="categoryList" type="List"/>
+    <aura:attribute name="credentials" type="List"/>
+    <aura:attribute name="credentialCompleteDetail" type="List"/>
+    <aura:attribute name="selectedVal" type="String" />
+    
+    <aura:attribute name="page" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="total" type="integer" description="total records count store "/>
+    
+    <aura:attribute name="pageSearch" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pagesSearch" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="totalSearch" type="integer" description="total records count store "/>
+    
+    <aura:attribute name="recordSize" type="Integer" default="10"/>
+    <aura:attribute name="message" type="String"/>
+
+    <aura:attribute name="datefalse" type="Boolean" default="false"/>
+	<aura:attribute name="noRecords" type="Boolean" default="false"/>
+	<aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+	<aura:attribute name="modalpopupCredential" type="Boolean" default="false"/>
+    <!--<aura:attribute name="HideSpinner" type="Boolean" default="true"/>-->
+    <!--<aura:attribute name="hideTimesheet" type="Boolean" default="false"/>-->
+    
+    <!--aura handler declared here-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+     <aura:handler event="c:ProjectEvent" action="{!c.doInit}" />
+    
+    <!--Event Registration-->
+    <aura:registerEvent name="tabSpecificEvent" type="c:IntranetLightningEvent"></aura:registerEvent>
+
+    <!--Time Sheet table starts here--> 
+    <div aura:id="timesheettableId">
+        <div style="text-align:right;width:96%;padding:1%;">
+            <lightning:buttonIcon iconName="utility:insert_template" variant="bare" class="myUniqueClass" onclick="{!c.showTimesheet}"/>
+        </div>
+        <div style="border:1px solid;width:90%;margin:auto;">
+                <!--search box starts here-->
+                <div class="slds-grid slds-gutters" style="padding:2%;">
+                    <div class="slds-col">
+                    	<lightning:select name="selectProject" aura:id="projectID" label="Project" onchange="{!c.searchTimeSheetList}">
+                            <option text=""></option>
+                            <aura:iteration items="{!v.projectList}" var="project">
+                            	<option text="{!project.Project_Name__c}" selected="{!project.Project_Name__c==v.selectedVal}"></option>
+                            </aura:iteration>
+                    	</lightning:select>
+                    </div>
+                    <div class="slds-col">
+                    	<lightning:select name="selectModule" aura:id="moduleID" label="Modules" onchange="{!c.searchTimeSheetList}">
+                    	    <option text=""></option>
+                            <aura:iteration items="{!v.moduleList}" var="module">
+                            	<option text="{!module.Module_Name__c}"></option>
+                            </aura:iteration>
+                    	</lightning:select>
+                    </div>
+                    <div class="slds-col">
+                    	<lightning:select name="selectEmployee" aura:id="employeeID" label="User" onchange="{!c.searchTimeSheetList}">
+                            <option text=""></option>
+                            <aura:iteration items="{!v.employeeList}" var="emp">
+                            	<option text="{!emp.Name}"></option>
+                            </aura:iteration>
+                    	</lightning:select>
+                    </div>
+                </div>
+                <aura:renderIf isTrue="{!v.HideSpinner}">
+                  <div class="slds-spinner_container">
+                    <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                      <span class="slds-assistive-text">Loading, Please Wait...</span>
+                      <div class="slds-spinner__dot-a"></div>
+                      <div class="slds-spinner__dot-b"></div>
+                    </div>
+                  </div>
+            </aura:renderIf>
+                <!--search box ends here-->
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table–header-fixed_container">
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="User">User</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Category">Category</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Projects">Projects</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Modules">Modules</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Billing Hours">Hours(hh:mm)</div>
+                                </th>
+                                <th class="slds-text-title_caps" scope="col">
+                                    <div class="slds-truncate" title="Date">Date</div>
+                                </th>
+                                 <th class="slds-text-title_caps" scope="col" style="text-align:center">
+                                    <div class="slds-truncate" title="Description">Description</div>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.timeSheetList}" var="timesheet">
+                                    <tr class="slds-hint-parent">
+                                        <td data-label="User Name" scope="row">
+                                            <div class="slds-truncate" title="">{!timesheet.Employee__r.Name}&nbsp;{!timesheet.Employee__r.Last_Name__c}</div>
+                                        </td>
+                                        <td data-label="User Name" scope="row">
+                                            <div class="slds-truncate" title="">{!timesheet.Category__c}</div>
+                                        </td>
+                                        <td data-label="Project Name">
+                                            <div class="slds-truncate" title="">{!timesheet.Project__r.Project_Name__c}</div>
+                                        </td>
+                                        <td data-label="Project Name">
+                                            <div class="slds-truncate" title="">{!timesheet.Module__r.Module_Name__c}</div>
+                                        </td>
+                                        <td data-label="Billing Hours" scope="row">
+                                            <div class="slds-truncate" title="">{!timesheet.Hours__c}:{!timesheet.Minutes__c}</div>
+                                        </td>
+                                        <td data-label="Date">
+                                            <div class="slds-truncate" title="">{!timesheet.Date__c}</div>
+                                        </td>
+                                        <td data-label="Description" scope="row" style="text-align:center">
+                                            <div class="slds-truncate" title="{!timesheet.Description__c}"></div>
+                                            <lightning:helptext content="{!timesheet.Description__c}"/>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                        <aura:if isTrue="{!v.noRecords}">
+                            <div style="font-size:20px;text-align:center;padding:1%;">
+                                {!v.message}
+                            </div>
+                        </aura:if>
+                    <!--<div class="slds-page-header" aura:id="allRecordPagination" role="banner">-->
+                    <!--    <p class="slds-page-header__title slds-truncate" style="float:right;font-size:12px;color:gray;">{!v.total} Total Records • Page: {!v.page} / {!v.pages}</p>-->
+                    <!--    <div style="width:4%;">-->
+                    <!--        <ui:inputSelect aura:id="recordSize" label="" change="{!c.onSelectChange}">-->
+                    <!--            <ui:inputSelectOption text="10" label="10" value="true"/>-->
+                    <!--            <ui:inputSelectOption text="15" label="15"/>-->
+                    <!--            <ui:inputSelectOption text="20" label="20"/>-->
+                    <!--        </ui:inputSelect>-->
+                    <!--    </div>-->
+                    <!--    <div class="slds-align_absolute-center">            -->
+                    <!--        <lightning:button  disabled="{!v.page == 1}" variant="brand" label="Previous" onclick="{! c.navigate }" />            -->
+                    <!--        <lightning:button  disabled="{!v.page == v.pages}" aura:id="previousPage" variant="brand" label="Next" onclick="{! c.navigate }" />-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                    <!--<div class="slds-page-header" aura:id="searchedPagination" role="banner">-->
+                    <!--    <p class="slds-page-header__title slds-truncate" style="float:right;font-size:12px;color:gray;">{!v.totalSearch} Total Records • Page: {!v.pageSearch} / {!v.pagesSearch}</p>-->
+                    <!--    <div style="width:4%;">-->
+                    <!--        <ui:inputSelect aura:id="recordSizeSearch" label="" change="{!c.onSelectChangeSearch}">-->
+                    <!--            <ui:inputSelectOption text="5" label="5" value="true"/>-->
+                    <!--            <ui:inputSelectOption text="10" label="10"/>-->
+                    <!--            <ui:inputSelectOption text="15" label="15"/>-->
+                    <!--        </ui:inputSelect>-->
+                    <!--    </div>-->
+                    <!--    <div class="slds-align_absolute-center">            -->
+                    <!--        <lightning:button  disabled="{!v.page == 1}" variant="brand" label="Previous" onclick="{! c.navigateSearch }" />            -->
+                    <!--        <lightning:button  disabled="{!v.page == v.pages}" aura:id="previousPage" variant="brand" label="Next" onclick="{! c.navigateSearch }" />-->
+                    <!--    </div>-->
+                    <!--</div>-->
+                    
+                    <div class="slds-page-header" aura:id="allRecordPagination" role="banner">
+                        <p class="slds-page-header__title slds-truncate" style="float:right;font-size:12px;color:gray;">{!v.total} Total Records • Page: {!v.page} / {!v.pages}</p>
+                        <div style="width:5%;">
+                            <ui:inputSelect aura:id="recordSize" label="" change="{!c.onSelectChange}">
+                                <ui:inputSelectOption text="10" label="10" value="true"/>
+                                <ui:inputSelectOption text="15" label="15"/>
+                                <ui:inputSelectOption text="20" label="20"/>
+                            </ui:inputSelect>
+                        </div>
+                        <div class="slds-align_absolute-center">            
+                            <lightning:button  disabled="{!v.page == 1}" variant="brand" label="Previous" onclick="{! c.navigate }" />            
+                            <lightning:button  disabled="{!v.page == v.pages}" aura:id="previousPage" variant="brand" label="Next" onclick="{! c.navigate }" />
+                        </div>
+                    </div>
+            </div>
+    </div>
+    <!--Time Sheet table starts here-->
+    
+    <!--TimeSheet and Calendar starts here -->
+    <div aura:id="timesheetCalenderId" class="slds-grid slds-gutters slds-p-horizontal_medium hideTimeSheet" style="padding-top:2%;padding-bottom:2%;width:90%;margin:auto;">
+        <div class="slds-col slds-size_1-of-3" style="box-shadow:0px 6px 4px 5px grey;padding:2%;">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            <!--<ui:inputSelect  aura:id="categorySelectListId" class="slds-select"  change="{!c.onPicklistChange}"/>-->
+                            <lightning:select name="selectCategory" aura:id="categorySelectListId" label="Category">
+                                <option value=""></option>
+                                <!--<aura:iteration items="{!v.timeSheetList}" var="timesheet">-->
+                                    <option value="Development">Development</option>
+                                    <option value="Documentation">Documentation</option>
+                                    <option value="POC">POC</option>
+                                    <option value="QA">QA</option>
+                                <!--</aura:iteration>-->
+                            </lightning:select>
+                        </td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td>
+                            <lightning:select name="selectProject" required="true" aura:id="projectSelectListId" label="Project" onchange="{!c.projectSelectListFunction}">
+                                <option value=""></option>
+                                <aura:iteration items="{!v.projectList}" var="project">
+                                    <option value="{!project.Project_Name__c}">{!project.Project_Name__c}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td>
+                            <lightning:select name="selectModule" aura:id="moduleSelectListId" label="Module" disabled="true" onchange="{!c.moduleSelectListFunction}">
+                                <option value=""></option>
+                                <aura:iteration items="{!v.moduleList}" var="module">
+                                    <option value="{!module.Module_Name__c}">{!module.Module_Name__c}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td>
+                            <lightning:select name="selectTask" aura:id="taskSelectId" label="Task" disabled="true" onchange="{!c.taskSelectListFunction}">
+                                <option value=""></option>
+                                <aura:iteration items="{!v.taskList}" var="task">
+                                    <option value="{!task.Task_Name__c}">{!task.Task_Name__c}</option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <lightning:input type="checkbox" aura:id="statusCheckboxId" label="Completed ?" class="slds-hide"/>
+                    </tr>
+                   
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td><lightning:input type="date" aura:id="selectedDateId" required="true" label="Date" onchange="{!c.dateFunction}"/></td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr> 
+                        <td>
+                            <aura:if isTrue="{!v.datefalse}">
+                            </aura:if>  
+                                <span stype="color:red" >Please select date of tommorow only.</span>
+                        </td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td>
+                            <div class="slds-grid slds-gutters" style="width:62.5%;">
+                                <div class="slds-col">
+                                     <lightning:select name="selectHours" aura:id="selectedHoursId" label="Hours">
+                                        <option value="00">00</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                     </lightning:select>
+                                </div>
+                                <div class="slds-col">
+                                    <lightning:select name="selectMinute" aura:id="selectedMinutesId" label="Minutes">
+                                        <option value="00">00</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="30">30</option>
+                                        <option value="40">40</option>
+                                        <option value="50">50</option>
+                                    </lightning:select>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <span style="color:#786978;">Description<br/></span>
+                                <ui:inputTextArea aura:id="descriptionId"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><br/><br/></tr>
+                    <tr style="">
+                        <td>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col" style='color:white;' >
+                                    <span><lightning:button variant="brand" label="Save" onclick="{!c.jsControllerToSaveTimeSheetDetails}"/></span>
+                                </div>
+                                <div class="slds-col">
+                                    <span><lightning:button variant="neutral" label="Save &#38; New" onclick="{!c.jsControllerToSaveTimeSheetDetails}"/></span>
+                                </div>
+                                <!-- <div class="slds-col">-->
+                                <!--    <span><lightning:button variant="neutral" label="Timesheet" onclick="{!c.Timesheetstay}"/></span>-->
+                                <!--</div>-->
+                                <div class="slds-col" >
+                                    <span><lightning:button variant="neutral" label="Cancel" onclick="{!c.showTimeSheetTable}"/></span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="slds-col slds-size_2-of-3">
+            <c:Calneder />
+        </div>
+    </div>
+    <!--TimeSheet and Calendar ends here -->
+    
+    <!-- MODAL POP UP FOR OPEN CREDENTIAL DETAILS -->
+    	<aura:if isTrue="{!v.modalpopupCredential}">
+    	    <aura:iteration items="{!v.credentialCompleteDetail}" var="credential">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+                    <div class="slds-modal__container">
+                        <!--  MODAL BOX HEADER Start -->
+                        <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <p id="modal-heading-01" class="slds-text-heading_medium">{!credential.Project__r.Project_Name__c}</p>
+                        </header>
+                        <!-- MODAL BOX BODY Part Start-->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr scope="row">
+                                            <td><span><b>Login URL</b><br/>&nbsp;<a href="{!credential.Login_URL__c}" target="blank">{!credential.Login_URL__c}</a></span></td>
+                                            <td><span><b>Org</b><br/>&nbsp;{!credential.Org__c}</span></td>
+                                        </tr>
+                                        <tr><td><br/></td></tr>
+                                        <tr scope="row">
+                                            <td><span><b>Username</b><br/>&nbsp;{!credential.Username__c}</span></td>
+                                            <td><span><b>Password</b><br/>&nbsp;{!credential.Password__c}</span></td>
+                                        </tr>
+                                        <tr><td><br/></td></tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <p><span><b>Redirect Login</b><br/>&nbsp;<a href="{!credential.Redirect_Login__c}" target="blank">{!credential.Redirect_Login__c}</a></span></p>
+                                    <br/>
+                                    <p><span><b>Security Token</b><br/>&nbsp;{!credential.Security_Token__c}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- MODAL BOX FOOTER Part Start -->
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral" 
+                                              label="Close"
+                                              title="View Detail"
+                                              class = "slds-align_absolute-center"
+                                              onclick="{! c.closeModel }"/>
+                           
+                        </footer>
+                    </div>
+                </section>
+            </aura:iteration>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+	  </aura:if>
+	<!-- MODAL POP UP FOR CREDENTIAL DETAILS -->
+	
+</aura:component>

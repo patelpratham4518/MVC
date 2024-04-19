@@ -1,0 +1,33 @@
+<aura:component controller="intranetController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <!--aura attribute declaration-->
+    <aura:attribute name="holidaysList" type="List"/>
+    <aura:attribute name="dateList" type="List"/>
+    
+    <!--aura handler declaration-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+   	<div style="height:28px;line-height:28px;background-color:#043b6b;">
+    	<span style="padding-left:2%;font-size:13px;color:white;font-weight:bolder;">HOLIDAYS</span>
+    </div>
+    <!--Holiday Details-->
+    	<div style="height:200px;overflow-y:scroll;border:2px solid #043b6b;padding:2%;">
+            <aura:iteration items="{!v.holidaysList}" var="h" indexVar="key">
+                <div class="demo-only slds-size_3-of-4">
+                    <div class="slds-media">
+                        <div class="slds-media__figure">
+                            <span class="slds-icon slds-icon--small">
+                                <div class="circleBase taskDiv"><b>{!h.Date__c}</b></div>
+                            </span>
+                        </div>
+                        <div class="slds-media__body">
+                            <p style="font-size:17px;">{!h.Name}</p>
+                            <p>{!h.Day__c}</p>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            </aura:iteration>
+    	</div>
+    <!--Holiday Details-->
+    
+</aura:component>

@@ -1,0 +1,141 @@
+<template>
+
+	<template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinnerContainer">
+                <div class="plane-spinner">
+                    <svg id="b31cb9b3-53d9-4f4c-adfb-406ca50138db" data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.8 227.9">
+                        <title>delete</title>
+                        <path
+                            d="M1012.25,426a75.19,75.19,0,0,0-53.19,21.87l-149.86,149h53.46l93.43-92.62,29.7-29.43a37.56,37.56,0,0,1,26.73-11.07H1053l-16.2,37.8-17.28,40.77-7.29,17-16.2,37.8h41L1110,426.22h-97.75V426Z"
+                            transform="translate(-809.2 -425.95)" fill="#0684c2" />
+                        <path d="M862.66,596.87l119.89,51a74.47,74.47,0,0,0,29.43,5.94h40.77l-57-57Z"
+                            transform="translate(-809.2 -425.95)" fill="#10ab96" />
+                    </svg>
+                </div>
+                <h1 class="loading-spinnet-txt">Loading...</h1>
+            </div>
+        </div>
+    </template>
+	
+	<div class="container">
+		<div class="header">
+			<div class="welcomeText slds-size_12-of-12 slds-align_absolute-center">
+				<h2 class="slds-p-bottom_large">Welcome {username}</h2>
+				<!-- <p class="slds-p-top_xx-large">Manage your account, contact us if you need assistance</p> -->
+			</div>
+        </div>
+			<div class="slds-p-bottom_medium slds-wrap">
+				<div class="slds-align_absolute-center slds-p-around_medium">
+					<div class="sffont">Let's start exploring Salesforce</div>
+				</div>
+				<div>
+					
+					<div class="slds-grid slds-grid_align-space slds-wrap">
+
+						<!-- <div class={HideClass1} >
+						<div class="slds-col slds-p-bottom_medium disablecls" >
+							<div class="ProfileTicket HoverShadow" data-name="" onclick={navigation}>
+								<div class="ticket-head slds-align_absolute-center">
+									<img src={courseimg}/>
+								</div>
+								<div class="ticket-body">
+								</div>
+								<div class="barcode"></div>
+										<div class="slds-align_absolute-center slds-p-around_medium">
+											<div class="buttoncls slds-p-around_small" data-name="timesheet" >
+												PROFILE SECTION
+												<img class="slds-hide slds-p-left_small" src={imgarrow}/>
+											</div>
+										</div>
+							</div>
+						</div>
+						</div> -->
+
+						<div class={HideClass2} >
+							<div class="slds-col slds-p-bottom_medium" >
+								<div class="TimeSheetticket HoverShadow" data-name="timesheet" onclick={navigation}>
+									<div class="ticket-head slds-align_absolute-center">
+										<img src={timesheetimg}/>
+										<img class="calenderimg" src={calenderimg}/>
+									</div>
+									<div class="ticket-body">
+									</div>
+										<div class="barcode"></div>
+										<div class="slds-align_absolute-center slds-p-around_medium">
+											<div class="buttoncls slds-p-around_small" data-name="timesheet" onclick={navigation}>
+												TIMESHEET SECTION
+												<img class="slds-hide slds-p-left_small" src={imgarrow}/>
+											</div>
+										</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- <div class={HideClass3} >
+						<div class="slds-col slds-p-bottom_medium">
+							<div class="leaveTicket HoverShadow" data-name="leave" onclick={navigation} >
+								<div class="ticket-head slds-align_absolute-center">
+									<img src={leaveimg}/>
+								</div>
+								<div class="ticket-body">
+								</div>
+								<div class="barcode"></div>
+									<div class="slds-align_absolute-center slds-p-around_medium">
+										<div class="buttoncls slds-p-around_small" data-name="leave">
+											LEAVE SECTION
+											<img class="slds-hide slds-p-left_small" src={imgarrow}/>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		
+			<!-- Navigation Button..Ust to Change Card In Mobile View  -->
+		<div class="slds-hide_medium">			<!-- This Class Display Button Only When Screen Width is Less than 768px -->
+			<div class="NavButtons">
+				<div class={PreviousbtnVisibility} >
+					<div class="Navbuttoncls slds-align_absolute-center slds-p-horizontal_large"  onclick={handlePreviousSection}>
+						<div style="padding-right: 10%;">&#10094;</div>
+						{PreviousSection} 
+					</div>
+				</div>
+
+				<div class={NextbtnVisibility} >
+					<div class="Navbuttoncls slds-align_absolute-center slds-p-horizontal_large"  onclick={handleNextSection}>
+						{NextSection}
+						<div style="padding-left: 10%;">&#10095;</div>
+					</div>
+				</div>
+
+					<!-- <lightning-button class={PreviousbtnVisibility} variant="brand" label={PreviousSection}  onclick={handlePreviousSection}></lightning-button>
+					<lightning-button class={NextbtnVisibility} variant="brand" label={NextSection}  onclick={handleNextSection}></lightning-button> -->
+			</div>
+		</div>
+
+		<!-- <div class="NavIcons slds-hide_medium slds-align_absolute-center">
+				<div class={PreviousbtnVisibility} >
+					<lightning-icon class={NaviconsClass} icon-name="utility:chevronleft" alternative-text="Warning!" title="PreviousSection" onclick={handlePreviousSection} style="cursor: pointer;"></lightning-icon>
+				</div>
+				<div class={NextbtnVisibility} >
+					<lightning-icon class="Navicons" icon-name="utility:chevronright" alternative-text="Warning!" title="NextSection" onclick={handleNextSection} style="cursor: pointer;"></lightning-icon>
+				</div>
+		</div>
+		 -->
+
+
+	<!-- <div class="btn">Move me</div>
+		<lightning-button variant="brand" label="labelName" title="titleName" class="btn" onclick={handleClick}></lightning-button>
+  <button class={boxClass} onclick={handleClick}>Click Me</button>
+  <div ></div> -->
+
+		
+</template>

@@ -1,0 +1,14 @@
+<apex:page sidebar="false" showHeader="false">
+    <apex:form >
+    <div style="margin:0 auto;text-align:center;">
+        <apex:image id="theImageMobile" value="{!$Resource.MVCloudRegLogo}" width="125" height="100" style="margin:0 auto;" />
+    </div>
+    <div style="font-size: 50px;font-family: verdana;text-align:center;margin-top:50px">
+        Thank you for applying
+    </div>
+    <div style="font-size: 16px;font-family: verdana;text-align:center;margin-top:20px"> 
+        We will contact you shortly.
+    </div>
+    
+    </apex:form>
+</apex:page>

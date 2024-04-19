@@ -1,0 +1,89 @@
+<template>
+    <div class="container">
+
+        <template if:true={successToast}>
+            <div class="slds-notify_container">
+                <div class="slds-notify slds-notify_toast slds-theme_success" role="status">
+                    <span class="slds-assistive-text">Success</span>
+                    <span class="slds-icon_container slds-icon-utility-success slds-m-right_small slds-no-flex slds-align-top">
+                        <lightning-icon icon-name="utility:success" variant="inverse" size="small"></lightning-icon>
+                    </span>
+
+                    <div class="slds-notify__content">
+                        <h2 class="slds-text-heading_small">
+                            <p> Answer Saved Successfully </p>
+                        </h2>
+                    </div>
+                    
+                    <div class="slds-notify__close">
+                        <lightning-button-icon icon-name="utility:close" size="small" variant="border-filled" onclick={closeToastModel} ></lightning-button-icon>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <div class="time-div">
+            <div class="inputArea"></div>  
+            <h1 class="time" style="font-size: 18px;">{timeVal}</h1>   
+        </div>
+        <!-- code here -->
+        <div class="card">
+            <div class="card-image card-form">
+                <h2 class="card-heading">
+                    Practical Questions
+                </h2>
+                <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png" style="width: auto;height:30px;"/>
+            </div>
+            <div class="card-form">
+                <div class="header">
+                    <p>You have 4 practicals to complete within given time. If you use any external library then you need to write that details in answers.</p>
+                </div>
+
+                <template for:each={questionList} for:item="que">
+                    <div key={que.Id}>
+                        <br/>
+                        <p class="question-title">Question {que.count}</p>
+                        <lightning-formatted-rich-text class="questions" value={que.question}></lightning-formatted-rich-text>
+                        <p class="question-title">Answer {que.count}:</p>
+                        <lightning-textarea name={que.count} class="reqInpFld" value={que.answer} onchange={handleChange} placeholder="Write your answer for above question" maxlength="131072" message-when-too-long="A maximum of 131072 characters are allowed in a answer." message-when-value-missing="An empty answer cannot be submitted" ></lightning-textarea>
+                        <span>
+                            <button class="slds-button slds-button_brand save-button" data-id={que.Id} onclick={saveSingleAns}>Save</button>
+                        </span>
+                    </div>
+                </template>
+
+                <div class="action">
+                    <button class="action-button" onclick={openQuePopup}>Submit & End</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={confirmQuePopup}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeQuePopup}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Submit Test</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <center>
+                    <p>Are you sure you want to submit your answers?</p>
+                </center>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeQuePopup} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={submitanswerdetails} title="Submit & End">Submit & End</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+    
+    <template if:true={showspinner}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="large"> </lightning-spinner>
+    </template>
+</template>

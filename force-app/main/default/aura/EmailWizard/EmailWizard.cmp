@@ -1,0 +1,446 @@
+<aura:component
+    implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+    access="global" controller="EmailWizardController">
+    <!--INITIALIZE ALL THE VARIABLES-->
+    <aura:attribute name="progressIndicatorFlag" type="String" />
+
+    <!--ALL THE ATTRIBUTES FOR LEAD LIST-->
+    <aura:attribute name="listOfAllAccounts" type="list" />
+    <aura:attribute name="PaginationList" type="list" />
+    <aura:attribute name="selectedCount" type="integer" default="0" description="selected Records Count" />
+    <aura:attribute name="startPage" type="Integer" />
+    <aura:attribute name="endPage" type="Integer" />
+    <aura:attribute name="totalRecordsCount" type="Integer" />
+    <aura:attribute name="pageSize" type="Integer" default="8"
+        description="number of records to be display on per page" />
+    <aura:attribute name="currentPage" type="integer" default="1" />
+    <aura:attribute name="totalPagesCount" type="integer" />
+    <aura:attribute name="bNoRecordsFound" type="boolean" />
+    <aura:attribute name="ListOfSelectedRecord" type="list" />
+
+    <aura:attribute name="selectedobjectname" type="String" />
+    <aura:attribute name="searchval" type="String" />
+    <aura:attribute name="showTeam" type="Boolean" default="false"/>
+    <aura:attribute name="TeamList" type="list" />
+    <aura:attribute name="selectedTeam" type="String" />
+    <aura:attribute name="selectedTeamName" type="String" />
+
+    
+    <!-- ALL ATTRIBUTES FOR TEMPLATE ND EMAILS -->
+    <aura:attribute name="emailTemplateList" type="object[]" default="[]" />
+    <aura:attribute name="emailbody" type="String" default="" />
+    <aura:attribute name="email" type="string" />
+    <aura:attribute name="subject" type="string" default="" />
+    <aura:attribute name="body" type="string" />
+    <aura:attribute name="mailStatus" type="boolean" default="false" />
+    <aura:attribute name="templateIDs" type="String" default="" />
+
+    <aura:attribute name="selectedLead" type="list" />
+    <aura:attribute name="PreviewBody" type="String" default="" />
+
+    <aura:attribute name="fileBlob" type="string" default="" />
+    <aura:attribute name="fileObj" type="Object" />
+    <aura:attribute name="bool" type="boolean" />
+
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="selectedValue" type="String" />
+    <aura:attribute name="loaded" type="Boolean" default="false" />
+
+    <aura:attribute name="showleadfilter" type="Boolean" default="false" />
+    <aura:attribute name="fieldMap" type="Map"/>
+    <aura:attribute name="leadStatus" type="String" default="--None--"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:messages />
+
+
+    <div class="demo-only" style="height: 640px;">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+            aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Bulk Mail</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+
+                    <lightning:progressIndicator type="path" currentStep="{!v.progressIndicatorFlag}">
+                        <lightning:progressStep label="Choose Object" value="step1" />
+                        <lightning:progressStep label="Select Record" value="step2" />
+                        <lightning:progressStep label="Configure Mail" value="step3" />
+                        <lightning:progressStep label="Preview" value="step4" />
+                    </lightning:progressIndicator>
+
+                    <!-- Select Object -->
+                    <div aura:id="stepOne">
+                        <lightning:select name="Objects" label="Select Object:" aura:id="onjId"
+                            value="{!v.selectedValue}">
+                            <option value="none" text="---None---" />
+                            <option value="Lead" text="Lead" />
+                            <option value="Contact" text="Contact" />
+                        </lightning:select>
+                        <div class="footerClass" style="justify-content: flex-end;">
+                            <lightning:button label="Next" onclick="{!c.goToStepTwo}" variant="brand" />
+                        </div>
+                    </div>
+                    <div aura:id="stepTwo">
+
+                        <div class="slds-m-vertical_medium">
+                            <lightning:input label="Search Name" value="{!v.searchval}" onchange="{!c.searchContact}"/>
+                            <aura:if isTrue="{!v.showleadfilter}">
+                                <lightning:select aura:id="industryPicklist" value="{!v.leadStatus}" onchange="{!c.handlefilter}" name="leadsourcePicklist" label="LeadSource">
+                                    <option value="--None--">--None--</option>
+                                    <aura:iteration items="{!v.fieldMap}" var="i" indexVar="key">
+                                        <option text="{!i.value}" value="{!i.key}" selected="{!i.selected}" />
+                                    </aura:iteration>
+                                </lightning:select>
+                            </aura:if>
+                        </div>
+                    <!-- 
+                        <div class="slds-m-vertical_medium">
+                            <ui:inputCheckbox aura:id="teamcheckbox" label="Team" change="{!c.isTeam}"/>
+                        </div>
+                    -->
+
+                        <aura:if isTrue="{!v.showTeam}">            <!--Added For Team-->
+
+                            <div>
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            <th style="width:3.25rem;" class="slds-text-align_right">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Team Name">Team Name</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Name">Name</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate" title="Email">Email</div>
+                                            </th>
+                                            <aura:if isTrue="{!v.showleadfilter}">
+                                                <th scope="col">
+                                                    <div class="slds-truncate" title="LeadSource">LeadSource</div>
+                                                </th>
+                                            </aura:if>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.TeamList}" var="team">
+                                            <tr>
+                                                <th scope="row" class="slds-text-align_right"
+                                                    style="width:3.25rem;">
+                                                    <div class="slds-form-element">
+                                                        <div class="slds-form-element__control">
+                                                            <lightning:input type="checkbox" label="" aura:id="teamid" title="{!team.Id}" name="{!team.Name}" onchange="{!c.selectTeam}"/>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th scope="row">
+                                                    <div class="slds-truncate" title="{!name}">
+                                                        {!team.Name}
+                                                    </div>
+                                                </th>
+                                                <th scope="row">
+                                                    <aura:iteration items="{!team.Contacts__r}" var="con">
+                                                        <div class="slds-truncate" title="{!name}">
+                                                            {!con.Name}
+                                                        </div>
+                                                    </aura:iteration>
+                                                </th>
+                                                <th scope="row">
+                                                    <aura:iteration items="{!team.Contacts__r}" var="con">
+                                                        <div class="slds-truncate" title="{!name}">
+                                                            {!con.Email}
+                                                        </div>
+                                                    </aura:iteration>
+                                                </th>
+                                                <th scope="row">
+                                                    <aura:iteration items="{!team.Contacts__r}" var="con">
+                                                        <div class="slds-truncate" title="{!name}">
+                                                            {!con.Email}
+                                                        </div>
+                                                    </aura:iteration>
+                                                </th>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <aura:set attribute="else">
+                                <aura:if isTrue="{!v.bNoRecordsFound}">
+                                    <!--display error message if there is no records available -->
+                                    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info"
+                                        role="alert">
+                                        <span class="slds-assistive-text">error</span>
+                                        <h2>No record found.</h2>
+                                    </div>
+                                    <aura:set attribute="else">
+                                        <p class="slds-m-around_small">
+                                            <span class="slds-badge slds-badge_lightest" style="display:inline-block">
+                                                Total Records : {!v.totalRecordsCount}
+                                            </span>
+                                        </p>
+
+                                        <!-- data table start-->
+                                        <aura:if isTrue="{!v.loaded}">
+                                            <lightning:spinner alternativeText="Loading" size="large" />
+                                            <aura:set attribute="else">
+                                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                                    <thead>
+                                                        <tr class="slds-text-title_caps">
+
+                                                            <th style="width:3.25rem;" class="slds-text-align_right">
+                                                                <div class="slds-form-element">
+                                                                    <div class="slds-form-element__control">
+                                                                        <label class="slds-checkbox">
+                                                                            <ui:inputCheckbox
+                                                                                disabled="{!v.totalRecordsCount == 0}"
+                                                                                aura:id="selectAllId"
+                                                                                change="{!c.selectAllCheckbox}" />
+                                                                            <span class="slds-checkbox_faux"></span>
+                                                                            <span class="slds-form-element__label"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <th scope="col">
+                                                                <div class="slds-truncate" title="Name">Name</div>
+                                                            </th>
+                                                            <th scope="col">
+                                                                <div class="slds-truncate" title="Phone">Phone</div>
+                                                            </th>
+                                                            <th scope="col">
+                                                                <div class="slds-truncate" title="Email">Email</div>
+                                                            </th>
+                                                            <aura:if isTrue="{!v.showleadfilter}">
+                                                                <th scope="col">
+                                                                    <div class="slds-truncate" title="LeadSource">LeadSource</div>
+                                                                </th>
+                                                            </aura:if>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <aura:iteration items="{!v.PaginationList}" var="obj">
+                                                            <tr>
+                                                                <th scope="row" class="slds-text-align_right"
+                                                                    style="width:3.25rem;">
+                                                                    <div class="slds-form-element">
+                                                                        <div class="slds-form-element__control">
+                                                                            <label class="slds-checkbox">
+                                                                                <ui:inputCheckbox text="{!obj.objAccount.Id}"
+                                                                                    value="{!obj.isChecked}"
+                                                                                    change="{!c.checkboxSelect}" />
+                                                                                <span class="slds-checkbox_faux"></span>
+                                                                                <span
+                                                                                    class="slds-form-element__label text"></span>
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </th>
+                                                                <th scope="row">
+                                                                    <div class="slds-truncate" title="{!name}">
+                                                                        {!obj.objAccount.Name}
+                                                                    </div>
+                                                                </th>
+                                                                <th scope="row">
+                                                                    <div class="slds-truncate" title="{!obj.objAccount.Phone}">
+                                                                        <lightning:formattedPhone
+                                                                            value="{!obj.objAccount.Phone}" />
+                                                                    </div>
+                                                                </th>
+                                                                <th scope="row">
+                                                                    <div class="slds-truncate" title="{!obj.objAccount.Email}">
+                                                                        {!obj.objAccount.Email}
+                                                                    </div>
+                                                                </th>
+                                                                <aura:if isTrue="{!v.showleadfilter}">
+                                                                    <th scope="row">
+                                                                        <div class="slds-truncate" title="{!obj.objAccount.LeadSource}">
+                                                                            {!obj.objAccount.LeadSource}
+                                                                        </div>
+                                                                    </th>
+                                                                </aura:if>
+                                                            </tr>
+                                                        </aura:iteration>
+                                                    </tbody>
+                                                </table>
+                                            </aura:set>
+                                        </aura:if>
+                                        <!-- DataTable End -->
+
+                                        <br />
+                                        <!--  Pagination Buttons Start -->
+                                        <div class="slds-align_absolute-center">
+                                            <lightning:button label="Previous" disabled="{!v.startPage == 0}"
+                                                onclick="{!c.navigation}" variant="brand" iconName="utility:back"
+                                                name="previous" />
+
+                                            <span class="slds-badge slds-badge_lightest"
+                                                style="margin-right: 10px;margin-left: 10px;">
+                                                Page {!v.currentPage} out of {!v.totalPagesCount}
+                                            </span>
+
+                                            <lightning:button label="Next" disabled="{!(v.endPage + 1) >= v.totalRecordsCount}"
+                                                onclick="{!c.navigation}" variant="brand" iconName="utility:forward"
+                                                iconPosition="right" name="next" />
+                                        </div>
+                                        <!--  Pagination Buttons End -->
+                                    </aura:set>
+                                </aura:if>
+                            </aura:set>
+                        </aura:if>
+
+                        <div class="footerClass">
+                            <lightning:button label="Back" onclick="{!c.goBackToStepOne}" />
+                            <lightning:button label="Next" onclick="{!c.goToStepThree}" variant="brand" />
+                        </div>
+                    </div>
+
+
+                    <div aura:id="stepThree">
+
+                        <div class="slds-m-around--medium">
+                            <div class="">
+                                <div class="slds-form--stacked">
+                                    <label><b></b></label>
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-form-element" aura:id="selectTemplate">
+                                            <label class="slds-form-element__label" for="select-Template">Select
+                                                Template</label>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <select class="slds-select" id="select-Template"
+                                                        onchange="{!c.onSelectEmailTemplate}">
+                                                        <option value="">Please Select Email Template</option>
+                                                        <aura:iteration items="{!v.emailTemplateList}" var="template">
+                                                            <option value="{!template.emailTemplateId}">
+                                                                {!template.emailTemplatename}</option>
+                                                        </aura:iteration>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="CC">Email</label>
+                                            <div class="slds-form-element__control">
+                                                <!-- <ui:inputEmail class="slds-input" aura:id="email" value="{!v.email}"
+                                                                        required="true" placeholder="abc@email.com" /> -->
+                                                <div
+                                                    style="display: flex;justify-content:flex-start;flex-wrap:wrap;max-height:200px;overflow-y:scroll;overflow-x:hidden;">
+                                                    <aura:iteration items="{!v.selectedLead}" var="slead">
+                                                        <p class="emailName">{!slead.Email}</p>
+                                                    </aura:iteration>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="CC">Subject</label>
+                                            <div class="slds-form-element__control">
+                                                <ui:inputText class="slds-input" aura:id="subject" value="{!v.subject}"
+                                                    placeholder="Subject" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element"
+                                            style="display:flex;align-items:flex-end;justify-content: space-between;">
+                                            <!-- <label class="slds-form-element__label">Add Field</label> -->
+                                            <div class="slds-form-element__control" style="width:80%;">
+                                                <lightning:combobox aura:id="FieldsList" name="FieldsList"
+                                                    label="Add Field" placeholder="Select the field" value=""
+                                                    diabled="true" />
+                                            </div>
+                                            <div class="slds-form-element__control" style="width: 10%;">
+                                                <lightning:button label="Add" onclick="{!c.AddfieldToMailBody}"
+                                                    variant="brand" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label" for="textareaSample2">Mail
+                                                Body</label>
+                                            <div class="slds-form-element__control">
+                                                <lightning:inputRichText aura:id="body" value="{!v.emailbody}" />
+                                            </div>
+                                        </div>
+                                        <div class="slds-form-element">
+                                            <label class="slds-form-element__label">Upload Attachment</label>
+                                            <div class="slds-for-element__control">
+                                                <lightning:input aura:id="file-input" type="file" label="Files"
+                                                    name="file" multiple="false" onchange="{!c.fileDetails}" />
+                                            </div>
+                                            <aura:if isTrue="{!v.bool}">
+                                                <div class="slds-m-top_medium">
+                                                    Attachment Uploaded Successfully!!
+                                                </div>
+                                            </aura:if>
+                                        </div>
+                                        <br />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="footerClass">
+                            <lightning:button label="Back" onclick="{!c.goBackToStepTwo}" />
+                            <lightning:button label="Next" onclick="{!c.goToStepFour}" variant="brand" />
+                        </div>
+                    </div>
+
+
+                    <div aura:id="stepFour">
+                        <div class="mainPreview">
+                            <div style="text-align: center;" class="slds-text-heading_large">Preview</div>
+                            <div class="previewBoxClass">
+                                <b>To:</b>
+                                <aura:if isTrue="{!v.showTeam}">
+
+                                    <div style="display: flex;justify-content:flex-start;flex-wrap:wrap;max-height:200px;overflow-y:scroll;overflow-x:hidden;">
+                                        <p class="emailName">{!v.selectedTeamName}</p>
+                                    </div>
+
+                                    <aura:set attribute="else">
+                                        <div
+                                            style="display: flex;justify-content:flex-start;flex-wrap:wrap;max-height:200px;overflow-y:scroll;overflow-x:hidden;">
+                                            <aura:iteration items="{!v.selectedLead}" var="slead">
+                                                <p class="emailName">{!slead.Email}</p>
+                                            </aura:iteration>
+                                        </div>
+                                    </aura:set>
+                                </aura:if>
+
+                            </div>
+                            <div class="previewBoxClass">
+                                <b>Subject:</b>&nbsp;{!v.subject}
+                            </div>
+                            <div class="previewBoxClass"><b>Body:</b></div>
+                            <aura:if isTrue="{!v.loaded}">
+                                <lightning:spinner alternativeText="Loading" size="large" />
+                                <aura:set attribute="else">
+                                    <div class="slds-box editor slds-text-longform">
+                                        <lightning:formattedRichText value="{!v.PreviewBody}" />
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        <div class="footerClass">
+                            <lightning:button label="Back" onclick="{!c.goBackToStepThree}" />
+                            <lightning:button label="Send" variant="brand" onclick="{!c.SendMails}" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open overlay"></div>
+    </div>
+    <!--</lightning:recordEditForm>-->
+</aura:component>

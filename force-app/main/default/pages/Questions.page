@@ -1,0 +1,178 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" lightningStylesheets="false">
+    <title>Q/A - MV Clouds</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <apex:includeLightning />    
+    <style>
+        body{
+            margin: 0 !important;
+        }
+    </style>    
+
+        <!-- <div id="container">
+            <div id="inputArea">
+            </div>  
+            <h1 id="time">0:00</h1>
+        </div> -->
+
+        <script>
+           
+    
+        </script>    
+    <div id="LightningComponentid" style="width:100%;min-height:100vh;"/>    
+    <script>
+    $Lightning.use("c:Test", function() {
+        $Lightning.createComponent("c:questions",
+          { 
+          },
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          });
+    });
+    </script>
+    
+    <html>
+
+    <head>
+        <style>
+            .videocls {
+                position: fixed;
+                bottom: 0px;
+                right: 0px;
+            }
+            #videoCam {
+                height: 7rem;
+            }
+        </style>
+    </head>
+
+    <body onload="openCam()">
+        <div class="videocls">
+            <video id="videoCam"></video>
+        </div>
+        <script>
+        //          var secondsRemaining;
+        //     var intervalHandle;
+            
+        //     function resetPage(){
+            
+        //         document.getElementById("inputArea").style.display = "block";
+            
+        //     }
+    
+        // function tick(){
+        //     // grab the h1
+        //     var timeDisplay = document.getElementById("time");
+        
+        //     // turn the seconds into mm:ss
+        //     var min = Math.floor(secondsRemaining / 60);
+        //     var sec = secondsRemaining - (min * 60);
+        
+        //     //add a leading zero (as a string value) if seconds less than 10
+        //     if (sec < 10) {
+        //         sec = "0" + sec;
+        //     }
+        
+        //     // concatenate with colon
+        //     var message = min.toString() + ":" + sec;
+        
+        //     // now change the display
+        //     timeDisplay.innerHTML = message;
+        
+        //     // stop is down to zero
+        //     if (secondsRemaining === 0){
+        //         alert("Done!");
+        //         clearInterval(intervalHandle);
+        //         resetPage();
+        //     }
+        
+        //     //subtract from seconds remaining
+        //     secondsRemaining--;
+        
+        // }
+        
+        // function startCountdown(){
+        
+        //     function resetPage(){
+        //         document.getElementById("inputArea").style.display = "block";
+        //     }
+        
+        //     // get countents of the "minutes" text box
+        //     //var minutes = document.getElementById("minutes").value;
+            
+        //     var minutes = 60;            
+        
+        //     // how many seconds
+        //     secondsRemaining = minutes * 60;
+            
+        //     //every second, call the "tick" function
+        //     // have to make it into a variable so that you can stop the interval later!!!
+        //     intervalHandle = setInterval(tick, 1000);
+        
+        //     // hide the form
+        //     document.getElementById("inputArea").style.display = "none";
+        
+        
+        // }
+        
+        // window.onload = function(){
+        //       alert('on load');
+        //     startCountdown();       
+        
+        //     //add to the DOM, to the div called "inputArea"
+        //     document.getElementById("inputArea").appendChild(inputMinutes);
+        //     document.getElementById("inputArea").appendChild(startButton)		
+        
+        // }
+            var video = document.querySelector('.recording');
+
+            var recording = navigator.mediaDevices.getDisplayMedia({
+                video: {
+                    mediaSource: 'screen',
+                },
+                audio: true,
+            })
+                .then(async (e) => {
+
+                    try {
+                        let audio = await navigator.mediaDevices.getUserMedia({
+                            audio: true, video: false
+                        })
+                    } catch (error) {
+                        console.log('Erorr--->',{error});
+                    }
+                })
+                .catch((error) => {
+                    console.log('Error while accessing screen:', error);
+                });
+
+                function openCam() {
+                    let All_mediaDevices = navigator.mediaDevices
+                    if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
+                        console.log("getUserMedia() not supported.");
+                        return;
+                    }
+                    All_mediaDevices.getUserMedia({
+                        audio: false,
+                        video: true
+                    })
+                        .then(function (vidStream) {
+                            var video = document.getElementById('videoCam');
+                            if ("srcObject" in video) {
+                                video.srcObject = vidStream;
+                            } else {
+                                video.src = window.URL.createObjectURL(vidStream);
+                            }
+                            video.onloadedmetadata = function (e) {
+                                video.play();
+                            };
+                        })
+                        .catch(function (e) {
+                            console.log(e.name + ": " + e.message);
+                        });
+                }
+        </script>
+    </body>
+
+    </html>
+</apex:page>

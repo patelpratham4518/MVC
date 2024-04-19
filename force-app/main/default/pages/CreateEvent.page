@@ -1,0 +1,82 @@
+<apex:page >
+    <html>
+        <head>
+    		<script>
+                console.log('Ecent');
+            var clientId = '271653873932-fvbnm95pk5gpggl6qdp9d4ttc7lht3o4.apps.googleusercontent.com';
+var apiKey = '9KaLD4SUb-C1YIsldoxTm0Tj'; 
+
+var scopes = 'https://www.googleapis.com/auth/calendar'; 
+
+// Use a button to handle authentication the first time.
+function handleClientLoad() {
+gapi.client.setApiKey(apiKey);
+window.setTimeout(checkAuth,1);
+} 
+
+function checkAuth() {
+gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+} 
+
+function handleAuthResult(authResult) {
+// var authorizeButton = document.getElementById('authorize-button');
+if (authResult && !authResult.error) { 
+
+makeApiCall(); 
+
+} else {
+handleAuthClick();
+}
+} 
+
+function handleAuthClick() {
+gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: false}, handleAuthResult);
+return false;
+} 
+
+// Load the API and make an API call. Display the results on the screen.
+function makeApiCall() {
+AddEvent();
+}
+function AddEvent()
+{
+var startdate='2020' + '-' + '04' + '-' + '13';
+var enddate='2020' + '-' + '04' + '-' + '14'; 
+
+var resource = {
+"summary":"Subject",
+"description": "Description",
+"start": {
+"date": startdate
+},
+"end": {
+"date": enddate
+}
+};
+gapi.client.load('calendar', 'v3', function() {
+var request = gapi.client.calendar.events.insert({
+'calendarId': 'primary',
+'resource': resource
+});
+request.execute(function(resp) {
+console.log(resp);
+if (resp.id){
+alert("Event was successfully added to the calendar!");
+}
+else{
+alert("An error occurred. Please try again later.")
+} 
+
+});
+}); 
+
+}
+
+handleClientLoad()
+            </script>        
+        </head>
+        <body>
+            Hello    
+        </body>
+    </html>
+</apex:page>

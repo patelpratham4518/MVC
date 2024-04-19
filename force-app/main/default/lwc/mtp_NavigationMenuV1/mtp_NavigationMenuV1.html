@@ -1,0 +1,16 @@
+<template>
+    <div class="nav-main nav-main-hover" onmouseover={menuHover}>
+        <div class="navicon">
+          <div></div>
+        </div>
+        <div class="nav-menu-lst" data-name="Home-page" onclick={handleClick}>Home</div>
+        <div class="nav-menu-lst" data-name="Timesheet-page" onclick={handleClick}>Timesheet</div>
+        <!-- <div class="nav-menu-lst" data-name="Leave-page" onclick={handleClick}>Leave</div> -->
+        <!-- <div class="nav-menu-lst disablecls" data-name="profile-page" >Profile</div>       -->
+        <div class="nav-menu-lst" data-name="Logout-page" onclick={handleClick}>Log out</div>      
+    </div>
+
+    <div class="logo-div">
+        <img src={headerLogo} alt="MV Clouds" class="hdr-logo" data-name="mv-logo" onclick={handleClick}>
+    </div>
+</template>

@@ -1,0 +1,67 @@
+<aura:component >
+    
+    <div class="slds-grid slds-gutters" style="margin:3%">
+        
+      	<div class="slds-col slds-size_1-of-3" style="box-shadow: 5px 5px 5px 5px #6b6d70;padding:1%;width:26%;">
+            <p style="text-align: center;font-size:17px;color: #00dcff;font-weight:bolder;">ADD TIME LOG</p><br/><br/>
+            <lightning:select name="catogoryList" aura:id="catogoryListID" label="Catogory" onchange="{!c.catogoryListHandler}">
+                <option value="">Select...</option>
+                <option value="Designing">Designing</option>
+                <option value="Development">Development</option>
+                <option value="Unit Testing">Unit Testing</option>
+                <option value="KT">KT</option>
+            </lightning:select>
+            <br/>
+			 <lightning:select name="ProjectList" aura:id="ProjectListID" label="Project" onchange="{!c.projectListHandler}">
+                <option value="">Select...</option>
+                <option value="Get Capital">Get Capital</option>
+                <option value="Merck">Merck</option>
+                <option value="Quickbook Integration">Quickbook Integration</option>
+                <option value="WhatsApp Integration">WhatsApp Integration</option>
+            </lightning:select>
+            <br/>
+            <lightning:input class="{! v.dateValidationError ? 'slds-has-error' : ''}"
+                         type="date"
+                         label=""
+                         placeholder="Date"
+                         value="{!v.myDate}"
+                         name="date"
+                         onchange="{!c.dateUpdate}" />
+            <br/>
+            <div class="slds-grid slds-gutters">
+              <div class="slds-col">
+                <lightning:select name="Hours" aura:id="HoursID" label="" onchange="{!c.handleHours}">
+                <option value="">Hours</option>
+                <option value="00">00</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+            </lightning:select>
+              </div>
+              <div class="slds-col">
+                <lightning:select name="Minutes" aura:id="MinutesID" label="" onchange="{!c.handleMinutes}">
+                <option value="">Minutes</option>
+                <option value="00">00</option>
+                <option value="01">01</option>
+                <option value="02">02</option>
+                <option value="03">03</option>
+            </lightning:select>
+              </div>
+            </div>
+            <br/>
+            <lightning:textarea placeholder="Description"/>
+            <br/>
+            <div class="slds-grid slds-gutters" style="text-align:center;">
+              <div class="slds-col" style="text-align:right">
+                <lightning:button label="Save" class="buttonCSS"/>
+              </div>
+              <div class="slds-col" style="text-align:left">
+                  <lightning:button label="Cancel" class="buttonCSS"/>  
+              </div>
+            </div><br/><br/>
+      	</div>
+        <div class="slds-col slds-size_2-of-3" style="padding:1%;">
+            
+        </div>
+	</div>
+</aura:component>

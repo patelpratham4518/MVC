@@ -1,0 +1,111 @@
+<template>
+    <lightning-card>
+
+        <template if:true={isStepOne}>
+            <div>
+                <div class="slds-grid slds-wrap slds-m-around_medium">
+                    <div class="slds-col slds-size_1-of-3">
+                        <lightning-combobox class="slds-m-around_x-small" label="Component Type" value={selectedValue} placeholder="Select an Option" options={optionsList} onchange={handleChange}></lightning-combobox>
+                    </div>
+                    <div class="slds-col slds-size_2-of-3">
+                        <lightning-input type="text" class="slds-m-around_x-small" value={searchValue} label="Search Component" placeholder="Search Your Component" onchange={searchKeyword}></lightning-input>
+                    </div>
+                </div>
+
+                <div class="tbl_content slds-m-around_medium">
+                    <table class="tbl">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Number of files</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={codesRecord} for:item="con">
+                                <tr key={con.Id} onclick={handleRowClick} data-key={con.Id} data-description={con.Description__c} data-label={con.Label__c}>
+                                    <td>
+                                        {con.Label__c}
+                                    </td>
+                                    <td>
+                                        {con.Category_Main_Primary__c}
+                                    </td>
+                                    <td>
+                                        {con.Number_of_files__c}
+                                    </td>
+                                    <td>
+                                        {con.Description__c}
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+
+        <template if:true={isStepTwo}>
+            <div class="slds-m-around_medium">
+
+
+                <div class="heading slds-m-bottom--small">
+                    
+                    <div style="font-size:1.5rem;"><lightning-icon icon-name="standard:code_set_bundle" alternative-text="code"></lightning-icon>{codeLabel}</div>
+                    <div style="font-size:0.8rem;">{description}</div>
+                </div>
+
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-2">
+
+                        <lightning-tabset active-tab-value={activeTab} variant="horizontal">
+                            <template for:each={codeFileData} for:item="code">
+                                <lightning-tab label={code.fileExtension} value={code.index} key={code.index} onactive={handleActive} icon-name={code.iconName} >
+                                    <div class="slds-m-around_x-small code">
+                                        <div style="float:right">
+                                            <lightning-button-icon icon-name={iconName} value={code.versionDataUrl} size="medium" onclick={handleCopy} class="slds-p-around_x-small"></lightning-button-icon>
+                                        </div>
+                                        <div class="formateCode">
+                                            <pre class="codePart">
+                                                {code.versionDataUrl}
+                                            </pre>
+                                        </div>
+                                    </div>
+                                </lightning-tab>
+                            </template>
+                        </lightning-tabset>
+                        
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2">
+                        <div class="slds-m-around_x-small slds-m-top_xx-large" style="height: 110vh; overflow:scroll;">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                            <img src="https://www.biswajeetsamal.com/blog/wp-content/uploads/2018/02/lightning-table-with-multiple-checkbox-select-options.png" alt="">
+                        </div>
+                    </div>
+                 
+                </div>
+
+                <div class="slds-m-bottom_medium">
+                    <lightning-button variant="brand" label="Back" onclick={handlePrev}></lightning-button>
+                </div>
+
+            </div>
+        </template>
+
+        <template if:true={isEnablePrev}>
+            
+        </template>
+    </lightning-card>
+</template>

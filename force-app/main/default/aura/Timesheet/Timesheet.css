@@ -1,0 +1,22 @@
+.THIS {
+}
+
+.THIS .slds-button_brand{
+    color:#fff;
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+.THIS .myUniqueClass svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+.THIS.hideTimeSheet{
+    display:none;
+}
+
+.THIS.closeIconClass{
+    width: 20px;
+    height: 20px;
+}

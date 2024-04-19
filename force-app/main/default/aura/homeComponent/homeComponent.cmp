@@ -1,0 +1,70 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="tabName" type="String" default="home"/>
+    <aura:handler name="tabSpecificEvent" event="c:IntranetLightningEvent" action="{!c.setRedirectTabname}"/>
+    
+    <div style="margin-top:2%;">
+    	<lightning:tabset variant="scoped" selectedTabId="{!v.tabName}">
+            <lightning:tab label="HOME" id="home">
+                <div style="padding-top:2%;padding-bottom:2%;">
+                	<table>
+                        <tr>
+                            <td class="homeCmpTd">
+                                <div>
+                                    <c:EmployeeDetails/>
+                                </div>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="homeCmpTd">
+                                <div>
+                                    <c:Credential/>
+                                </div>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="homeCmpTd">
+                                <div>
+                                    <c:Holidays/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr><td><br/></td></tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <td class="homeCmpTd">
+                                <div>
+                                    <c:OpenTask/>
+                                </div>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="homeCmpTd">
+                                <div>
+                                    <c:MVproject/>
+                                </div>
+                            </td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="homeCmpTd">
+                                <div>
+                                    <c:RecentCompletedTaskComponent/>
+                                </div>
+                            </td>
+                        </tr>
+                </table>
+              </div>
+            </lightning:tab>
+            <lightning:tab label="PROJECTS" id="projects">
+                <c:ProjectComponent/>
+            </lightning:tab>
+            <lightning:tab label="TASKS" id="task">
+                <c:AllTaskComponent/>
+            </lightning:tab>
+            <lightning:tab label="TIME SHEET" id="timesheet">
+                <c:Timesheet/> 
+            </lightning:tab>
+            <lightning:tab label="LogTime" id="manage">
+                <c:Logtime/>
+            </lightning:tab>
+    	</lightning:tabset>
+    </div>
+    <br/>
+</aura:component>

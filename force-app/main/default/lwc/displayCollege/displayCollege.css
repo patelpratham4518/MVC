@@ -1,0 +1,31 @@
+.email-textarea{
+    --sds-c-textarea-sizing-min-height: 450px;
+}
+
+.email-div{
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 1rem;
+}
+
+.datetime-div{
+    padding: 5px;
+}
+
+.main-tb-div {
+    background: #FFF;
+    padding: 24px 12px;
+    border-radius: 10px;
+}
+
+.tbd-hdt-txt {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.top-hdr-tb {
+    display: flex;
+    padding: 4px 8px 16px 8px;
+    align-items: center;
+    justify-content: space-between;
+}

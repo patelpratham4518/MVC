@@ -1,0 +1,38 @@
+
+.input .slds-input,.input .slds-input:focus,.input .slds-input:invalid{
+  border-width: 0px !important;
+  border-bottom: 1px solid #04cbff !important;
+}
+
+/* .input-field .slds-form-element__label {*/
+  
+.input-label { 
+    color: #8597a3;
+    position: absolute;
+    /* top: 1.5rem; */
+    top: 1rem;
+    transition: 0.25s ease;
+  }
+  
+  .input-field .slds-input{
+    border: 0;
+    z-index: 1;
+    background-color: transparent;
+    border-bottom: 2px solid #eee;
+    font: inherit;
+    font-size: 1.125rem;
+    padding: 0.25rem 0;
+  }
+  .input-field .slds-input:focus, .input-field .slds-input:valid {
+    outline: 0;
+    border-bottom-color: #04cbff;
+  }
+  /* .input-field .slds-input:focus + .slds-form-element__label, .input-field .slds-input:valid + .slds-form-element__label { */
+  .input-field .slds-input:focus + .input-label, .input-field .slds-input:valid + .input-label {
+    color: #04cbff;
+    transform: translateY(-1.5rem);
+  }
+
+  input,input:focus{
+    border: 0px !important;
+  }

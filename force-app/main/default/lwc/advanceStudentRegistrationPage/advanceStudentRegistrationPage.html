@@ -1,0 +1,165 @@
+<template>
+    <div class="container">
+        <template if:false={displayNone}>
+            <template if:false={thankYouSection}>
+                <div class="college-label">
+                    {accountName}
+                </div>
+                <div class="card">
+                    <template if:true={candidateForm}>
+                        <div class="card-image1">
+                            <h2 class="card-heading">
+                                Candidate Details
+                            </h2>
+                            <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png"/>
+                        </div>
+                        <div class="card-form">
+                            <div class="input">
+                                <lightning-input label="First Name" aria-autocomplete="off" class="reqInpFld" type="text" name="firstname" pattern="[A-Za-z\s]{1,32}" required message-when-pattern-mismatch="Please enter FirstName" value={firstname} onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="input">
+                                <lightning-input label="Last Name" aria-autocomplete="off" class="reqInpFld" type="text" name="lastname" pattern="[A-Za-z\s]{1,32}" required message-when-pattern-mismatch="Please enter LastName" value={lastname} onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="input">
+                                <lightning-combobox name="Gender" class="reqInpFld" required label="Gender" value={gender} placeholder="-Select-" options={genderOptions} onchange={handleChange}></lightning-combobox>
+                            </div>
+                            <div class="input">
+                                <lightning-combobox name="department" class="reqInpFld" required label="Department" value={department} placeholder="-Select-" options={departmentOptions} onchange={handleChange}></lightning-combobox>
+                            </div>
+                            <div class="input">
+                                <lightning-combobox name="semester" class="reqInpFld" required label="Semester" value={semester} placeholder="-Select-" options={semesterOptions} onchange={handleChange}></lightning-combobox>
+                            </div>
+                            <div class="input">
+                                <lightning-input label="Enrollment No." aria-autocomplete="off" class="reqInpFld" type="text" name="enroll" pattern="[0-9\s]{10,15}" required message-when-pattern-mismatch="Please enter valid Enrollment Number" onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="input">
+                                <lightning-input label="Email" aria-autocomplete="off" class="reqInpFld" type="text" name="email" required message-when-pattern-mismatch="Please enter valid Email" value={email} onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="input">
+                                <lightning-input label="Mobile No." aria-autocomplete="off" class="reqInpFld" type="text" name="mobile" pattern="[0-9\s]{10,12}" required message-when-pattern-mismatch="Please enter valid Mobile Number" value={mobile} onchange={handleChange}></lightning-input>
+                            </div>
+                            <div class="input">
+                                <lightning-input label="Upload Resume" multiple="false" type="file" accept=".pdf" name="fileUploader" onchange={handleUploadFinished}></lightning-input>
+                            </div>
+                            <div class="small-text slds-p-top_xx-small">
+                                <p>File size should not exceed 3 MB.</p>
+                            </div>
+                            <template if:true={fileName}>
+                                <div class="file-name">
+                                    <span class="file-name-label">File Name : </span>
+                                    <button onclick={removeFile}>{fileName} X</button>
+                                </div>
+                            </template>
+                            <div class="action">
+                                <button class="action-button" disabled={submitdisable} onclick={submituserdetails}>Submit</button>
+                            </div>
+                            <br/>
+                            <div class="small-text">
+                                <span class="small-text-label">Note : </span>
+                                <p>All fields marked with * are mandatory.</p>
+                            </div>
+                        </div>
+                    </template>
+                    <template if:true={registrationSucessfull}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                        <lightning-icon icon-name="utility:close"
+                                            alternative-text="close"
+                                            variant="inverse"
+                                            size="small" ></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Registration Successful</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                                    <p><b>Thank you for registering.</b></p>
+                                    <p>Please check your email for more details.</p>
+                                    <br>
+                                    <p><b>Email :</b> {registeredEmail}</p>  
+                                    <p><b>Enrollment No. :</b> {registeredEnroll}</p>
+                                    <p><b>Note :</b> In case of any query you can contact us at&nbsp; 
+                                        <a href = "mailto:career@mvclouds.com"  target="_blank">
+                                            career@mvclouds.com
+                                        </a>
+                                    </p>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_brand" onclick={openThankYouPage} title="OK">OK</button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                    <template if:true={candidateExists}>
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-idnverse" title="Close" onclick={closeModal}>
+                                        <lightning-icon icon-name="utility:close"
+                                            alternative-text="close"
+                                            variant="inverse"
+                                            size="small" ></lightning-icon>
+                                        <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Candidate Already Exist</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                                    <p><b>We have already received your details.</b></p>
+                                    <br>
+                                    <p><b>Email :</b> {registeredEmail}</p>
+                                    <p><b>Enrollment No. :</b> {registeredEnroll}</p>
+                                    <p><b>Note :</b> In case of any query you can contact us at&nbsp; 
+                                        <a href = "mailto:career@mvclouds.com"  target="_blank">
+                                            career@mvclouds.com
+                                        </a>
+                                    </p>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <button class="slds-button slds-button_brand" onclick={openThankYouPage} title="OK">OK</button>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </template>
+                </div>
+            </template>
+
+            <template if:true={thankYouSection}>
+                <div class="container">
+                    <div class="card" style="padding: 3rem 1rem;">
+                        <div class="card-image2">
+                            <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png"/>
+                        </div>
+
+                        <template if:true={newContact}>
+                            <div>
+                                <img class="back-img" src="https://img.freepik.com/premium-vector/thank-you-people-great-design-any-purposes-vector-illustration_123447-3885.jpg?w=2000" width="560" />
+                                <p class="txt-div" style="padding-top: 1rem;">Your Form has been Submitted</p>
+                                <p class="txt-div" style="padding-top: 1rem;">Hi {firstname},</p> <br/>
+                                <p class="txt-div">Thank you for your time</p>
+                                <p class="txt-div">Please check your mail for futher information.</p> <br/>
+                                <p class="txt-div">-MV Clouds Team</p>
+                            </div>
+                        </template>
+
+                        <template if:false={newContact}>
+                            <div>
+                                <img class="back-img" src="https://img.freepik.com/premium-vector/thank-you-people-great-design-any-purposes-vector-illustration_123447-3885.jpg?w=2000" width="560" />
+                                <p class="txt-div" style="padding-top: 1rem;">Hi {firstname},</p> <br/>
+                                <p class="txt-div">Thank you for your time</p>
+                                <p class="txt-div">You have already registered for Campus Drive.</p>
+                                <p class="txt-div">Please check your mail for futher information.</p> <br/>
+                                <p class="txt-div">-MV Clouds Team</p>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+    <template if:true={showspinner}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="large" class="spinner-cls"> </lightning-spinner>
+    </template>
+</template>

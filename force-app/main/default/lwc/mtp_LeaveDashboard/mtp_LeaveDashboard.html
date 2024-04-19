@@ -1,0 +1,112 @@
+<template>
+    <div class = "maindiv">
+		<div class ="header">
+            <div class="heading">Approve and Reject Leave</div> 
+            <div class ="subheading" >Leave Records</div> 
+        </div>
+		<!-- <div class ="body"> -->
+			<div class="UpperBody">
+				<div class="TraineeSelectionButton">
+
+                    <!-- <template if:true={mentor}> -->
+                        <div class="combobox">
+                            <lightning-combobox 
+                                label="Trainee" 
+                                options={traineeList} 
+                                value={selectedTrainee} 
+                                onchange={handleTraineeChange} 
+                                variant="label-hidden"
+                                class="combobox">
+                            </lightning-combobox>
+                        </div>
+                    <!-- </template> -->
+            
+                    <div class="MonthPicklist">
+                        <lightning-combobox 
+                            label="Months" 
+                            options={Months} 
+                            value={SelectedMonth} 
+                            onchange={HandleMonthchange} 
+                            variant="label-hidden"
+                            class="combobox">
+                        </lightning-combobox>
+                    </div>
+            
+                    <div class="MonthPicklist">
+                        <lightning-combobox 
+                            label="Years" 
+                            options={years} 
+                            value={SelectedYearValue} 
+                            onchange={HandleYearChange}
+                            dropdown-alignment="top-right" 
+                            variant="label-hidden"
+                            class="combobox">
+                        </lightning-combobox>
+                    </div>
+            
+                </div>
+			</div>
+			<div class ="lowerBody">
+				<div class = 'table-container'>
+                    <table class="styled-table" id="Table1" >
+                        <thead>
+                            <tr class="slds-line-height_reset">
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Name">Name</div>
+                                </th>
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Trainee Name">Employee Name</div>
+                                </th>
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Reason">Reason</div>
+                                </th>
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Leave Type">Leave Type</div>
+                                </th>
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Status">Status</div>
+                                </th>
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Day Type">Day Type</div>
+                                </th>
+                                <th class="tableHeader" scope="col">
+                                    <div class="slds-truncate" title="Action">Action</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={Leaves} for:item="leavee">
+                                <tr class="slds-hint-parent" key={leavee.Id}>
+                                    <td data-th="Name" >{leavee.Name}</td>
+        
+                                    <template if:true={leavee.Contact_Trainee__c}>
+                                        <td data-th="Task Number">{leavee.Contact_Trainee__r.Name}</td>
+                                    </template>
+        
+                                    <template if:false={leavee.Contact_Trainee__c}>
+                                        <td data-th="Task Number"></td>
+                                    </template>
+        
+                                    <td data-th="reason">{leavee.Reason__c}</td>
+                                    <td data-th="type">{leavee.Leave_Type__c}</td>
+                                    <td data-th="status" class="statusCls" data-status={leavee.Status__c}>{leavee.Status__c}</td>
+                                    <td data-th="day">{leavee.Day__c}</td>
+                                    <td class="btn-div">
+                                        <button class="slds-button slds-button_success" onclick={changeStatus} value="Approved" data-val={leavee.Id}>Approved</button>
+                                        <button class="slds-button slds-button_destructive" onclick={changeStatus} value="Rejected" data-val={leavee.Id}>Rejected</button>
+                                    </td>
+                                </tr>
+                            </template>
+        
+                            <template if:true={noData}>
+                                <td colspan="100%" class="emptystate__body">
+                                    <h2>Opps! There is No Pending Leaves</h2>
+                                </td>
+                            </template>
+                        </tbody>
+                    </table>
+				</div>
+			</div>
+		<!-- </div> -->
+	</div>
+</template>

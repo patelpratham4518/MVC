@@ -1,0 +1,61 @@
+<template>
+    <div class="container">
+        <div class="time-div">
+            <div class="inputArea"></div>  
+            <h1 class="time" style="font-size: 18px;">{timeVal}</h1>   
+        </div>
+        <div class="card">
+            <div class="card-image">
+                <h2 class="card-heading">
+                    Language Selection
+                </h2>
+                <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png" />
+            </div>
+            <div class="card-form">
+                <div class="header">
+                    <p>Choose any 2 language you are comfertable with.</p>
+                </div>
+                <fieldset>
+                    <template for:each={languageList} for:item="language">
+                        <label key={language.value}>
+                            <input type="checkbox" value={language.value} name={language.label} onchange={checkboxchange}/>
+                            <span class="checkbox-style">{language.label}</span>
+                        </label>
+                    </template>
+                </fieldset>
+                <p class="errorcls">{errormsg}</p>
+
+                <div class="action">
+                    <button class="action-button" disabled={langdisable} onclick={nextfromlanguage}>Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template if:true={confirmLanPopup}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeLanPopup}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Thanks for choosing languages</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <center>
+                    <p>Please confirm your selected languages - <b>{showlanguages}</b> </p>
+                </center>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeLanPopup} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={gotoquestions} title="Confirm and Proceed">Confirm and Proceed</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={showspinner}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="large"> </lightning-spinner>
+    </template>
+</template>

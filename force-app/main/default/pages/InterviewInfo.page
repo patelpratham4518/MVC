@@ -1,0 +1,17 @@
+<apex:page showHeader="false" sidebar="false">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <apex:includeLightning />   
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:studentRegistrationApp", function() {
+        $Lightning.createComponent("c:studentRegistrationPage",
+          { 
+              accountId: "{!$CurrentPage.parameters.Id}"
+          },
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Salesforce driller added in VF page');
+          });
+    });
+    </script>
+</apex:page>

@@ -1,0 +1,850 @@
+<apex:page sidebar="false" showHeader="false" html-lan="en-US" docType="html-5.0" controller="WebinarController">
+    
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Webinar</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.2.1/font-awesome-animation.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"/>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'/>
+
+    <style>
+       
+        /*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.border-md {
+    border-width: 2px;
+}
+
+.btn-facebook {
+    background: #405D9D;
+    border: none;
+}
+
+.btn-facebook:hover, .btn-facebook:focus {
+    background: #314879;
+}
+
+.btn-twitter {
+    background: #42AEEC;
+    border: none;
+}
+
+.btn-twitter:hover, .btn-twitter:focus {
+    background: #1799e4;
+}
+
+
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+body {
+    min-height: 100vh;
+}
+
+.form-control:not(select) {
+    padding: 1.5rem 0.5rem;
+}
+
+select.form-control {
+    height: 52px;
+    padding-left: 0.5rem;
+}
+
+.form-control::placeholder {
+    color: #ccc;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+.form-control:focus {
+    box-shadow: none;
+}
+ul{
+    list-style: none;
+}
+#text li:before{
+    content: '\f054';
+    font-family: 'FontAwesome';
+    float: left;
+    margin-left: -2em;
+    color: #00ccff;
+}
+
+
+/* ======================================style for error message============================ */
+.alert>.start-icon {
+    margin-right: 0;
+    min-width: 20px;
+    text-align: center;
+}
+
+.alert>.start-icon {
+    margin-right: 5px;
+}
+
+.greencross
+{
+  font-size:18px;
+      color: #25ff0b;
+    text-shadow: none;
+}
+
+.alert-simple.alert-success
+{
+  border: 1px solid rgba(36, 241, 6, 0.46);
+    background-color: rgba(7, 149, 66, 0.12156862745098039);
+    box-shadow: 0px 0px 2px #259c08;
+    color: #0ad406;
+  text-shadow: 2px 1px #00040a;
+  transition:0.5s;
+  cursor:pointer;
+}
+.alert-success:hover{
+  background-color: rgba(7, 149, 66, 0.35);
+  transition:0.5s;
+}
+.alert-simple.alert-info
+{
+  border: 1px solid rgba(6, 44, 241, 0.46);
+    background-color: rgba(7, 73, 149, 0.12156862745098039);
+    box-shadow: 0px 0px 2px #0396ff;
+    color: #0396ff;
+  text-shadow: 2px 1px #00040a;
+  transition:0.5s;
+  cursor:pointer;
+}
+
+.alert-info:hover
+{
+  background-color: rgba(7, 73, 149, 0.35);
+  transition:0.5s;
+}
+
+.blue-cross
+{
+  font-size: 18px;
+    color: #0bd2ff;
+    text-shadow: none;
+}
+
+.alert-simple.alert-warning
+{
+      border: 1px solid rgba(241, 142, 6, 0.81);
+    background-color: rgba(220, 128, 1, 0.16);
+    box-shadow: 0px 0px 2px #ffb103;
+    color: #ffb103;
+    text-shadow: 2px 1px #00040a;
+  transition:0.5s;
+  cursor:pointer;
+}
+
+.alert-warning:hover{
+  background-color: rgba(220, 128, 1, 0.33);
+  transition:0.5s;
+}
+
+.warning
+{
+      font-size: 18px;
+    color: #ffb40b;
+    text-shadow: none;
+}
+
+.alert-simple.alert-danger
+{
+  border: 1px solid rgba(241, 6, 6, 0.81);
+    background-color: rgba(220, 17, 1, 0.16);
+    box-shadow: 0px 0px 2px #ff0303;
+    color: #ff0303;
+    text-shadow: 2px 1px #00040a;
+  transition:0.5s;
+  cursor:pointer;
+}
+
+.alert-danger:hover
+{
+     background-color: rgba(220, 17, 1, 0.33);
+  transition:0.5s;
+}
+
+.danger
+{
+      font-size: 18px;
+    color: #ff0303;
+    text-shadow: none;
+}
+
+.alert-simple.alert-primary
+{
+  border: 1px solid rgba(6, 241, 226, 0.81);
+    background-color: rgba(1, 204, 220, 0.16);
+    box-shadow: 0px 0px 2px #03fff5;
+    color: #03d0ff;
+    text-shadow: 2px 1px #00040a;
+  transition:0.5s;
+  cursor:pointer;
+}
+
+.alert-primary:hover{
+  background-color: rgba(1, 204, 220, 0.33);
+   transition:0.5s;
+}
+
+.alertprimary
+{
+      font-size: 18px;
+    color: #03d0ff;
+    text-shadow: none;
+}
+
+.square_box {
+    position: absolute;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    border-top-left-radius: 45px;
+    opacity: 0.302;
+}
+
+.square_box.box_three {
+    background-image: -moz-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
+    background-image: -webkit-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
+    background-image: -ms-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
+    opacity: 0.059;
+    left: -80px;
+    top: -60px;
+    width: 500px;
+    height: 500px;
+    border-radius: 45px;
+}
+
+.square_box.box_four {
+    background-image: -moz-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
+    background-image: -webkit-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
+    background-image: -ms-linear-gradient(-90deg, #290a59 0%, #3d57f4 100%);
+    opacity: 0.059;
+    left: 150px;
+    top: -25px;
+    width: 550px;
+    height: 550px;
+    border-radius: 45px;
+}
+
+.alert:before {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: calc(100% - 44px);
+    border-left: 1px solid;
+    border-right: 2px solid;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+    left: 0;
+    top: 50%;
+    transform: translate(0,-50%);
+      height: 20px;
+}
+
+.fa-times
+{
+-webkit-animation: blink-1 2s infinite both;
+	        animation: blink-1 2s infinite both;
+}
+
+
+/**
+ * ----------------------------------------
+ * animation blink-1
+ * ----------------------------------------
+ */
+@-webkit-keyframes blink-1 {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+@keyframes blink-1 {
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+
+
+
+
+
+/* ===========================THANK YOU PAGE STYLE=============== */
+@import url("https://fonts.googleapis.com/css?family=Barlow:300,400,500,600,700|Hind:400,500,600,700|Quattrocento:400,700");
+
+.header-banner{
+	
+	background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-image: url({!$Resource.Background5});
+  background-attachment: fixed;
+}
+
+@media all and (max-width: 768px){
+	.header-banner{
+		background-image: linear-gradient(to left,rgba(255, 255, 255,0.6) 0%, rgba(255,255,255, 0.7) 100%),url({!$Resource.Background6});
+        text-align: center;
+	}
+	#thankyouBody .banner-title{
+	font-size: 38px !important;
+	}
+	#thankyouBody .banner-content .sub-title{
+	font-size: 18px;
+	}
+}
+#thankyouBody .banner-content .sub-title{
+font-size: 24px;
+color: #00ccff;
+text-transform: uppercase;
+}
+.banner-title{
+	font-size: 60px;
+}
+.banner-title span{
+	color: #00ccff;
+}
+.banner-contact i{
+    color: #00ccff;
+}
+#thankyouBody h1,#thankyouBody h2,#thankyouBody h3,#thankyouBody h4,#thankyouBody h5,#thankyouBody h6{
+    /* font-family: 'Quattrocento', serif; */
+    font-family: "Oswald", sans-serif;
+    font-weight: 700;
+	}
+	.mt-10{
+	margin-top:10px;
+	}
+	.mt-25{
+	margin-top: 25px;
+	}
+
+
+/* ===========================================COUNTDOWN BOX CSS========================================== */
+#CountDownContainer h1 {
+  font-weight: normal;
+  letter-spacing: .125rem;
+  text-transform: uppercase;
+}
+
+#CountDownContainer li {
+  display: inline-block;
+  font-size: 1.5em;
+  list-style-type: none;
+  padding: 1em;
+  text-transform: uppercase;
+}
+
+#CountDownContainer li span {
+  display: block;
+  font-size: 4.5rem;
+}
+
+#CountDownContainer .message {
+  font-size: 4rem;
+  background-color: transparent;
+  border-width: 0px;
+}
+
+#CountDownContainer #content {
+  display: none;
+  padding: 1rem;
+}
+
+#CountDownContainer .emoji {
+  padding: 0 .25rem;
+}
+
+@media all and (max-width: 768px) {
+    #CountDownContainer{
+        margin-top: 20px;
+    }
+    #CountDownContainer h1 {
+    font-size: 1rem;
+  }
+  
+  #CountDownContainer li {
+    font-size: 1rem;
+    padding: .5rem;
+  }
+  
+  #CountDownContainer li span {
+    font-size: 1.375rem;
+  }
+  #CountDownContainer ul{
+      padding-left: 0 !important;
+  }
+}
+
+
+
+/* =============================================CUSTOM CSS============================== */
+.navbar-brand img{
+    height:80px;
+    width: auto;
+}
+
+.container-fluid{
+    width:70%;
+}
+@media all and (max-width: 900px){
+    .container-fluid{
+        width: 90%;
+    }
+}
+body{
+    background: url({!$Resource.Background2});
+    background-size: cover;
+}
+@media all and (max-width: 768px){
+    body{
+        background: url({!$Resource.Background3});
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+}
+.bgcolor{
+    background-color: rgba(0,0,0,0.4);
+    color:white;
+}
+.container-fluid p{
+    text-align: justify;
+}
+span{
+    width: 100%;    
+}
+#footer ul li{
+    font-size: 20px;
+    padding: 1em 0 0 1em;
+}
+#footer .style2{
+    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    background-color: transparent;
+    border: solid 1px #c9c9c9;
+    border-radius: 4px;
+    width: 2.65em;
+    height: 2.65em;
+    display: inline-block;
+    text-align: center;
+    line-height: 2.65em;
+    color: inherit;
+    transition: transform .2s;
+}
+#footer .style2:hover {
+    color: #00ccff;
+    border-color: #00ccff;
+    transform: scale(1.5);
+}
+@media all and (max-width:768px){
+    #footer ul li{
+        font-size: 15px;
+    }
+    #footer ul{
+        padding-left: 0px !important;
+    }
+    h1,.h1{
+        font-size: 2rem;
+    }
+}
+    </style>
+    <script>
+        window.onload = function() {
+            var xx = document.body.offsetHeight + 'px';
+            document.getElementById('maain').style.height = xx;            
+        }        
+    </script>
+</head>
+<body>
+
+    <div class="header-banner d-flex align-items-center" id="thankyouBody">
+    <apex:outputPanel rendered="{!thankyou != false}">                
+                <script>
+                    var hei = window.innerHeight + 'px';
+                    document.getElementById('thankyouBody').style.height = hei;
+                </script>
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-8 col-lg-9 col-sm-10">
+                        <div class="banner-content">
+                            
+                            <apex:outputPanel rendered="{!WebiTime == false}">
+                            <h4 class="sub-title">MV Clouds</h4>
+                            <h1 class="banner-title mt-10"><span>Thanks</span> For Joining Us.</h1>
+							<h3 class=" mt-10 wow fadeInUp">Your Registration Is Complete.</h3>
+                            <div class="banner-contact mt-25"><i class="fa fa-envelope" aria-hidden="true"></i> Check Your Email For Confirmation.</div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!WebiTime != false}">
+                                <h4 class="sub-title">MV Clouds</h4>
+                                <h1 class="banner-title mt-10"><span>Thanks</span> For Filling In.</h1>
+                                <h3 class=" mt-10 wow fadeInUp">We regret to inform you that the webinar has ended.</h3>
+                                <h4 class=" mt-10 wow fadeInUp">Stay tuned to our Social Media for more updates.</h4>
+                                <div class="row justify-content-left" id="footer">
+                                    <ul class="d-flex">
+                                        <li><a href="https://twitter.com/mvclouds?lang=en" class="style2"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="https://www.facebook.com/pages/category/Consulting-Agency/MV-Clouds-Private-Limited-1654924794732236/" class="style2"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="https://www.linkedin.com/company/mv-clouds-private-limited/" class="style2"><i class="fab fa-linkedin-in"></i></a></li>
+                                        <li><a href="https://www.instagram.com/mvcloudsync/" class="style2"><i class="fab fa-instagram"></i></a></li>
+                                        <li><a href="skype:dharmik_mv?chat" class="style2"><i class="fab fa-skype"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="banner-contact mt-25"><i class="fa fa-envelope" aria-hidden="true"></i> We will inform you for the next event.</div>
+                            </apex:outputPanel>
+
+                        </div> <!-- banner content -->
+                    </div>
+                </div> <!-- row -->
+            </div> <!-- container -->        
+    </apex:outputPanel>
+</div>
+
+
+<apex:outputPanel rendered="{!thankyou == false}">
+<div class="bgcolor" id="maain">
+<!-- Navbar-->
+<header class="header">
+    <nav class="navbar navbar-expand-lg navbar-light py-3">
+        <div class="container-fluid">
+            <!-- Navbar Brand -->
+            <a href="https://mvclouds.com" class="navbar-brand">
+                <img src="{!$Resource.MVlogoWhite}" alt="MV Clouds" />
+            </a>
+            <a href="#" class="navbar-brand">
+                <img src="https://seeklogo.com/images/S/salesforce-logo-273F95FE60-seeklogo.com.png" atl="Salesforce" />
+            </a>
+        </div>
+    </nav>
+</header>
+
+
+<div class="container-fluid" id="mainContent">
+    <!-- <div class="row py-5 mt-4 align-items-center"> -->
+    <div class="row  mt-4">
+        <!-- For Demo Purpose -->
+        <div class="col-md-5 mb-5 mb-md-0" id="text">
+            <!-- <img src="https://res.cloudinary.com/mhmd/image/upload/v1569543678/form_d9sh6m.svg" alt="" class="img-fluid mb-3 d-none d-md-block"/> -->
+            <apex:outputText value="{!Webi.Webinar_Description__c}" escape="false"/>
+            <!--  <h1>What is Salesforce?</h1>
+            <br/>
+            <p class="font-weight-bold">Live Webinar on Friday, December 18, 2020</p>
+            <p class="font-weight-bold">10am onwards</p>
+            <h3>About The Webinar</h3>
+            <p>
+                We all want to flap our wings and fly beyond the horizon, with the pressure to succeed choking us,how can we fly high. It is important to choose the right career at the right time. But, "What do we choose?.". <b>MV Clouds</b> brings to you <b>The number one CRM in the world!</b>
+            </p>
+            <p>
+                Learn more about what is salesforce, how it is impacting the market, how does one dive into salesforce and succeed, what's more, we are even offering a <b>Certificate of Attendance!</b>
+            </p>
+            <p class="font-weight-bold">What you will be learning:</p>
+            <ul>
+                <li>How salesforce has transformed business across the globe</li>
+                <li>Ways to grow in salesforce</li>
+                <li>A practical session on basic salesforce modules </li>
+            </ul> -->
+            
+        </div>
+
+        <!-- Registeration Form -->
+        <div class="col-md-7 col-lg-6 ml-auto">
+            <apex:form id="form">
+                <div class="row">
+
+                    <apex:outputPanel rendered="{!error != false}">
+                        <div class="col-sm-12">
+                            <div class="alert fade alert-simple alert-danger alert-dismissible text-left font__family-montserrat font__size-16 font__weight-light brk-library-rendered rendered show" role="alert" data-brk-library="component__alert">
+                            <button type="button" class="close font__size-18" data-dismiss="alert">
+                                                        <span aria-hidden="true">
+                                                            <i class="fa fa-times danger "></i>
+                                                        </span>
+                                                        <span class="sr-only">Close</span>
+                                                    </button>
+                            <i class="start-icon far fa-times-circle faa-pulse animated"></i>
+                            <strong class="font__weight-semibold">Oh snap!</strong> {!errormsg}
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+
+                    <!-- First Name -->
+                    <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-user text-muted"></i>
+                            </span>
+                        </div>
+                        <apex:input id="firstName" type="text" html-name="firstname" html-placeholder="First Name" styleClass="form-control bg-white border-left-0 border-md"  value="{!fname}"  required="true"/>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-user text-muted"></i>
+                            </span>
+                        </div>
+                        <apex:input id="lastName" type="text" html-name="lastname" html-placeholder="Last Name" styleClass="form-control bg-white border-left-0 border-md"  value="{!lname}"  required="true"/>
+                    </div>
+
+                    <!-- Email Address -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-envelope text-muted"></i>
+                            </span>
+                        </div>
+                        <apex:input id="email" type="text" html-name="email" html-placeholder="Email Address" styleClass="form-control bg-white border-left-0 border-md"  value="{!eml}"  required="true"/>                        
+                    </div>
+
+                    <!-- Phone Number -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fas fa-phone-alt text-muted"></i>
+                            </span>
+                        </div>
+                        <!-- <select id="countryCode" name="countryCode" style="max-width: 80px" class="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted">
+                            <option value="">+91</option>
+                            <option value="">+79</option>                            
+                        </select> -->
+                        <apex:selectList id="countryCode" value="{!PrefixNumber}" html-name="countryCode" style="max-width: 80px;" styleclass="custom-select form-control bg-white border-left-0 border-md h-100 font-weight-bold text-muted" size="1">
+                            <apex:selectOption itemValue="+91" itemLabel="+91"/>
+                            <apex:selectOption itemValue="+79" itemLabel="+79"/>
+                        </apex:selectList> 
+                        <apex:input id="phoneNumber" type="text" html-name="phoneNumber" html-placeholder="Phone Number" styleClass="form-control bg-white border-md border-left-0 pl-3"  value="{!phoneNumber}" required="true" html-patten="\(?\d+\)?[-.\s]?\d+[-.\s]?\d+" />
+                    </div>
+
+
+                    <!-- Job -->
+                    <!-- <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-black-tie text-muted"></i>
+                            </span>
+                        </div>
+                        <select id="job" name="jobtitle" class="form-control custom-select bg-white border-left-0 border-md">
+                            <option value="">Choose your job</option>
+                            <option value="">Designer</option>
+                            <option value="">Developer</option>
+                            <option value="">Manager</option>
+                            <option value="">Accountant</option>
+                        </select>
+                    </div> -->
+
+                    <!-- College or Company -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-building text-muted"></i>
+                            </span>
+                        </div>
+                        <apex:input id="college_company" type="text" html-name="Company/College" html-placeholder="Company/College" styleClass="form-control bg-white border-md border-left-0 pl-3" value="{!company}" required="true"/>
+                    </div>
+
+                    <!-- Profession -->
+                    <div class="input-group col-lg-12 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fas fa-briefcase text-muted"></i>
+                            </span>
+                        </div>
+                        <apex:input id="profession" type="text" html-name="profession" html-placeholder="Profession" styleClass="form-control bg-white border-md border-left-0 pl-3" value="{!profession}" required="true"/>
+                    </div>
+
+
+                    <!-- Password -->
+                    <!-- <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-lock text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="password" type="password" name="password" placeholder="Password" class="form-control bg-white border-left-0 border-md"/>
+                    </div> -->
+
+                    <!-- Password Confirmation -->
+                    <!-- <div class="input-group col-lg-6 mb-4">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text bg-white px-4 border-md border-right-0">
+                                <i class="fa fa-lock text-muted"></i>
+                            </span>
+                        </div>
+                        <input id="passwordConfirmation" type="text" name="passwordConfirmation" placeholder="Confirm Password" class="form-control bg-white border-left-0 border-md"/>
+                    </div> -->
+
+                    <!-- Submit Button -->
+                    <div class="form-group col-lg-12 mx-auto mb-0">
+                        <apex:commandButton action="{!create}" value="Register" styleClass="btn btn-primary btn-block py-2 font-weight-bold"/>
+                    </div>
+
+                    <!-- <div class="form-group col-lg-12 mx-auto d-flex align-items-center my-4">
+                        <div class="border-bottom w-100 ml-5"></div>
+                        <span class="px-2 small font-weight-bold text-center">OR</span>
+                        <div class="border-bottom w-100 mr-5"></div>
+                    </div>
+
+                    <div class="form-group col-lg-12 mx-auto">
+                        <a href="https://www.instagram.com/mvcloudsync/" class="btn btn-primary btn-block py-2 btn-instagram">
+                            <i class="fa fa-facebook-f mr-2"></i>
+                            <span class="font-weight-bold">Check us on Instagram</span>
+                        </a>
+                        <a href="https://www.linkedin.com/company/mv-clouds-private-limited/" class="btn btn-primary btn-block py-2 btn-linkedin">
+                            <i class="fa fa-twitter mr-2"></i>
+                            <span class="font-weight-bold">Check us on LinkedIn</span>
+                        </a>
+                    </div> -->
+
+                    <!-- Already Registered -->
+                    <!-- <div class="text-center col-lg-12 w-100">
+                        <p class="text-muted font-weight-bold">Already Registered? <a href="#" class="text-primary ml-2">Login</a></p>
+                    </div> -->
+
+                </div>
+            </apex:form>
+        </div>
+    </div>
+    <div class="row justify-content-center" id="CountDownContainer">
+        <div class="col-12 text-center">
+        <h1 id="headline">Countdown to Webinar:</h1>
+        <div id="countdown">
+            <ul>
+            <li><span id="days"></span>days</li>
+            <li><span id="hours"></span>Hours</li>
+            <li><span id="minutes"></span>Minutes</li>
+            <li><span id="seconds"></span>Seconds</li>
+            </ul>
+        </div>
+        <div class="message" id="content">
+            <div>
+            <span class="emoji">😁</span>
+            <span class="emoji">🎇</span>
+            <span class="emoji">💻</span>
+            </div>
+        </div>
+        </div>
+        </div>
+    <div class="row justify-content-center" id="footer">
+        <ul class="d-flex">
+            <li><a href="https://twitter.com/mvclouds?lang=en" class="style2"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="https://www.facebook.com/pages/category/Consulting-Agency/MV-Clouds-Private-Limited-1654924794732236/" class="style2"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="https://www.linkedin.com/company/mv-clouds-private-limited/" class="style2"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="https://www.instagram.com/mvcloudsync/" class="style2"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="skype:dharmik_mv?chat" class="style2"><i class="fab fa-skype"></i></a></li>
+        </ul>
+    </div>
+    
+</div>
+</div>
+</apex:outputPanel>
+
+
+<script>
+// For Demo Purpose [Changing input group text on focus]
+$(function () {
+    $('input, select').on('focus', function () {
+        $(this).parent().find('.input-group-text').css('border-color', '#80bdff');
+    });
+    $('input, select').on('blur', function () {
+        $(this).parent().find('.input-group-text').css('border-color', '#ced4da');
+    });
+});
+
+</script>
+
+<script>
+    (function () {
+      const second = 1000,
+            minute = second * 60,
+            hour = minute * 60,
+            day = hour * 24;
+        
+      let birthday = "{!Webi.WebinarTime__c}",
+          countDown = new Date(birthday).getTime(),
+          x = setInterval(function() {    
+    
+            let now = new Date().getTime(),
+                distance = countDown - now;
+    
+            document.getElementById("days").innerText = Math.floor(distance / (day)),
+              document.getElementById("hours").innerText = Math.floor((distance % (day)) / (hour)),
+              document.getElementById("minutes").innerText = Math.floor((distance % (hour)) / (minute)),
+              document.getElementById("seconds").innerText = Math.floor((distance % (minute)) / second);
+    
+            //do something later when date is reached
+            if (distance < 0) {
+              let headline = document.getElementById("headline"),
+                  countdown = document.getElementById("countdown"),
+                  content = document.getElementById("content");
+    
+              headline.innerText = "It's Webinar Time!";
+              countdown.style.display = "none";
+              content.style.display = "block";
+    
+              clearInterval(x);
+            }
+            //seconds
+          }, 0)
+      }());
+      </script>
+
+
+<script>
+         var disableStyle = function(styleName, disabled) {
+                  var styles = document.styleSheets;
+                  var href = "";
+                  for (var i = 0; i < styles.length; i++) {
+                    // href=style[i];
+                      href = styles[i].href.split("/");
+                      href = href[href.length - 1];
+                    if (href === styleName) {
+                          styles[i].disabled = disabled;
+                          break;
+                      }
+                  }
+              };
+              disableStyle("common.css",'true');
+              disableStyle("extended.css",'true');
+      </script>
+
+</body>
+</html>
+</apex:page>

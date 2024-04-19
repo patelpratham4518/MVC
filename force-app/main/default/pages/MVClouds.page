@@ -1,0 +1,14 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" title="MV Clouds Portal">
+    <apex:includeLightning />
+    <script>
+        $Lightning.use("c:MVCloudsPortalApp", function() {
+          $Lightning.createComponent("c:holidays",
+          {},
+          "mvcloudspage",
+          function(cmp) {
+            // do some stuff
+          });
+        });
+    </script>
+    <div id="mvcloudspage" />
+</apex:page>

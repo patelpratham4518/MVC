@@ -1,0 +1,11 @@
+<apex:page >
+	<html>
+		<head>
+            <META http-equiv="refresh" content="60"/>
+		</head>
+	</html>
+	From Apex tags:
+	<apex:outputText value="The formatted time right now is: {0,date,yyyy.MM.dd G 'at' HH:mm:ss z}">
+		<apex:param value="{!NOW()}" />
+	</apex:outputText>
+</apex:page>

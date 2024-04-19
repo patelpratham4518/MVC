@@ -1,0 +1,192 @@
+<template>
+	<template if:true={isSpinner}>
+		<div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+			<div class="container">
+				<div class="plane-spinner">
+					<svg id="b31cb9b3-53d9-4f4c-adfb-406ca50138db" data-name="Layer 1"
+						xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.8 227.9">
+						<title>delete</title>
+						<path
+							d="M1012.25,426a75.19,75.19,0,0,0-53.19,21.87l-149.86,149h53.46l93.43-92.62,29.7-29.43a37.56,37.56,0,0,1,26.73-11.07H1053l-16.2,37.8-17.28,40.77-7.29,17-16.2,37.8h41L1110,426.22h-97.75V426Z"
+							transform="translate(-809.2 -425.95)" fill="#0684c2" />
+						<path d="M862.66,596.87l119.89,51a74.47,74.47,0,0,0,29.43,5.94h40.77l-57-57Z"
+							transform="translate(-809.2 -425.95)" fill="#10ab96" />
+					</svg>
+				</div>
+				<h1 class="loading-spinnet-txt">Loading...</h1>
+			</div>
+		</div>
+	</template>
+	<div class = "maindiv">
+		<div class ="header">
+			<div class="heading">{UserName} Timesheet</div> 
+			<!-- <div class ="subheading" >Manage your daily tasks by filling the Timesheet</div>  -->
+			<div class ="subheading" >{statusValue} Timesheet Records</div> 
+		</div>
+		<div class ="body">
+			<div class="UpperBody">
+				<div class="ButtonGroupleft">
+					<!-- <button class="custom-btn btn-16 btn_active_16" onclick ={handleStatus} data-value="Pending" data-name={statusValue}> Pending </button>
+					<button class="custom-btn btn-13 btn_active_13" onclick ={handleStatus} data-value="Approved" data-name={statusValue}> Approved </button>
+					<button class="custom-btn btn-5 btn_active_5" onclick ={handleStatus} data-value="Rejected" data-name={statusValue}> Rejected </button> -->
+				</div>
+				<div class="ButtonGroupright">
+					<div class="date">
+						<lightning-input 
+							type="date" 
+							label="Date" 
+							value={date} 
+							onchange={handleDateChange} 
+							variant="label-hidden"
+							required>
+						</lightning-input>
+					</div>
+				</div>
+			</div>
+			<div class ="lowerBody">
+				<div class = 'table-container'>
+					<template if:true={timesheetDataList}>
+						<table class="rwd-table" >
+							<thead>
+								<tr> 
+									<th>Task Number</th>
+									<th>Start Time</th>
+									<th>End Time</th>
+									<th>Duration</th>
+									<th>Project Name</th>
+									<!-- <th>Ticket No./Requirementr</th> -->
+									<th>Task Name</th>
+									<th>Description</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+								<tbody>
+									<!-- <div class="TableRow"> -->
+									<template for:each={timesheetData} for:item="row">
+										<tr key={row.Id} >
+											<td data-th="Task Number">{row.Name}</td>
+											<td data-th="Start Time">
+												<lightning-formatted-date-time value={row.Start_Time__c} hour="2-digit" minute="2-digit" ></lightning-formatted-date-time>
+											</td>
+											<td data-th="End Time"> 
+												<lightning-formatted-date-time value={row.End_Time__c} hour="2-digit" minute="2-digit" ></lightning-formatted-date-time>
+											</td>
+											<td data-th="Duration"> 
+												{row.Hours__c} Hrs
+											</td>
+											<td data-th="Project "> 
+												<template if:true={row.Project__c}>
+													{row.Project__r.Name}
+												</template>
+											</td>
+											<template if:true={row.TicketNumber__c}>
+												<td data-th="Task Name">{row.TicketNumber__c}</td>
+											</template>
+											<template if:false={row.TicketNumber__c}>
+												<template if:true={row.Requirement__c}>
+													<td data-th="Task Name">{row.Requirement__r.Name}</td>
+												</template>
+												<template if:false={row.Requirement__c}>
+													<td data-th="Task Name">-</td>
+												</template>
+											</template>
+											<!-- <td data-th="Task Name"> {row.Task_Name__c} </td> -->
+											<td data-th="Task Description"> {row.Task_Description__c} </td>
+											<td data-th="Status"> {row.Status__c} </td>
+
+											<template if:true={ownerDisplay}>
+												<td data-th="OwnerId"> {row.Timesheet__r.Contact__r.Name} </td>
+											</template>
+											<td data-th="Action">																
+												<lightning-button-group>
+													<template if:true={CreateSubmitButton}>
+														<lightning-button-icon icon-name="utility:edit" variant="border-filled" alternative-text="Update" onclick={createTimesheet} value={row.Id} ></lightning-button-icon>
+														<lightning-button-icon icon-name="utility:delete" variant="border-filled" alternative-text="Delete" onclick={deleteTimesheetRecord} value={row.Id} ></lightning-button-icon>
+													</template>
+													<template if:true={editDeleteButton}>
+														<lightning-button-icon 
+															icon-name="utility:edit" 
+															variant="border-filled" 
+															alternative-text="Update" 
+															onclick={updateTimesheet} 
+															value={row.Id}
+														></lightning-button-icon>
+													</template>
+														<lightning-button-icon icon-name="utility:preview" variant="border-filled" alternative-text="Preview" onclick={handlePreviewRecord} value={row.Id}></lightning-button-icon>
+												</lightning-button-group>
+											</td>
+										</tr>
+									</template>
+								<!-- </div> -->
+								</tbody>
+						</table>
+					</template>
+					<template if:false={timesheetDataList}>
+						<div class="not-task-div">	
+							<div class="emptystate__container">
+								<div class="illustration__container">
+									<div class="illustration__containerBackground">
+										<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M95.4364 -6.41777C121.205 -3.10253 147.172 0.915383 164.56 20.1773C183.302 40.9388 194.658 69.1155 188.155 96.2932C181.715 123.21 157.27 139.576 132.853 152.7C106.412 166.912 77.8003 180.117 49.1956 170.983C15.5703 160.245 -14.6761 136.331 -24.4277 102.475C-34.7443 66.6577 -27.9705 24.0501 -0.352662 -1.03982C24.5259 -23.6412 62.0665 -10.711 95.4364 -6.41777Z" stroke="#D2E9FF"/>
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M90.9802 24.8397C107.335 26.9558 123.817 29.5205 134.853 41.8153C146.749 55.0673 153.956 73.0525 149.829 90.3999C145.742 107.581 130.226 118.027 114.729 126.404C97.9461 135.476 79.7865 143.905 61.631 138.074C40.2889 131.22 21.0914 115.956 14.9021 94.3457C8.35409 71.4836 12.6534 44.2873 30.1826 28.2725C45.9731 13.846 69.8002 22.0993 90.9802 24.8397Z" stroke="#D2E9FF"/>
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M86.2972 45.9442C96.2986 47.2315 106.377 48.7916 113.126 56.271C120.4 64.3326 124.808 75.2736 122.284 85.8266C119.785 96.2782 110.297 102.633 100.82 107.729C90.557 113.248 79.4522 118.375 68.3499 114.828C55.299 110.659 43.5595 101.373 39.7746 88.227C35.7705 74.3192 38.3996 57.7748 49.1188 48.0324C58.7749 39.2563 73.3454 44.2771 86.2972 45.9442Z" stroke="#D2E9FF"/>
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M93.8221 5.49329C115.943 8.33241 138.235 11.7733 153.161 28.2689C169.25 46.0487 178.999 70.1787 173.417 93.4532C167.888 116.504 146.903 130.52 125.942 141.759C103.244 153.93 78.6824 165.239 54.1268 157.416C25.2613 148.221 -0.703657 127.741 -9.07492 98.7472C-17.9312 68.0738 -12.1162 31.5855 11.5922 10.0989C32.9492 -9.2566 65.1758 1.81662 93.8221 5.49329Z" stroke="#D2E9FF"/>
+										</svg>
+									</div>
+									<div class="illustration__elements">
+										<div class="illustration__element illustration__element--right illustration__element--1">
+											<div class="illustration__elementType">
+											T
+											</div>
+											<div class="illustration__elementWireframe">
+											</div>
+										</div>
+										<div class="illustration__element illustration__element--left illustration__element--2">
+											<div class="illustration__elementType">
+											T
+											</div>
+											<div class="illustration__elementWireframe">
+											</div>
+										</div>
+										<div class="illustration__element illustration__element--right illustration__element--3">
+											<div class="illustration__elementType">
+											T
+											</div>
+											<div class="illustration__elementWireframe">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="emptystate__body">
+									<h2>Opps! There is No Timesheet</h2>
+									<p>Start by adding the first task details of today.</p>
+								</div>
+							</div>
+						</div>						
+					</template>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class ="footer">
+			<div class ="ButtonGroupleft">
+				<button class="page-btn" onclick={handlepreviousDate}>Previous
+				</button>
+				<button class="page-btn" onclick={handlenextDate} disabled={isNext}>Next</button>
+			</div>
+			<div class="ButtonGroupright">
+				<template if:true={CreateSubmitButton}>
+					<!-- <div class="SubmitBtn">
+						<button class="page-btn" onclick ={handlesubmit} > Submit </button>
+					</div>
+					<div class="ButtonGroupright">
+						<button class="page-btn" onclick ={createTimesheet}>
+							+ Create
+						</button>
+					</div> -->
+				</template>
+			</div>
+		</div>
+	</div>
+</template>

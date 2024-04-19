@@ -1,0 +1,22 @@
+.THIS {
+}
+
+.THIS.logSign{
+    width:25%;
+    margin: auto;
+    padding:1%;
+    box-shadow: 7px 5px 2px 2px gainsboro;
+    margin-top: 2%;
+}
+
+.THIS .buttonwidth{
+    width:100%;
+    background-color: #00ccff;
+    border-color:#00ccff;
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+.THIS.formhide{
+    display:none;
+}

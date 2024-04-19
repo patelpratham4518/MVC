@@ -1,0 +1,19 @@
+.THIS {
+}
+
+.THIS .circleBase {
+    	border-radius: 50%;
+    	behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+}
+
+.THIS .taskDiv {
+    width: 120px;
+    height: 120px;
+    line-height: 50px;
+    text-align: center;
+}
+
+.THIS .myUniqueClass svg {
+    width: 2rem;
+    height: 2rem;
+}

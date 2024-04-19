@@ -1,0 +1,47 @@
+<aura:component controller="MVCloudsPortalController">
+    <aura:attribute name="UserName" type="String"/>
+    <aura:attribute name="Password" type="String"/>
+    <aura:attribute name="message" type="String"/>
+    	<!-- Login Page starts here -->
+    	<div aura:id="logoDiv" style="width:30%;margin:auto;text-align:center;margin-top:4%;">
+            <img src="{!$Resource.mvlogo}" style="width:40%;"/>
+    		<p style="color: #03ccff;font-size:20px;padding-top:1%;}">Let's make something greater together</p>
+    	</div>
+        <div aura:id="loginPage" class="logSign">
+            <div style="color:red;"><span>{!v.message}</span></div>
+            <br/>
+            <div style="text-align:center"><img src="{!$Resource.mvavatarlogo}" style="width:30%;"/></div>
+            <br/>
+            <lightning:input placeholder="MV Clouds Email..." value="{!v.UserName}"/>
+            <br/>
+            <lightning:input placeholder="Password" type="Password" value="{!v.Password}"/>
+            <br/>
+            <p style="padding-top:5%;text-align:center;">
+                <lightning:button variant="Brand" label="Login" class="buttonwidth" onclick="{!c.loginAuthenticate}"/>
+            </p>
+            <br/>
+            <p style="text-align:right">
+                <button class="slds-button slds-text-link_reset" onclick="{!c.forgotPassword}">Forgot Password?</button>
+            </p>
+            <br/>
+        </div>
+		<!-- Login Page ends here -->
+    
+		<!--Forgot Password Section Starts here-->
+	    <div aura:id="forgotPasswordPage" class="logSign formhide">
+        <div style="color:#005fb2e0;font-size:20px;text-align:center"><span><b></b></span></div>
+            <br/><br/>
+            <lightning:input placeholder="Enter your registered Email Address"/>
+            <p style="padding-top:5%;text-align:center;">
+                <lightning:button variant="Brand" label="Recover" class="buttonwidth" />
+            </p>
+            <br/>
+            <p style="text-align:center">
+                <button class="slds-button slds-text-link_reset" onclick="{!c.loginPage}">Back to Login</button>
+            </p>
+		</div>
+		<!--Forgot Password Section Ends here -->
+    	<div aura:id="homePage" class="formhide" style="width:96%;margin:auto;">
+            <c:MVCloudsHomePage/>
+    	</div>
+</aura:component>

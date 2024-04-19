@@ -1,0 +1,313 @@
+<template>
+	<template if:true={isSpinner}>
+		<lightning-spinner alternative-text="Loading..." variant="brand" style="position: fixed;"> </lightning-spinner>
+	</template>
+
+	<div class="maindiv">
+		<div class="header">
+            <div class="heading">Timesheet</div> 
+		</div>
+
+		<template if:true={projectModal}>
+			<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<div class="slds-modal__header popup-header">
+						<p>Select your Projects</p>
+					</div>
+					<lightning-modal-body>
+						<lightning-dual-listbox name="Projects"
+							variant="label-hidden"
+                            label="Select Projects"
+                            options={allProjectList}
+                            onchange={handleSelectedProject}
+							value={previousSelectedProjects}>
+						</lightning-dual-listbox>
+					</lightning-modal-body>
+					<div class="slds_modal__footer slds-modal__content popup-footer">
+						<lightning-button label="Cancel" onclick={closeProjectModal} variant="netural" ></lightning-button>
+						<lightning-button label="Save" onclick={handleProjectUpdate} variant="Brand"></lightning-button>
+					</div>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</template>
+
+		<div class ="body">
+			<div class="UpperBody">
+				<div class="ButtonGroupleft">
+					<template if:true={showButtons}>
+						<template if:true={showProjectBtn}>
+							<lightning-button style="color: #000;" label="Choose Projects" onclick={openProjectModal} variant="netural" ></lightning-button>
+						</template>
+					</template>
+				</div>
+				<div class="ButtonGroupright">
+					<div class="date">
+						<lightning-input type="date" data-id="Date__c" label="Date" value={date} onchange={handleDateChange} variant="label-hidden" required> </lightning-input>
+					</div>
+				</div>
+			</div>
+
+			<div class="lowerBody">
+				<div class='table-container'>
+					<template if:true={showButtons}>
+						<template if:true={createSubmitButton}>
+							<table class="input-table" >
+								<tr> 
+									<th class="time-div">Start Time</th>
+									<th class="time-div">End Time</th>
+									<th class="project-div">Project Name</th>
+									<th class="type-div">Task Type</th>
+									<th class="task-div">Task Name</th>
+									<th class="description-div">Description</th>
+									<th class="action-div">Action</th>
+								</tr>
+	
+								<tr>
+									<td data-th="Start Time">
+										<input type="time" class="time-field" data-id="Start_Time__c" value={timeSheetObj.Start_Time__c} onchange={handleInputChange} />
+									</td>
+									<td data-th="End Time">
+										<input type="time" class="time-field" data-id="End_Time__c" value={timeSheetObj.End_Time__c} onchange={handleInputChange} />
+									</td>
+									<td data-th="Project">
+										<div class="slds-form-element">
+											<div class="slds-form-element__control">
+												<div class="slds-select_container">
+												<select class="slds-select" data-id="Project__Name" onchange={handleInputChange}>
+													<option value="PreSelected" disabled selected>- Select Project -</option>
+													<template for:each={projectList} for:item="row">
+														<option key={row.label}>{row.label}</option>
+													</template>
+												</select>
+												</div>
+											</div>
+										</div>
+									</td>
+									<td data-th="Task Type">
+										<div class="slds-form-element">
+											<div class="slds-form-element__control">
+												<div class="slds-select_container">
+												<select class="slds-select" data-id="Task_Type__c" onchange={handleInputChange}>
+													<option value="PreSelected" disabled selected>- Select Task Type -</option>
+													<template for:each={taskTypes} for:item="row">
+														<option key={row.label}>{row.label}</option>
+													</template>
+												</select>
+												</div>
+											</div>
+										</div>
+									</td>
+									<td data-th="Task Name">
+										<lightning-input variant="label-hidden" max-length="255" data-id="Task_Name__c" value={timeSheetObj.Task_Name__c} onchange={handleInputChange} required></lightning-input>
+									</td>
+									<td data-th="Task Description">
+										<lightning-textarea variant="label-hidden" min-length="50" data-id="Task_Description__c" value={timeSheetObj.Task_Description__c} onchange={handleInputChange} required></lightning-textarea>
+									</td>
+									<td data-th="Action">
+										<div>
+											<lightning-button-icon icon-name="utility:save" variant="border-filled" alternative-text="Save" onclick={createTimesheet} disabled={disableSave}> </lightning-button-icon>
+											<lightning-button-icon icon-name="utility:delete" variant="border-filled" alternative-text="Clear" onclick={clearTimesheetData}> </lightning-button-icon>
+										</div>
+									</td>
+								</tr>
+							</table>
+							<div class="blank-div"></div>
+						</template>
+					</template>
+
+					<template if:true={timesheetDataList}>
+
+						<div class="header2">
+							<div class="subheading" >Timesheet Records</div> 
+						</div>
+
+						<table class={tableClass}>
+							<tr> 
+								<th>Start Time</th>
+								<th>End Time</th>
+								<th>Duration</th>
+								<th>Project Name</th>
+								<th>Task Type</th>
+								<th style="min-width: 10rem;">Task Name</th>
+								<th>Description</th>
+								<th>Action</th>
+							</tr>
+
+							<template for:each={timesheetData} for:item="row">
+								<tr key={row.Id} >
+									<td data-th="Start Time">
+										<input type="time" class={timeDivClass} data-id={row.Start_Time__Id} value={row.Start_Time__c} disabled={viewMode} onchange={handleUpdateChange} />
+									</td>
+									<td data-th="End Time">
+										<input type="time" class={timeDivClass} data-id={row.End_Time__Id} value={row.End_Time__c} disabled={viewMode} onchange={handleUpdateChange} />
+									</td>
+									<td data-th="Duration"> {row.Hours__c} Hrs </td>
+
+									<template if:true={viewMode}>
+										<td data-th="Project"> {row.Project__Name} </td>
+										<td data-th="Task Type"> {row.Task_Type__c} </td>
+										<td data-th="Task Name"> {row.Task_Name__c} </td>
+										<td data-th="Task Description"> {row.Task_Description__c} </td>
+									</template>
+
+									<template if:false={viewMode}>
+										<td data-th="Project">
+											<div class="slds-form-element">
+												<div class="slds-form-element__control">
+													<div class="slds-select_container">
+													<select class="slds-select" data-id={row.Project__Id} onchange={handleUpdateChange}>
+														<option value="PreSelected" disabled selected>- Select Project -</option>
+														<template for:each={row.projectList} for:item="item">
+															<template if:true={item.selected}>
+																<option key={item.label} selected>{item.label}</option>
+															</template>
+															<template if:false={item.selected}>
+																<option key={item.label}>{item.label}</option>
+															</template>
+														</template>
+													</select>
+													</div>
+												</div>
+											</div>
+										</td>
+
+										<td data-th="Task Type">
+											<div class="slds-form-element">
+												<div class="slds-form-element__control">
+													<div class="slds-select_container">
+													<select class="slds-select" data-id={row.Task_Type__Id} onchange={handleUpdateChange}>
+														<option value="PreSelected" disabled selected>- Select Task Type -</option>
+														<template for:each={row.taskTypes} for:item="item">
+															<template if:true={item.selected}>
+																<option key={item.label} selected>{item.label}</option>
+															</template>
+															<template if:false={item.selected}>
+																<option key={item.label}>{item.label}</option>
+															</template>
+														</template>
+													</select>
+													</div>
+												</div>
+											</div>
+										</td>
+
+										<td data-th="Task Name">
+											<lightning-input variant="label-hidden" max-length="255" data-id={row.Task_Name__Id} value={row.Task_Name__c} onchange={handleUpdateChange} required></lightning-input>
+										</td>
+										<td data-th="Task Description">
+											<lightning-textarea variant="label-hidden" min-length="50" data-id={row.Task_Description__Id} value={row.Task_Description__c} onchange={handleUpdateChange} required></lightning-textarea>
+										</td>
+									</template>
+									
+									<td data-th="Action">																
+										<lightning-button-group>
+											<lightning-button-icon icon-name="utility:preview" variant="border-filled" alternative-text="Preview" onclick={handlePreviewRecord} value={row.Id}> </lightning-button-icon>
+											<lightning-button-icon icon-name="utility:copy" variant="border-filled" alternative-text="Duplicate" onclick={createDuplicateRecord} value={row.Id}> </lightning-button-icon>
+											<template if:true={showButtons}>
+												<template if:true={createSubmitButton}>
+													<lightning-button-icon icon-name="utility:delete" variant="border-filled" alternative-text="Delete" onclick={deleteTimesheetRecord} value={row.Id}> </lightning-button-icon>
+												</template>
+											</template>
+										</lightning-button-group>
+									</td>
+								</tr>
+							</template>
+						</table>
+					</template>
+
+					<template if:false={timesheetDataList}>
+						<div class="not-task-div">	
+							<div class="emptystate__container">
+								<div class="illustration__container">
+									<div class="illustration__containerBackground">
+										<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M95.4364 -6.41777C121.205 -3.10253 147.172 0.915383 164.56 20.1773C183.302 40.9388 194.658 69.1155 188.155 96.2932C181.715 123.21 157.27 139.576 132.853 152.7C106.412 166.912 77.8003 180.117 49.1956 170.983C15.5703 160.245 -14.6761 136.331 -24.4277 102.475C-34.7443 66.6577 -27.9705 24.0501 -0.352662 -1.03982C24.5259 -23.6412 62.0665 -10.711 95.4364 -6.41777Z" stroke="#D2E9FF"/>
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M90.9802 24.8397C107.335 26.9558 123.817 29.5205 134.853 41.8153C146.749 55.0673 153.956 73.0525 149.829 90.3999C145.742 107.581 130.226 118.027 114.729 126.404C97.9461 135.476 79.7865 143.905 61.631 138.074C40.2889 131.22 21.0914 115.956 14.9021 94.3457C8.35409 71.4836 12.6534 44.2873 30.1826 28.2725C45.9731 13.846 69.8002 22.0993 90.9802 24.8397Z" stroke="#D2E9FF"/>
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M86.2972 45.9442C96.2986 47.2315 106.377 48.7916 113.126 56.271C120.4 64.3326 124.808 75.2736 122.284 85.8266C119.785 96.2782 110.297 102.633 100.82 107.729C90.557 113.248 79.4522 118.375 68.3499 114.828C55.299 110.659 43.5595 101.373 39.7746 88.227C35.7705 74.3192 38.3996 57.7748 49.1188 48.0324C58.7749 39.2563 73.3454 44.2771 86.2972 45.9442Z" stroke="#D2E9FF"/>
+											<path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M93.8221 5.49329C115.943 8.33241 138.235 11.7733 153.161 28.2689C169.25 46.0487 178.999 70.1787 173.417 93.4532C167.888 116.504 146.903 130.52 125.942 141.759C103.244 153.93 78.6824 165.239 54.1268 157.416C25.2613 148.221 -0.703657 127.741 -9.07492 98.7472C-17.9312 68.0738 -12.1162 31.5855 11.5922 10.0989C32.9492 -9.2566 65.1758 1.81662 93.8221 5.49329Z" stroke="#D2E9FF"/>
+										</svg>
+									</div>
+									<div class="illustration__elements">
+										<div class="illustration__element illustration__element--right illustration__element--1">
+											<div class="illustration__elementType"> T </div>
+											<div class="illustration__elementWireframe"> </div>
+										</div>
+										<div class="illustration__element illustration__element--left illustration__element--2">
+											<div class="illustration__elementType"> T </div>
+											<div class="illustration__elementWireframe"> </div>
+										</div>
+										<div class="illustration__element illustration__element--right illustration__element--3">
+											<div class="illustration__elementType"> T </div>
+											<div class="illustration__elementWireframe"> </div>
+										</div>
+									</div>
+								</div>
+								<div class="emptystate__body">
+									<h2>Opps! There is No Timesheet</h2>
+									<p>Start by adding the first task details of today.</p>
+								</div>
+							</div>
+						</div>						
+					</template>
+				</div>
+			</div>
+		</div>
+		<br/>
+		<div class="footer">
+			<div class ="ButtonGroupleft">
+				<button class="page-btn" onclick={handlePreviousDate}> Previous </button>
+				<button class="page-btn" onclick={handleNextDate} disabled={isNext}> Next </button>
+			</div>
+
+			<template if:true={showButtons}>
+				<template if:true={createSubmitButton}>
+					<div style="display: none;">
+						<!-- <lightning-input type="file" name="file" accept={acceptedFormats} onchange={handleFileChange}></lightning-input> -->
+					</div>
+				</template>
+			</template>
+
+			<div class="ButtonGroupright">
+				<template if:true={showButtons}>
+					<template if:true={createSubmitButton}>
+						<div class="ButtonGroupright">
+							<template if:true={viewMode}>
+								<button class="page-btn" onclick={editTimeSheet}> Edit </button>
+								<button class="page-btn" onclick={openSubmitModal}> Submit </button>
+							</template>
+							<template if:false={viewMode}>
+								<button class="page-btn" onclick={cancelEditTimeSheet}> Cancel </button>
+								<button class="page-btn" onclick={saveAllTimeSheet}> Save </button>
+							</template>
+						</div>
+					</template>
+					<template if:false={createSubmitButton}>
+						<div class="SubmitBtn">
+							<button class="page-btn" onclick={handleUnlock}> Unlock </button>
+						</div>
+					</template>
+				</template>
+			</div>
+		</div>
+	</div>
+
+	<template if:true={submitPopUp}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+			<div class="slds-modal__container">
+				<div class="slds-modal__header popup-header">
+					<p>Submit</p>
+				</div>
+				<lightning-modal-body>
+					<p class="popup-heading"> Are you sure ? </p>
+					<p class="popup-subheading"> you would not be able to edit, create and delete the timesheet after submission. </p>
+				</lightning-modal-body>
+				<div class="slds_modal__footer slds-modal__content popup-footer">
+					<lightning-button label="No" onclick={closeSubmitModal} variant="netural" ></lightning-button>
+					<lightning-button label="Yes" onclick={handleSubmit} variant="Brand"></lightning-button>
+				</div>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</template>
+</template>

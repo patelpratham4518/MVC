@@ -1,0 +1,12 @@
+<apex:page sidebar="false" showHeader="false">
+    <apex:includeLightning />
+    <script>
+
+    $Lightning.use("c:MasterPageApp", function() {
+        $Lightning.createComponent("c:MasterPage",{},"FlipcardContainer",function(cmp) {
+            console.log('Component created, do something cool here');
+       });
+    });
+    </script>
+    <div style="width:100%;height:100%;" id="FlipcardContainer" />
+</apex:page>

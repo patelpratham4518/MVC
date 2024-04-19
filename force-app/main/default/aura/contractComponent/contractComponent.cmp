@@ -1,0 +1,197 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="contractController" access="global">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:attribute name="contractList" type="List"/>
+    <aura:attribute name="recordDetails" type="List"/>
+    
+        <div class="slds-page-header" style="width:80%">
+        	<div class="slds-media">
+        		<div class="slds-media__figure">
+        			<lightning:icon iconName="action:record" alternativeText="Approved"/>  
+        		</div>
+        		<div class="slds-media__body" style="padding-top: 13px;">
+        			<h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Contract Details">Contract Details</h1>
+        			<p class="slds-text-body_small slds-line-height_reset"></p>
+        		</div>
+        	</div>
+		</div>
+    	<div aura:id="backToID" style="float:right;width:19%;margin-top:-5%;padding-left:15%" class="details">
+            <a onclick="{!c.backToList}">
+              <lightning:icon iconName="action:recall" class="changeColor" size="small" alternativeText="add"/>
+            </a> 
+        </div>
+    	<div style="" aura:id="recordTable">
+            <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col">
+                            <div class="slds-truncate" title="Customer Name">Contract Id</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Due date">First Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Business Unit">LastName</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Status">View Details</div>
+                        </th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.contractList}" var="con">
+                        <tr>
+                            <td scope="row" data-label="Customer Name">
+                                <div class="slds-truncate" title="Name">{!con.Name}</div>
+                            </td>
+                            <td data-label="Due Date">
+                                <div class="slds-truncate" title="Customer Name">{!con.FirstName__c}</div>
+                            </td>
+                            <td data-label="Business Unit">
+                                <div class="slds-truncate" title="Last Name">{!con.Lastname__c}</div>
+                            </td>
+                            <td data-label="status">
+                                <div class="slds-truncate" title="status"><lightning:button label="View Details" name="{!con.Id}" variant="neutral" onclick="{!c.showDetails}"/></div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+    	</div>
+       	<div style="" aura:id="detailsSection" class="details" >
+           <!-- Customer and contract preview section start here-->
+            <aura:iteration items="{!v.recordDetails}" var="con">
+                <div style="width:100%;">
+                    <div style="padding:1%;width:100%;">
+                    <h3 class="slds-section__title slds-theme_shade" style="background:#019591;width:100%;color:white;">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Customer &#38; Contract Preview</span>
+                    </h3>
+                	</div>
+                    <div style="width:50%;float:left;padding:1%;padding-left:5%">
+                        <p title="">Tax Indentification No.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Tax_Identification_No__c}</p><br/>
+                        <p>Purchasing Order&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Purchasing_Group__c}</p><br/>
+                        <p title="">Shipping Address.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_Address__c}</p><br/>
+                        <p title="">Shipping City.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_City__c}</p><br/>
+                        <p title="">Shipping State.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_State__c}</p><br/>
+                        <p title="">Shipping Country.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_Country__c}</p><br/>
+                        <p title="">Shipping Pincode.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Shipping_Pincode__c}</p><br/>
+                    </div>
+                    <div style="width:50%;float:right;padding:1%;">
+                        <p>Customer Name&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Customer_Name__r.Name}</p><br/>
+                        <p title="">Billing Address.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_Address__c}</p><br/>
+                        <p title="">Billing City.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_City__c}</p><br/>
+                        <p title="">Billing State.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_State__c}</p><br/>
+                        <p title="">Billing Country.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_Country__c}</p><br/>
+                        <p title="">Billing Pincode.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Billing_Pincode__c}</p><br/>
+                    </div>
+                </div>
+           <!-- </aura:iteration>-->
+           <!-- Customer and contract preview section end here-->
+           <!-- Customer Contact Details Section Start here -->
+          <div style="width:100%">
+                <div style="padding:1%;width:100%;">
+                    <h3 class="slds-section__title slds-theme_shade" style="background:#019591;width:100%;color:white;">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Customer Contact Details</span>
+                    </h3>
+                </div>
+                <div style="padding:1%;">
+                    <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer ">
+                          <thead>
+                            <tr class="slds-text-heading_label">
+                              <th scope="col"><div class="slds-truncate" title="FirstName">First Name</div></th>
+                              <th scope="col"><div class="slds-truncate" title="LastName">Last Name</div></th>
+                              <th scope="col"><div class="slds-truncate" title="ContactEmail">Contact Email</div></th>
+                              <th scope="col"><div class="slds-truncate" title="PhoneNumber">Phone Number</div></th>
+                              <th scope="col"><div class="slds-truncate" title="EMailStatement">Email Statement</div></th>
+                                <th scope="col"><div class="slds-truncate" title="Signatory">Signatory</div></th>                      
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                  <td scope="col"><div class="slds-truncate" title="FirstName">{!con.FirstName__c}</div></td>
+                                  <td scope="col"><div class="slds-truncate" title="LastName">{!con.Lastname__c}</div></td>
+                                  <td scope="col"><div class="slds-truncate" title="ContactEmail">{!con.Email__c}</div></td>
+                                  <td scope="col"><div class="slds-truncate" title="PhoneNumber">{!con.Phone__c}</div></td>
+                                  <td scope="col"><div class="slds-truncate" title="EMailStatement"><lightning:input type="checkbox" checked="{!con.Email_Statement__c}" disabled="true"/></div></td>
+                                  <td scope="col"><div class="slds-truncate" title="Signatory"><lightning:input type="checkbox" checked="{!con.Signatory__c}" disabled="true"/></div></td>
+                            </tr>
+                          </tbody>
+                    </table>
+                </div>
+            </div>
+           	<!-- Customer Contact Details Section end here -->
+           
+           <!-- Rebate Agreement details start here -->
+           <div style="width:100%">
+                <div style="padding:1%;width:100%;">
+                    <h3 class="slds-section__title slds-theme_shade" style="background:#019591;width:100%;color:white;">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Rebate Agreement Details</span>
+                    </h3>
+                </div>
+                <div style="width:50%;float:left;padding:1%;padding-left:5%">
+                    <p title="">Start Date&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Start_Date__c}</p><br/>
+                    <p>End Date&nbsp;&nbsp;:&nbsp;&nbsp;{!con.End_Date__c}</p><br/>
+                </div>
+                <div style="width:50%;float:right;padding:1%;">
+                    <p>Business Unit&nbsp;&nbsp;:&nbsp;&nbsp;{!con.Business_Unit__c}</p><br/>
+                    <p title="">Comment.&nbsp;&nbsp;:&nbsp;&nbsp;{!con.comment__c}</p><br/>
+                </div>
+            </div>
+           <!-- Rebate Agreement details end here -->
+           <!-- Customer rules details start here -->
+           <div style="width:100%">
+                <div style="padding:1%;width:100%;">
+                    <h3 class="slds-section__title slds-theme_shade" style="background:#019591;width:100%;color:white;">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Customer Rules</span>
+                    </h3>
+                </div>
+                <div style="padding:1%;">
+                    <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer ">
+                          <thead>
+                            <tr class="slds-text-heading_label">
+                              <th scope="col"><div class="slds-truncate" title="Schema Name">Schema Name</div></th>
+                              <th scope="col"><div class="slds-truncate" title="Schema Type">Schema Type</div></th>
+                              <th scope="col"><div class="slds-truncate" title="Business Unit">Business Unit</div></th>
+                              <th scope="col"><div class="slds-truncate" title="Schema Description">Schema Description</div></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <tr>
+                                 <td scope="col"><div class="slds-truncate" title="name">{!con.Schema_Name__c}</div></td>
+                                 <td scope="col"><div class="slds-truncate" title="Type">{!con.Schema_Type__c}</div></td>
+                                 <td scope="col"><div class="slds-truncate" title="business Unit">{!con.Business_Unit__c}</div></td>
+                                 <td scope="col"><div class="slds-truncate" title="Schema description">This is Testing</div></td>
+                            </tr>
+                          </tbody>
+                    </table>
+                </div>
+            </div>
+           <!-- Customer rules details end here -->
+          <div style="width:100%">
+                <div style="padding:1%;width:100%;">
+                    <h3 class="slds-section__title slds-theme_shade" style="background:#019591;width:100%;color:white;">
+                      <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Wholesaler Info</span>
+                    </h3>
+                </div>
+                <div style="padding:1%;">
+                    <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer ">
+                          <thead>
+                            <tr class="slds-text-heading_label">
+                              <th scope="col"><div class="slds-truncate" title="Schema Name">WholeSaler Name</div></th>
+                              <th scope="col"><div class="slds-truncate" title="Schema Type">Customer Account No</div></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              <!--<aura:iteration items="{!v.customerRule}" var="schema">-->
+                              <tr>
+                                  <td scope="col"><div class="slds-truncate" title="name">{!con.WholeSalerName__c}</div></td>
+                                  <td scope="col"><div class="slds-truncate" title="Type">{!con.Customer_account_no__c}</div></td>
+                              </tr>
+                            <!--</aura:iteration>-->
+                          </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+    	</aura:iteration>
+    </div>
+</aura:component>

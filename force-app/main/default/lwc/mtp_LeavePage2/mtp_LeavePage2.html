@@ -1,0 +1,94 @@
+<template>
+
+    <!-- Toast Message -->
+    <c-mtp_-toast-message></c-mtp_-toast-message>
+    <!-- Toast Message -->
+
+    <div class="container">
+        <div class="header_text">
+            <h1>Leave History</h1>
+            <h3>Check out your history, and try not to remove it !</h3>
+        </div>
+
+        <div class="sub_container">
+            <div class="stack-top_left">
+
+                <h1>Leave History</h1>
+                <div class="leave-lst-main">
+
+                    <template for:each={pendingLeaves} for:item="pl">
+                        <div class="leave-block" key={pl.Id}>
+                            <div class="left-tckt-circle"></div>
+                            <div class="main-lv-blck">
+                                <div class="lv-info">
+                                    <p class="lv-days">{pl.Day__c} Day Application</p>
+                                    <p class="lv-duration">{pl.startDateSTR} - {pl.endDateSTR}</p>
+                                    <p class="lv-type">{pl.Reason__c}</p>
+                                </div>
+                                <div class="lev-right-tp c-txt" data-name={pl.statusTag}>
+                                    <!-- <p>Awaiting</p> -->
+                                    <p>{pl.statusTag}</p>
+                                </div>
+                            </div>
+                            <div class="right-tckt-circle"></div>
+                        </div>
+                    </template>
+
+                </div>
+
+            </div>
+            <div class="stack-top_right">
+                <h1>Booking Details</h1>
+                <div class="row_div2">
+                    <div class="logo_class logo_class_2 slds-align_absolute-center"></div>
+                    <h2>{username}</h2>
+                </div>
+                <div class="row_div3">
+                    <div class="dis_left">
+                        <p class="pHead">Airlines</p>
+                        <p class="pbody">MV Clouds</p>
+                    </div>
+                    <div class="dis_right">
+                        <p class="pHead">Flight</p>
+                        <p class="pbody">D408</p>
+                    </div>
+                </div>
+                <div class="row_div4">
+                    <div class="dis_left">
+                        <p class="pHead">Flight Class</p>
+                        <p class="pbody">Business Class</p>
+                    </div>
+                    <div class="dis_right">
+                        <p class="pHead">Passanger</p>
+                        <p class="pbody">1 Adult</p>
+                    </div>
+                </div>
+                <h1 class="header_Balance">Leave Balance</h1>
+                <div class="row_div5">
+                    <div class="dis_left_01">
+                        <p class="pHead">Approved Leaves</p>
+                    </div>
+                    <div class="dis_right_01">
+                        <p class="pbody">{approvedLeavesCount}</p>
+                    </div>
+                </div>
+                <div class="row_div6">
+                    <div class="dis_left_01">
+                        <p class="pHead">Rejected Leaves</p>
+                    </div>
+                    <div class="dis_right_01">
+                        <p class="pbody">{rejectedLeavesCount}</p>
+                    </div>
+                </div>
+                <div class="row_div6">
+                    <div class="dis_left_01">
+                        <p class="pHead">Pending Leaves</p>
+                    </div>
+                    <div class="dis_right_01">
+                        <p class="pbody">{pendingLeavesCount}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

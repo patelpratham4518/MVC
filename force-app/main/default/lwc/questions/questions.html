@@ -1,0 +1,70 @@
+<template>
+    <div class="container">
+        <div class="time-div">
+            <div class="inputArea"></div>  
+            <h1 class="time" style="font-size: 18px;">{timeVal}</h1>   
+        </div>
+        <!-- code here -->
+        <div class="card">
+            <div class="card-image">
+                <h2 class="card-heading">
+                    Candidate Details
+                </h2>
+                <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png" />
+            </div>
+
+            <div class="header">
+            </div>
+            <div class="card-form">
+                <br/>
+                <p>Hi {contactData.FirstName}, </p>
+                <br/>
+                <p>Candidate details for this test link are: </p>
+                <br/>
+                <div class="row">
+                    <div class="col">
+                        <p><b>First Name:</b> {contactData.FirstName}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Last Name:</b> {contactData.LastName}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Email:</b> {contactData.Email}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Phone:</b> {contactData.MobilePhone}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Enrollment Number:</b> {contactData.Enrollment_No__c}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Department:</b> {contactData.Department}</p>
+                    </div>
+                    <div class="col">
+                        <p><b>Semester:</b> {contactData.Semester__c}</p>
+                    </div>
+                </div>
+                <br/>
+                <p><b>Instructions for the test: </b></p>
+                <ol>
+                    <li>Every candidate has a unique link to take the test. You cannot use someone else’s link to begin the test.</li>
+                    <li>Please give the camera and screen recording permission to start the test.</li>
+                    <li>Candidates will have to give permission to share the entire screen.</li>
+                    <li>The test has two parts- Aptitude test and a practical test on programming two languages of your choice.</li>
+                    <li>For the technical test, please save the answers before proceeding to the next one.</li>
+                    <li>You will have one hour in total to submit both the aptitude and practical test. The entire test will be auto-submitted after an hour of beginning the test.</li>
+                    <li>If any candidate will be caught cheating during the test, they will be disqualified. </li>
+                    <li>Timer will start when you click on Start Test.</li>
+                    <li>Once you submit the test, you will not be able to go back to the test.</li>
+                </ol>
+                <br/>
+                <div class="action">
+                    <button class="action-button" onclick={startExam}>Start Test</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template if:true={showspinner}>
+        <lightning-spinner variant="brand" alternative-text="Loading" size="large"> </lightning-spinner>
+    </template>
+</template>

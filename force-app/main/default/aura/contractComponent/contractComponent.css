@@ -1,0 +1,9 @@
+.THIS {
+}
+
+.THIS.details{
+    display:none;
+}
+.THIS.changeColor svg {
+    fill :red !important;
+}

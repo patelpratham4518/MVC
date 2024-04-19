@@ -1,0 +1,40 @@
+.THIS .footerClass{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    /*padding: 10px 0;*/
+    margin: 10px;
+}
+.THIS .emailName{
+    padding: 5px 10px;
+    border: 1px solid black;
+    width: fit-content;
+    border-radius: 28px;
+    background: aliceblue;
+    margin: 5px;
+}
+.THIS .previewBoxClass{
+    padding: 10px 0;
+}
+.THIS .mainPreview{
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #e6e6e6;
+}
+.THIS .slds-modal__container{
+    width: 80%;
+    max-width:80%;
+}
+@media screen and (min-width: 1400px){
+    .THIS .slds-modal__container{
+        width: 50%;
+        max-width:50%;
+    }   
+}
+/* .THIS .spinner-holder{
+    position:relative;
+    display: inline-block;
+    width:100%;
+    vertical-align: middle;
+    white-space: nowrap;
+} */

@@ -1,0 +1,71 @@
+<template>
+    	<!-- Spinner -->
+
+	<template if:true={isSpinner}>
+		<div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+			<div class="spinner-container">
+				<div class="plane-spinner">
+					<svg id="b31cb9b3-53d9-4f4c-adfb-406ca50138db" data-name="Layer 1"
+						xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.8 227.9">
+						<title>delete</title>
+						<path
+							d="M1012.25,426a75.19,75.19,0,0,0-53.19,21.87l-149.86,149h53.46l93.43-92.62,29.7-29.43a37.56,37.56,0,0,1,26.73-11.07H1053l-16.2,37.8-17.28,40.77-7.29,17-16.2,37.8h41L1110,426.22h-97.75V426Z"
+							transform="translate(-809.2 -425.95)" fill="#0684c2" />
+						<path d="M862.66,596.87l119.89,51a74.47,74.47,0,0,0,29.43,5.94h40.77l-57-57Z"
+							transform="translate(-809.2 -425.95)" fill="#10ab96" />
+					</svg>
+				</div>
+				<h1 class="loading-spinnet-txt">Loading...</h1>
+			</div>
+		</div>
+	</template>
+
+<!-- Spinner -->
+
+<div class="container">
+    <div class="header" style={imgEvent}>
+        <div class="eventHeaderText slds-size_12-of-12 slds-align_absolute-center">
+            <h2 class="slds-p-bottom_large eventHead">EVENTS</h2>
+            <p class="slds-p-top_xx-large"></p>
+        </div>
+    </div>
+    <div class="eventContainer slds-grid">
+        <div class="slds-col slds-size_8-of-12  slds-p-around_medium">
+            <div class="subContainer">
+                <h2 class="upcomingEvents ">
+                    Upcoming Events
+                </h2>
+
+                <div style="height: 5rem;"></div>
+
+                <template for:each={eventList} for:item="list" for:index="index">
+                        <div class="slds-grid  slds-p-around_medium mainDiv" key={list.Id}>
+
+                        <div class="slds-col slds-size_1-of-12"></div>
+                        <div class="slds-col slds-size_2-of-12">
+                            <lightning-formatted-date-time value={list.Date__c} month="short" class="monthBox"></lightning-formatted-date-time> 
+                            <div class="lineBox" ></div>
+                            <lightning-formatted-date-time class="dayBox" value={list.Date__c} day="2-digit" ></lightning-formatted-date-time>                     
+                       </div>
+                        <div class="slds-col slds-size_1-of-12"></div>
+                        <div class="slds-col slds-size_4-of-12 imgBox">
+                            <lightning-formatted-rich-text value={list.Image__c} ></lightning-formatted-rich-text>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                        <h2 style="color: #595959;">{list.Name}</h2>
+                        <p>{list.Description__c}   </p>
+                        </div>
+
+                        </div>
+                    </template>
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+</template>

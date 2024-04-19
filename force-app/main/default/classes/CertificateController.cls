@@ -1,0 +1,42 @@
+public class CertificateController {
+
+    public String CertiId {get;set;}
+    public String CertiName {get;set;}
+    public Lead l {get;set;}
+    public string imgurl {get;set;}
+    public string UniqNum {get;set;}
+
+    public CertificateController(){
+        
+        CertiIdMethod();
+    }
+
+    public void CertiIdMethod(){
+        CertiId = '';
+        UniqNum = '';
+        CertiId = ApexPages.currentPage().getParameters().get('Id');
+        
+        System.debug('---->'+CertiId);
+
+            if(CertiId != ''){
+                lead l = new lead();
+                l = [SELECT Id,Name,(SELECT Id,Name,Certificate_Id__c FROM WebinarAttendees__r) FROM Lead WHERE Id =: CertiId LIMIT 1];                
+                CertiName = l.Name;
+                UniqNum = l.WebinarAttendees__r[0].Certificate_Id__c;                
+            }else{                
+                
+            }
+    }
+
+    // public void test(){
+
+    //     String subjectGmail = 'Reminder';
+
+    //     String bodyGmail = '<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="format-detection" content="telephone=no"><meta name="x-apple-disable-message-reformatting"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body class="pc-fb-font" bgcolor="#fff" style="background-color:#fff;font-family:"Work Sans",Helvetica,Arial,sans-serif;font-size:16px;width:100%!important;Margin:0!important;padding:0;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%"><table style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td style="padding:0;vertical-align:top" align="center" valign="top"><table class="pc-container" align="center" style="mso-table-lspace:0;mso-table-rspace:0;width:100%;Margin:0 auto;max-width:620px" width="100%" border="0" cellpadding="0" cellspacing="0"><tbody><tr><td align="left" style="vertical-align:top;padding:0 10px" valign="top"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top;padding:0;height:20px;font-size:20px;line-height:20px" valign="top">&nbsp;</td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td class="pc-header-box-s3" background="images/photo.jpeg" style="vertical-align:top;background-color:#0A2445;background-image:url(images/photo.jpeg);background-position:top center;background-size:cover;width:600px;border-radius:8px;box-shadow:0 2px 4px 0 rgba(0,0,0,.1)" width="600" valign="top" bgcolor="#1B1B1B"><div class="pc-header-box-in" style="padding:34px 40px 55px"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td align="center" style="vertical-align:top" valign="top"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:130px" width="130"><tbody><tr><td style="vertical-align:top" valign="top"><a href="https://www.mvclouds.com" style="text-decoration:none"><img src="https://i.ibb.co/88z8k7N/mvlogo-1.png" width="130" height="22" alt="" style="border:0;line-height:100%;outline:0;-ms-interpolation-mode:bicubic;display:block;Margin:0 auto;font-family:"Work Sans",Helvetica,Arial,sans-serif;font-size:20px;font-weight:700;color:#fff;height:40px;width:auto"></a></td></tr></tbody></table></td></tr><tr><td style="vertical-align:top" valign="top"><table class="pc-spacing pc-m-header-2" border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top;height:61px;line-height:61px;font-size:61px" valign="top">&nbsp;</td></tr></tbody></table></td></tr><tr><td style="vertical-align:top" valign="top"><table class="pc-header-cta-s2" border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top" valign="top"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td class="pc-fb-font" style="vertical-align:top;text-align:center;font-family:-apple-system,BlinkMacSystemFont,Roboto,sans-serif;font-weight:700;font-size:28px;color:grey" valign="top" align="center">&#128276;REMINDER&#128276;</td></tr><tr><td class="pc-header-cta-title pc-fb-font;color:yes" style="vertical-align:top;padding:12px 0 12px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,Roboto,sans-serif;font-size:26px;font-weight:800;line-height:1.28;letter-spacing:-.6px;color:#fff" valign="top" align="center"><p>FRIDAY, DECEMBER 18 AT 10:00 AM<br><strong>- WHAT IS SALESFORCE? -</strong></p><img src="https://i.ibb.co/GF54jBD/24-hours-png-free-download-png-mart-hours-png-1600-1600.png" style="width:50%;height:auto"/></td></tr><tr><td class="pc-header-cta-text pc-fb-font" style="vertical-align:top;padding:30px 0 0 0;text-align:center;font-size:22px;font-weight:300;line-height:1.56;letter-spacing:-.2px;color:#fff" valign="top" align="center">We are very excited for the webinar! Are you?<br>Join our webinar on "What is Salesforce?"<br><p style="font-size:18px;margin:0">Get to know more about Salesforce and Cloud Computing!</p><br>&#127775;Setup your first salesforce account with us.</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table></div></td></tr></tbody></table><table border="0" cellspacing="0" cellpadding="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top;padding:0;height:8px;-webkit-text-size-adjust:100%;font-size:8px;line-height:8px" valign="top">&nbsp;</td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td class="pc-footer-box-s2" style="vertical-align:top;padding:37px 40px 40px;background-color:#0A2445;border-radius:8px;box-shadow:0 2px 4px 0 rgba(0,0,0,.1)" valign="top" bgcolor="#000000"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr></tr><tr><td style="vertical-align:top" valign="top"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top;height:13px;font-size:13px;line-height:13px" valign="top">&nbsp;</td></tr></tbody></table></td></tr><tr><td class="pc-footer-text-s2 pc-fb-font" style="vertical-align:top;text-align:center;line-height:1.43;letter-spacing:-.2px;font-size:20px;color:#fff" valign="top" align="center">For further queries reply back to this email😃</td></tr><tr><td style="vertical-align:top" valign="top"><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top;height:14px;font-size:14px;line-height:14px" valign="top">&nbsp;</td></tr></tbody></table></td></tr><tr><td class="pc-fb-font" style="vertical-align:top;text-align:center;line-height:1.714;font-family:"Work Sans",Helvetica,Arial,sans-serif;font-size:14px;color:#fff" valign="top" align="center"><a href="https://www.mvclouds.com" style="text-decoration:none;font-weight:500;color:#1595E7">www.mvclouds.com</a></td></tr></tbody></table></td></tr></tbody></table><table border="0" cellpadding="0" cellspacing="0" style="mso-table-lspace:0;mso-table-rspace:0;width:100%" width="100%"><tbody><tr><td style="vertical-align:top;padding:0;height:20px;font-size:20px;line-height:20px" valign="top">&nbsp;</td></tr></tbody></table></td></tr></tbody></table><!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]--></td></tr></tbody></table></body></html>';
+        
+    //     String sendTo = 'Devansh Shukla<devansh.s@mvclouds.com>';
+
+    //     GoogleGmailApi.sendGmail(subjectGmail,bodyGmail,sendTo);
+    // }
+
+}

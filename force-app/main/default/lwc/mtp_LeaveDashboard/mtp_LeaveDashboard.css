@@ -1,0 +1,150 @@
+.maindiv {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+ }
+
+ .header{
+  margin-top: 30px;
+  font-family: 'Montserrat';
+  text-align: center;
+  padding: 15px 15px 5px;
+  margin-right: auto;
+ }
+
+ .body{
+  height: 510px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+ }
+
+ .body::-webkit-scrollbar {
+  display: none;
+}
+
+ .UpperBody{
+  position: relative;
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  margin-top: 0.5%;
+  margin-bottom: 15px;
+ }
+
+.TraineeSelectionButton{
+  color: black;
+  margin-top: 0.75%;
+  padding: 1.5%;
+  display: flex;
+  justify-content: end;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  right: 10%;
+  width: 25%;
+  margin-top: 0.9%;
+  float: right;
+}
+
+.table-container{
+  position: relative;
+  height: 440px;
+  overflow: auto;
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.10),
+     0px 10px 20px rgba(0,0,0,0.05),
+     0px 20px 20px rgba(0,0,0,0.05),
+     0px 30px 20px rgba(0,0,0,0.05);
+  border-bottom: 3px solid #3a81d7;
+}
+
+ .styled-table{
+  content: "Scroll horizontally >";
+  border-collapse: collapse;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  position: absolute;
+}
+
+ .styled-table thead tr {
+  background-color: #3a81d7;
+  color: #ffffff;
+  text-align: left;
+  font-size: 125%;
+}
+
+.styled-table thead{
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+
+.styled-table th{
+  padding: 18px 15px;
+}
+
+.styled-table td {
+  padding: 8px 15px;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:last-of-type {
+  /* border-bottom: 2px solid #3a81d7; */
+  border-bottom: sticky;
+}
+
+.styled-table tbody td[data-status^="Approved"]{
+ color : #24c43f;
+}
+.styled-table tbody td[data-status^="Rejected"]{
+  color : #d21414;
+ }
+
+.slds-hint-parent{
+  font-size: 13px;
+  color: black;
+  width: fit-content;
+}
+
+.emptystate__body {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  text-align: center;
+ }
+ .emptystate__body h2{
+    font-weight: 800;
+    font-size: 18px;
+    height: 100px;
+    padding: 50px;
+ }
+
+ .heading{
+  font-size: 1.7rem;
+  margin-bottom: -2px;
+  font-family: initial;
+  font-weight: 800;
+}
+
+@media screen and (max-height: 750px) {
+  .table-container {
+    height: 350px;
+  }
+  .body{
+    height: 470px;
+  }
+ }
+
+ @media screen and (min-height: 901px) {
+  .table-container {
+    height: 607px;
+  }
+  .body{
+    height: 700px;
+  }
+ }

@@ -1,0 +1,130 @@
+<template>
+    <div class="slds-modal__container">
+        <div class="slds-modal__header popup-header">
+            <h1>{headerText}</h1>
+        </div>
+
+        <div class="slds-modal__content slds-p-around_medium modal-body">
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>Date</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <lightning-input type="date" name="Date" variant="label-hidden" data-id="Date__c" value={timeSheetObj.Date__c} disabled={isPreview} onchange={handleUpdateChange}> </lightning-input>
+                </div>
+            </div>
+
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>Start Time</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <input type="time" name="Start Time" class="slds-input time-field" data-id="Start_Time__c" value={timeSheetObj.Start_Time__c} disabled={isPreview} onchange={handleUpdateChange} />
+                </div>
+            </div>
+
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>End Time</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <input type="time" name="End Time" class="slds-input time-field" data-id="End_Time__c" value={timeSheetObj.End_Time__c} disabled={isPreview} onchange={handleUpdateChange} />
+                </div>
+            </div>
+
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>Project</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <template if:true={isPreview}>
+                        <lightning-input name="Project" variant="label-hidden" value={timeSheetObj.Project__Name} disabled> </lightning-input>
+                    </template>
+
+                    <template if:false={isPreview}>
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                <select class="slds-select" data-id="Project__Name" onchange={handleUpdateChange}>
+                                    <option value="PreSelected" disabled selected>- Select Project -</option>
+                                    <template for:each={timeSheetObj.projectList} for:item="item">
+                                        <template if:true={item.selected}>
+                                            <option key={item.label} selected>{item.label}</option>
+                                        </template>
+                                        <template if:false={item.selected}>
+                                            <option key={item.label}>{item.label}</option>
+                                        </template>
+                                    </template>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>Task Type</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <template if:true={isPreview}>
+                        <lightning-input name="Task Type" variant="label-hidden" value={timeSheetObj.Task_Type__c} disabled> </lightning-input>
+                    </template>
+
+                    <template if:false={isPreview}>
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__control">
+                                <div class="slds-select_container">
+                                <select class="slds-select" data-id="Task_Type__c" onchange={handleUpdateChange}>
+                                    <option value="PreSelected" disabled selected>- Select Task Type -</option>
+                                    <template for:each={timeSheetObj.taskTypes} for:item="item">
+                                        <template if:true={item.selected}>
+                                            <option key={item.label} selected>{item.label}</option>
+                                        </template>
+                                        <template if:false={item.selected}>
+                                            <option key={item.label}>{item.label}</option>
+                                        </template>
+                                    </template>
+                                </select>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+                
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>Task Name</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <lightning-input name="Task Name" variant="label-hidden" max-length="255" data-id="Task_Name__c" value={timeSheetObj.Task_Name__c} onchange={handleUpdateChange} disabled={isPreview} required></lightning-input>
+                </div>
+            </div>
+
+            <div class="slds_Wrap">
+                <div class="slds-col input-div" >
+                    <span><abbr class="slds-required" title="required">* </abbr>Task Description</span>
+                </div>
+                <div class="slds-col slds-size_1-of-12 input-div colon-div"><span>:</span></div>
+                <div class="slds-col slds-size_8-of-12 input-div">
+                    <lightning-textarea name="Task Description" variant="label-hidden" min-length="50" data-id="Task_Description__c" value={timeSheetObj.Task_Description__c} onchange={handleUpdateChange} disabled={isPreview} required></lightning-textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="slds-modal__footer footer">
+            <template if:false={isPreview}>
+                <button class="buttoncls create-btn slds-p-around_small" onclick={handleCreate} disabled={disableSave}>Create</button>
+            </template>
+            <button class="buttoncls cancel-btn slds-p-around_small" onclick={handleCancel}>Cancel</button>
+        </div>
+    </div>
+</template>

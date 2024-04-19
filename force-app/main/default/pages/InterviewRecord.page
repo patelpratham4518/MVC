@@ -1,0 +1,138 @@
+<apex:page controller="InterviewRecordController" sidebar="false" showHeader="false" docType="html-5.0" lightningStylesheets="true">
+    <apex:slds />
+    
+    <body style="background-image: url('{!$Resource.InterviewPageBackground}'); background-position: center; background-position:fixed; background-repeat: no-repeat ; height:100%; width:100%; background-size: cover;">
+        <div style="margin-left: 15%; " class="slds-align_absolute-center">
+            <apex:form style="width: 100%; height:100%; padding:35px; " >
+                <div style="font-weight:bold; font-size:15px;">
+                    <apex:pageMessages ></apex:pageMessages>
+                </div>
+                <table style="margin-bottom:18%;">
+                    
+                    <tr style="text-align:center;">
+                        <td>
+                            <div style="font-size:30px; color:slid black; text-decoration:underline; font-family:Times New Roman, Open-Sans; margin-left:50%">
+                                Candidate Details
+                            </div><br/>             
+                        </td>        
+                    </tr>
+                    <tr style="font-size:20px; text-decoration:underline;">
+                        <th style="margin-bottom:15px;">
+                            Basic Details 
+                        </th>
+                    </tr><br/>
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px; margin-top:15px;">
+                                <apex:outputText >Name :</apex:outputText> 
+                                <apex:outputField value=" {!cont.name}" label="Name : " />
+                            </div>            
+                        </td>    
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px; margin-top:15px;">
+                                <apex:outputText >Email :</apex:outputText>     
+                                <apex:outputField value="{!cont.Email}" label="Email : " />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >Gender :</apex:outputText>
+                                <apex:outputField value="{!cont.Gender__c}" label="Gender : " />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >Mobile :</apex:outputText>
+                                <apex:outputField value="{!cont.MobilePhone}" label="Mobile Number : " />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr style="font-size:20px; text-decoration:underline;">
+                        <th>
+                            Education Details 
+                        </th>
+                    </tr><br/>
+                    <tr>
+                        <td> 
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px; margin-top:15px;">
+                                <apex:outputText >College Name :</apex:outputText>
+                                <apex:outputField value=" {!cont.College_Name__c}" label="College Name : " />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px; margin-top:15px;">
+                                <apex:outputText >Type of Degree :</apex:outputText>
+                                <apex:outputField value=" {!cont.Type_of_Degree__c}" label="Type of Degree : " />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >Branch :</apex:outputText>
+                                <apex:outputField value=" {!cont.Branch__c}" label="Branch : " />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >Year Of Passing :</apex:outputText>
+                                <apex:outputField value=" {!cont.Year_Of_Passing__c}" label="Year Of Passing : " />
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >CGPA or Percentage :</apex:outputText>
+                                <apex:outputField value=" {!cont.CGPA_or_Percentage__c}" label="CGPA or Percentage : "/>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >Total Experience :</apex:outputText>
+                                <apex:outputField value=" {!cont.Total_Experience__c}" label="Total Experience : "/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="font-size:18px; color:solid black; margin-bottom:15px">
+                                <apex:outputText >Status :</apex:outputText>
+                                <apex:outputField value=" {!Candidate.Status__c}" label="Status : "/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="width:40%; font-size:18px; color: solid black; margin-top:15px;">
+                                <label class="slds-form-element__label" for="select-01" style="font-size:18px; color:black; font-weight:bold;">
+                                    <abbr class="slds-required" title="required">*</abbr>Change Status :</label>
+                                <div class="slds-form-element__control">
+                                    <div class="slds-select_container">
+                                        <apex:selectList value="{!selectedStatus}" multiselect="false" size="1" styleClass="slds-select" required="true" label="Select Interviewer : ">
+                                            <apex:selectOptions value="{!statusOptions}" />
+                                        </apex:selectList><br />
+                                    </div>
+                                </div>
+                            </div><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="slds-form-element" style="font-size:20px; text-align:center; margin-left:40%;">
+                                <apex:commandButton value="Submit" action="{!submit}" styleClass="slds-btn" />
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+               
+            </apex:form>
+        </div>
+    </body>
+</apex:page>

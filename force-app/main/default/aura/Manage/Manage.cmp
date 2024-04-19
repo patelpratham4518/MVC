@@ -1,0 +1,582 @@
+<aura:component controller="intranetController">
+    
+    <!--use JQuery Data Table css,Js and jQUERY js file in lightning component by using ltng:require component-->
+    <ltng:require styles="{! $Resource.	datatable + '/DataTables-1.10.16/media/css/jquery.dataTables.min.css'}" 
+                  scripts="{!join(',', 
+                           $Resource.jquery224 , 
+                           $Resource.datatable + '/DataTables-1.10.16/media/js/jquery.dataTables.min.js')
+                           }" afterScriptsLoaded="{!c.scriptsLoaded}"/>
+    
+    <!--aura attributes declared here-->
+    <aura:attribute name="projectList" type="List"/>
+    <aura:attribute name="modulelist" type="List"/>
+    <aura:attribute name="employeeList" type="List"/>
+    <aura:attribute name="clientList" type="List"/>
+    <aura:attribute name="taskList" type="List"/>
+    <aura:attribute name="assignedEmployeeList" type="List"/>
+    
+    <aura:attribute name="message" type="String" default=''/>
+    <aura:attribute name="selectedGlobalproject" type="String"/> 
+    
+    <aura:attribute name="modalpopupAssignedProject" type="Boolean" default="false"/>
+    <aura:attribute name="modalpopupAddNewProject" type="Boolean" default="false"/>
+    <aura:attribute name="modalpopupAssignedModule" type="Boolean" default="false"/>
+    <aura:attribute name="showAssignedEmployees" type="Boolean" default="false"/>
+    <aura:attribute name="modalpopupAddNewModule" type="Boolean" default="false"/>
+    <aura:attribute name="modalpopupAddNewTask" type="Boolean" default="false"/>
+    
+    <!--aura handler declared here-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <lightning:accordion >
+        <lightning:accordionSection name="client" label="Add New Client">
+            <div style="width:65%;margin:auto;border:1px solid #dad4d4;padding:2%;box-shadow:7px 0px 3px 3px #dad4d4">
+                <table>
+                    <tr>
+                        <td><lightning:input label="Name" aura:id="clientName"/></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><lightning:input label="Email" aura:id="clientEmail"/></td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                    <tr>
+                        <td><lightning:input label="Phone" aura:id="clientPhone"/></td>
+                        <td>&nbsp;&nbsp;</td>
+                        <td><lightning:input label="Location" aura:id="clientLocation"/></td>
+                    </tr>
+                    <tr><td><br/></td></tr>
+                </table>
+                <div>
+                    <lightning:input label="Company" aura:id="clientCompany"/>
+                    <br/>
+                    <ui:inputTextArea aura:id="clientDescription" label="Description" rows="3" placeholder="Enter Project Description in brief..."/>
+                    <br/>
+                    <div style="text-align:center;">
+                        <lightning:button label="Save" variant="brand" iconName="utility:check" onclick="{!c.addNewClient}"/>&nbsp;
+                        <lightning:button label="Cancel" iconName="utility:close" onclick="{!c.clearClientFields}"/>                        
+                    </div>
+                </div>
+            </div>            
+        </lightning:accordionSection>
+        <lightning:accordionSection name="Project" label="Project">
+            <div style="text-align:right;width:90%;margin:auto">
+                <lightning:buttonIcon iconName="utility:filter" variant="bare" onclick = "{!c.addNewProjectPopup}"/>
+            </div>
+           <div style="width:90%;margin:auto;border:1px solid #ccc4c4;margin-top:2%;margin-bottom:2%;padding:2%;">
+               <table id="manageProjectListId">
+                <thead class="slds-box slds-theme_shade slds-theme_alert-texture">
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Project">Project</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Client">Client</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Due Date">Due date</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Description">Description</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Assigned to">Assigned to</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.projectList}" var="pro">
+                        <tr class="slds-line-height_reset">
+                            <td scope="col">
+                                <div class="slds-truncate" title="Project">{!pro.Project_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Client">{!pro.Client__r.Client_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Due Date">{!pro.Start_Date__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Description"><lightning:helptext iconName="utility:info" content="{!pro.Description__c}" /></div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Assigned to"><lightning:buttonIcon iconName="utility:adduser" name="{!pro.Id}" aura:id="assignedButtonId" variant="bare" onclick="{!c.assignedProject}"/></div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+           </div>
+        </lightning:accordionSection>
+        <lightning:accordionSection name="module" label="Module">
+            <div style="text-align:right;width:90%;margin:auto">
+                <lightning:buttonIcon iconName="utility:filter" variant="bare" onclick = "{!c.addNewModulePopup}"/>
+            </div>
+           <div style="width:90%;margin:auto;border:1px solid #ccc4c4;margin-top:2%;margin-bottom:2%;padding:2%;">
+               <table id="manageModuleListId">
+                <thead class="slds-box slds-theme_shade slds-theme_alert-texture">
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Module">Module</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Project">Project</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Due Date">Due Date</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Description">Description</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Assigned to">Assigned to</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.modulelist}" var="module">
+                        <tr class="slds-line-height_reset">
+                            <td scope="col">
+                                <div class="slds-truncate" title="Module">{!module.Module_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Project">{!module.Project__r.Project_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Due Date">{!module.End_Date__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Description"><lightning:helptext iconName="utility:info" content="{!module.Description__c}" /></div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Assigned to"><lightning:buttonIcon iconName="utility:adduser" name="{!module.Id}" aura:id="assignedButtonId" variant="bare" onclick="{!c.assignedProject}"/></div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+           </div>
+        </lightning:accordionSection>
+
+        <lightning:accordionSection name="Task" label="Task">
+            <div style="text-align:right;width:90%;margin:auto">
+                <lightning:buttonIcon iconName="utility:filter" variant="bare" onclick = "{!c.addNewTaskPopup}"/>
+            </div>
+            <div style="width:90%;margin:auto;border:1px solid #ccc4c4;margin-top:2%;margin-bottom:2%;padding:2%;">
+               <table id="manageTaskListId">
+                <thead class="slds-box slds-theme_shade slds-theme_alert-texture">
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Task Name">Task Name</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Module">Module</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Project">Project</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Due Date">Due Date</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Description">Description</div>
+                        </th>
+                        <th class="slds-text-title_caps" scope="col">
+                            <div class="slds-truncate" title="Assigned to">Assigned to</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.taskList}" var="task">
+                        <tr class="slds-line-height_reset">
+                            <td scope="col">
+                                <div class="slds-truncate" title="Task Name">{!task.Task_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Module">{!task.Module__r.Module_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Project">{!task.Project__r.Project_Name__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Due Date">{!task.Due_Date__c}</div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Due Date"><lightning:helptext iconName="utility:info" content="{!task.Description__c}" /></div>
+                            </td>
+                            <td scope="col">
+                                <div class="slds-truncate" title="Assigned to"><lightning:buttonIcon iconName="utility:adduser" name="{!task.Id}" aura:id="assignedButtonId" variant="bare" onclick="{!c.assignedProject}"/></div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+               </table>
+            </div>
+        </lightning:accordionSection>
+        
+        <lightning:accordionSection name="User" label="User">
+            <p>This is the content area for section C.</p>
+            <p>.</p>
+            <p>.</p>
+            <p>.</p>
+            <p>The section height expands to fit your content.</p>
+        </lightning:accordionSection>
+    </lightning:accordion>
+    
+    <!-- MODAL POP UP TO ASSIGN PROJECTS -->
+    <aura:if isTrue="{!v.modalpopupAssignedProject}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <p id="modal-heading-01" class="slds-text-heading_medium">Assigned Project</p>
+                </header>
+                <!-- MODAL BOX BODY Part Start-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <aura:if isTrue="{!v.showAssignedEmployees}">
+                            <div style="border:1px solid #d0c8c8;width:70%;margin:auto;">
+                                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Employee</th>
+                                            <th>Role</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.assignedEmployeeList}" var="assignedEmp">
+                                            <tr>
+                                                <td>{!assignedEmp.Employee__r.Name}</td>
+                                                <td>{!assignedEmp.Role__c}</td>
+                                                <td><lightning:buttonIcon iconName="utility:delete" name="{!assignedEmp.Id}" variant="bare" onclick="{!c.removeEmployee}"/></td>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <aura:set attribute="else">
+                                <span style="color:red">{!v.message}</span>
+                                <br/>
+                            </aura:set>
+                        </aura:if>
+                        <table>
+                            <tbody>
+                                <tr><td><br/></td></tr>
+                                <tr scope="row">
+                                    <td>
+                                        <lightning:select name="selectEmployeeToAssign" aura:id="selectEmployeeToAssignId" label="Employee">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.employeeList}" var="employee">
+                                                <option value="{!employee.Name}">{!employee.Name}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>
+                                        <lightning:select name="selectRoleToAssign" aura:id="selectRoleToAssignId" label="Role">
+                                            <option value=""></option>
+                                            <!--<aura:iteration items="{!v.employeeList}" var="employee">-->
+                                                <option value="Software Developer">Software Developer</option>
+                                                <option value="Project Lead">Project Lead</option>
+                                                <option value="Quality Analyst">Quality Analyst</option>
+                                            <!--</aura:iteration>-->
+                                        </lightning:select>
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- MODAL BOX FOOTER Part Start -->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.assignedProjectToEmployee}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+	<!-- MODAL POP UP TO ASSIGN PROJECTS -->
+	
+	<!-- MODAL POP UP TO NEW PROJECT -->
+    <aura:if isTrue="{!v.modalpopupAddNewProject}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <p id="modal-heading-01" class="slds-text-heading_medium">New Project</p>
+                </header>
+                <!-- MODAL BOX BODY Part Start-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><lightning:input label="Project Name" aura:id="projectNameId"/></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>
+                                        <lightning:select name="selectClient" aura:id="selectClientId" label="Client">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.clientList}" var="client">
+                                                <option value="{!client.Client_Name__c}">{!client.Client_Name__c}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                                <tr>
+                                    <td><lightning:input type="date" label="Start Date" aura:id="startDateId"/></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td><lightning:input type="date" label="End Date" aura:id="endDateId"/></td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <ui:inputTextArea aura:id="projectDescriptionId" label="Description" rows="3" placeholder="Enter Project Description in brief..."/>
+                            <!--<lightning:textarea label="Description" aura:id="projectDescriptionId"/>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL BOX FOOTER Part Start -->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.addNewProject}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+	<!-- MODAL POP UP TO NEW PROJECT -->
+	
+	<!-- MODAL POP UP TO ASSIGN MODULE -->
+    <!--<aura:if isTrue="{!v.modalpopupAssignedModule}">-->
+    <!--    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">-->
+    <!--        <div class="slds-modal__container">-->
+                <!--  MODAL BOX HEADER Start -->
+    <!--            <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">-->
+    <!--                <lightning:buttonIcon iconName="utility:close"-->
+    <!--                                      onclick="{! c.closeModel }"-->
+    <!--                                      alternativeText="close"-->
+    <!--                                      variant="bare-inverse"-->
+    <!--                                      class="slds-modal__close"/>-->
+    <!--                <p id="modal-heading-01" class="slds-text-heading_medium">Assigned Module</p>-->
+    <!--            </header>-->
+                <!-- MODAL BOX BODY Part Start-->
+    <!--            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">-->
+    <!--                <div>-->
+    <!--                    <aura:if isTrue="{!v.showAssignedEmployees}">-->
+    <!--                        <div style="border:1px solid #d0c8c8;width:70%;margin:auto;">-->
+    <!--                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">-->
+    <!--                                <thead>-->
+    <!--                                    <tr>-->
+    <!--                                        <th>Employee</th>-->
+    <!--                                        <th>Role</th>-->
+    <!--                                        <th>Action</th>-->
+    <!--                                    </tr>-->
+    <!--                                </thead>-->
+    <!--                                <tbody>-->
+    <!--                                    <aura:iteration items="{!v.assignedEmployeeList}" var="assignedEmp">-->
+    <!--                                        <tr>-->
+    <!--                                            <td>{!assignedEmp.Employee__r.Name}</td>-->
+    <!--                                            <td>{!assignedEmp.Role__c}</td>-->
+    <!--                                            <td><lightning:buttonIcon iconName="utility:delete" name="{!assignedEmp.Id}" variant="bare" onclick="{!c.removeEmployee}"/></td>-->
+    <!--                                        </tr>-->
+    <!--                                    </aura:iteration>-->
+    <!--                                </tbody>-->
+    <!--                            </table>-->
+    <!--                        </div>-->
+    <!--                        <aura:set attribute="else">-->
+    <!--                            <span style="color:red">{!v.message}</span>-->
+    <!--                            <br/>-->
+    <!--                        </aura:set>-->
+    <!--                    </aura:if>-->
+    <!--                    <table>-->
+    <!--                        <tbody>-->
+    <!--                            <tr><td><br/></td></tr>-->
+    <!--                            <tr scope="row">-->
+    <!--                                <td>-->
+    <!--                                    <lightning:select name="selectEmployeeToAssign" aura:id="selectEmployeeToAssignId" label="Employee">-->
+    <!--                                        <option value=""></option>-->
+    <!--                                        <aura:iteration items="{!v.employeeList}" var="employee">-->
+    <!--                                            <option value="{!employee.Name}">{!employee.Name}</option>-->
+    <!--                                        </aura:iteration>-->
+    <!--                                    </lightning:select>-->
+    <!--                                </td>-->
+    <!--                                <td>&nbsp;&nbsp;</td>-->
+    <!--                                <td>-->
+    <!--                                    <lightning:select name="selectRoleToAssign" aura:id="selectRoleToAssignId" label="Role">-->
+    <!--                                        <option value=""></option>-->
+                                            <!--<aura:iteration items="{!v.employeeList}" var="employee">-->
+    <!--                                            <option value="Software Developer">Software Developer</option>-->
+    <!--                                            <option value="Project Lead">Project Lead</option>-->
+    <!--                                            <option value="Quality Analyst">Quality Analyst</option>-->
+                                            <!--</aura:iteration>-->
+    <!--                                    </lightning:select>-->
+    <!--                                </td>-->
+    <!--                            </tr>-->
+    <!--                            <tr><td><br/></td></tr>-->
+    <!--                        </tbody>-->
+    <!--                    </table>-->
+    <!--                </div>-->
+    <!--            </div>-->
+                <!-- MODAL BOX FOOTER Part Start -->
+    <!--            <footer class="slds-modal__footer">-->
+    <!--                <lightning:button variant="neutral" label="Close" onclick="{!c.closeModel}"/>-->
+    <!--                <lightning:button variant="brand" label="Save" onclick="{!c.assignedProjectToEmployee}"/>-->
+    <!--            </footer>-->
+    <!--        </div>-->
+    <!--    </section>-->
+    <!--    <div class="slds-backdrop slds-backdrop_open"></div>-->
+    <!--</aura:if>-->
+	<!-- MODAL POP UP TO ASSIGN MODULE -->
+	
+	<!-- MODAL POP UP TO NEW MODULE -->
+    <aura:if isTrue="{!v.modalpopupAddNewModule}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <p id="modal-heading-01" class="slds-text-heading_medium">New Module</p>
+                </header>
+                <!-- MODAL BOX BODY Part Start-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><lightning:input label="Module Name" aura:id="moduleNameId"/></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>
+                                        <lightning:select name="selectProject" aura:id="selectProjectId" label="Project">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.projectList}" var="project">
+                                                <option value="{!project.Project_Name__c}">{!project.Project_Name__c}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                                <tr>
+                                    <td><lightning:input type="date" label="Start Date" aura:id="moduleStartDateId"/></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td><lightning:input type="date" label="End Date" aura:id="moduleEndDateId"/></td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <ui:inputTextArea aura:id="moduleDescriptionId" label="Description" rows="3" placeholder="Enter Module Description in brief..."/>
+                            <!--<lightning:textarea label="Description" aura:id="projectDescriptionId"/>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL BOX FOOTER Part Start -->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.addNewModule}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+	<!-- MODAL POP UP TO NEW MODULE -->
+    
+    <!-- MODAL POP UP TO NEW TASK -->
+    <aura:if isTrue="{!v.modalpopupAddNewTask}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <p id="modal-heading-01" class="slds-text-heading_medium">New Task</p>
+                </header>
+                <!-- MODAL BOX BODY Part Start-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><lightning:input label="Project Name" aura:id="projectNameId"/></td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>
+                                        <lightning:select name="selectModule" aura:id="selectModuleId" label="Module">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.modulelist}" var="module">
+                                                <option value="{!module.Module__r.Module_Name__c}">{!module.Module__r.Module_Name__c}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                                <tr>
+                                    <td>
+                                        <lightning:select name="selectProject" aura:id="selectProjectId" label="Project">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.projectList}" var="project">
+                                                <option value="{!project.Project_Name__c}">{!project.Project_Name__c}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>
+                                        <lightning:select name="selectEmployeeToAssign" aura:id="selectEmployeeToAssignIdForTask" label="Employee">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.employeeList}" var="employee">
+                                                <option value="{!employee.Name}">{!employee.Name}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                </tr>
+                                <tr><td><br/></td></tr>
+                                <tr>
+                                    <td>
+                                        <lightning:select name="selectParentTask" aura:id="selectParentTaskId" label="Parent Task">
+                                            <option value=""></option>
+                                            <aura:iteration items="{!v.taskList}" var="task">
+                                                <option value="{!task.Task_Name__c}">{!project.Project_Name__c}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </td>
+                                    <td>&nbsp;&nbsp;</td>
+                                    <td>
+                                      <lightning:input type="date" label="Due Date" aura:id="dueDateId"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div>
+                            <ui:inputTextArea aura:id="taskDescriptionId" label="Description" rows="3" placeholder="Enter Task Description in brief..."/>
+                            <!--<lightning:textarea label="Description" aura:id="projectDescriptionId"/>-->
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL BOX FOOTER Part Start -->
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" onclick="{!c.closeModel}"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.addNewProject}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+	<!-- MODAL POP UP TO NEW TASK -->
+</aura:component>

@@ -1,0 +1,196 @@
+<aura:component implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+	<!--aura handler declared here-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    <aura:handler event="c:ProjectEvent" action="{!c.doInit}" />
+    	<aura:attribute name="clientList" type="List"/>
+    <aura:attribute name="projectList" type="List"/>
+    <aura:attribute name="moduleList" type="List"/>
+    <aura:attribute name="taskList" type="List"/>
+    <aura:attribute name="timeSheetList" type="List"/>
+    <aura:attribute name="employeeList" type="List"/>
+    <aura:attribute name="categoryList" type="List"/>
+    <aura:attribute name="credentials" type="List"/>
+    <aura:attribute name="credentialCompleteDetail" type="List"/>
+    <aura:attribute name="selectedVal" type="String" />
+    
+    <aura:attribute name="page" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="total" type="integer" description="total records count store "/>
+    
+    <aura:attribute name="pageSearch" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pagesSearch" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="totalSearch" type="integer" description="total records count store "/>
+    
+    <aura:attribute name="recordSize" type="Integer" default="10"/>
+    <aura:attribute name="message" type="String"/>
+	
+	<aura:attribute name="noRecords" type="Boolean" default="false"/>
+	<aura:attribute name="modalpopupCredential" type="Boolean" default="false"/>
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="hideTimesheet" type="Boolean" default="false"/>
+    <aura:attribute name="showMessage" type="String" default="" />
+     
+    <!--aura handler declared here-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    <aura:handler event="c:ProjectEvent" action="{!c.doInit}" />
+    <aura:handler name="change" value="{!v.pageReference}" action="{!c.reInit}" />
+    
+    <!--Event Registration-->
+    <aura:registerEvent name="tabSpecificEvent" type="c:IntranetLightningEvent"></aura:registerEvent>
+    
+    <!--TimeSheet and Calendar starts here -->
+    <div class="slds-grid slds-wrap" style="padding-bottom:2%;">
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3 " >
+            <center>
+               <div class="slds-col slds-medium-size--1-of-1" style="box-shadow:0px 6px 4px 5px grey;padding:6%; width:90%; height:85%">
+                <table >
+                    <tbody>
+                        <tr>
+                            <td>
+                                <!--<ui:inputSelect  aura:id="categorySelectListId" class="slds-select"  change="{!c.onPicklistChange}"/>-->
+                                <lightning:select name="selectCategory" aura:id="categorySelectListId" label="Category">
+                                    <option value=""></option>
+                                    <!--<aura:iteration items="{!v.timeSheetList}" var="timesheet">-->
+                                        <option value="Development">Development</option>
+                                        <option value="Documentation">Documentation</option>
+                                        <option value="POC">POC</option>
+                                        <option value="QA">QA</option>
+                                    <!--</aura:iteration>-->
+                                </lightning:select>
+                            </td>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <td>
+                                <lightning:select name="selectProject" required="true" aura:id="projectSelectListId" label="Project" onchange="{!c.projectSelectListFunction}">
+                                    <option value=""></option>
+                                    <aura:iteration items="{!v.projectList}" var="project">
+                                        <option value="{!project.Project_Name__c}">{!project.INTRANET__Project_Name__c}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </td>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <td>
+                                <lightning:select name="selectModule" aura:id="moduleSelectListId" label="Module" disabled="true" onchange="{!c.moduleSelectListFunction}">
+                                    <option value=""></option>
+                                    <aura:iteration items="{!v.moduleList}" var="module">
+                                        <option value="{!module.Module_Name__c}">{!module.INTRANET__Module_Name__c}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </td>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <td>
+                                <lightning:select name="selectTask" aura:id="taskSelectId" label="Task" disabled="true" onchange="{!c.taskSelectListFunction}">
+                                    <option value=""></option>
+                                    <aura:iteration items="{!v.taskList}" var="task">
+                                        <option value="{!task.Task_Name__c}">{!task.INTRANET__Task_Name__c}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </td>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <lightning:input type="checkbox" aura:id="statusCheckboxId" label="Completed ?" class="slds-hide"/>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <td><lightning:input type="date" aura:id="selectedDateId" required="true" label="Date" onchange="{!c.dateFunction}"/></td> <!-- -->
+                        </tr>
+                        
+                        <tr><td><br/>
+                            <div style='color:red'>{!v.showMessage}</div>
+                        <br/></td></tr>
+                        <tr>
+                            <td>
+                                <div class="slds-grid slds-gutters" style="width:62.5%;">
+                                    <div class="slds-col">
+                                         <lightning:select name="selectHours" aura:id="selectedHoursId" label="Hours">
+                                            <option value="00">00</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                         </lightning:select>
+                                    </div>
+                                    <div class="slds-col">
+                                        <lightning:select name="selectMinute" aura:id="selectedMinutesId" label="Minutes">
+                                            <option value="00">00</option>
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                        </lightning:select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><td><br/></td></tr>
+                        <tr>
+                            <td>
+                                <div>
+                                    <span style="color:#786978;  resize: initial;">Description<br/></span>
+                                    <ui:inputTextArea aura:id="descriptionId" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr><br/><br/></tr>
+                        <tr style="">
+                            <td>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col" style='color:white;' >
+                                        <span><lightning:button variant="brand" label="Save" onclick="{!c.jsControllerToSaveTimeSheetDetails}"/></span>
+                                    </div>
+                                    <div class="slds-col">
+                                        <span><lightning:button variant="neutral" label="Save &#38; New" onclick="{!c.jsControllerToSaveTimeSheetDetails}"/></span>
+                                    </div>
+                                    <!-- <div class="slds-col">-->
+                                    <!--    <span><lightning:button variant="neutral" label="Timesheet" onclick="{!c.Timesheetstay}"/></span>-->
+                                    <!--</div>-->
+                                    <div class="slds-col" >
+                                        <span><lightning:button variant="neutral" label="Cancel" onclick="{!c.showTimeSheetTable}"/></span>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+             </div>
+            </center>
+        </div>
+        <aura:renderIf isTrue="{!v.HideSpinner}">
+      <div class="slds-spinner_container">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+          <span class="slds-assistive-text">Loading, Please Wait...</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </aura:renderIf>
+        <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-3 ">
+            <center>
+                <div class="slds-col slds-size--2-of-5" style="box-shadow:0px 6px 4px 5px grey;padding:1%; width:98%;">
+                    <!--<p style="color:#9da4ab;font-size:17px;font-family:cursive;height:40px;">Important Links<lightning:button label="Add Topic"/></p>-->
+                     <!-- <c:Calender />  -->
+                </div>  
+            </center>
+        </div>
+    </div>
+    <!--TimeSheet and Calendar ends here -->
+</aura:component>

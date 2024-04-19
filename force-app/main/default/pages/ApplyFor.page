@@ -1,0 +1,231 @@
+<apex:page lightningStylesheets="true" showHeader="false" sidebar="false" applyHtmlTag="true" controller="ApplyForController" docType="html-5.0">
+    
+  <link href='http://fonts.googleapis.com/css?family=Bitter' rel='stylesheet' type='text/css'/>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+  <link rel="stylesheet" href="/resources/demos/style.css"/>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <script>
+function onSubmit(){
+    var isSubmit = false;
+    if(confirm('Are you sure you want to Submit?')){
+        isSubmit = true;
+        return isSubmit;
+    } else {
+         return isSubmit;   
+    }
+
+    if(isSubmit){
+        alert('Your input was received successfully. We will contact you soon!');
+        return;
+    } else {
+        alert('Please fill out the required fields!');
+    }
+
+}
+</script>
+  <!--<script>-->
+  <!--   $( function() {-->
+  <!--      $( "#datepicker" ).datepicker();-->
+  <!--    } );-->
+  <!--</script>-->
+        
+        
+        
+        
+        <style type="text/css">
+            .form-style-10{
+            width:450px;
+            padding:50px;
+            margin:20px auto;
+            background: #FFF;
+            border-radius: 10px;
+            -webkit-border-radius:10px;
+            -moz-border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+            -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+            -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.13);
+            
+            }
+            .form-style-10 .inner-wrap{
+            padding: 30px;
+            background: #F8F8F8;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            }
+            .form-style-10 h1{
+            background: #2A88AD;
+            padding: 20px 30px 15px 30px;
+            margin: -30px -30px 30px -30px;
+            border-radius: 10px 10px 0 0;
+            -webkit-border-radius: 10px 10px 0 0;
+            -moz-border-radius: 10px 10px 0 0;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+            font: normal 30px 'Bitter', serif;
+            -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            border: 1px solid #257C9E;
+            }
+            .form-style-10 h1 > span{
+            display: block;
+            margin-top: 2px;
+            font: 13px Arial, Helvetica, sans-serif;
+            }
+            .form-style-10 label{
+            display: block;
+            font: 13px Arial, Helvetica, sans-serif;
+            color: #888;
+            margin-bottom: 15px;
+            }
+            .form-style-10 input[type="text"],
+            .form-style-10 input[type="date"],
+            .form-style-10 input[type="datetime"],
+            .form-style-10 input[type="email"],
+            .form-style-10 input[type="number"],
+            .form-style-10 input[type="search"],
+            .form-style-10 input[type="time"],
+            .form-style-10 input[type="url"],
+            .form-style-10 input[type="password"],
+            .form-style-10 textarea,
+            .form-style-10 select {
+            display: block;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            width: 100%;
+            padding: 8px;
+            border-radius: 6px;
+            -webkit-border-radius:6px;
+            -moz-border-radius:6px;
+            border: 2px solid #fff;
+            box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+            -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+            -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.33);
+            }
+            
+            .form-style-10 .section{
+            font: normal 20px 'Bitter', serif;
+            color: #2A88AD;
+            margin-bottom: 5px;
+            }
+            .form-style-10 .section span {
+            background: #2A88AD;
+            padding: 5px 10px 5px 10px;
+            position: absolute;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border: 4px solid #fff;
+            font-size: 14px;
+            margin-left: -45px;
+            color: #fff;
+            margin-top: -3px;
+            }
+            .form-style-10 input[type="button"], 
+            .form-style-10 input[type="submit"]{
+            background: #2A88AD;
+            padding: 8px 20px 8px 20px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            color: #fff;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12);
+            font: normal 30px 'Bitter', serif;
+            -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.17);
+            border: 1px solid #257C9E;
+            font-size: 15px;
+            }
+            .form-style-10 input[type="button"]:hover, 
+            .form-style-10 input[type="submit"]:hover{
+            background: #2A6881;
+            -moz-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+            -webkit-box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+            box-shadow: inset 0px 2px 2px 0px rgba(255, 255, 255, 0.28);
+            }
+            .form-style-10 .privacy-policy{
+            float: right;
+            width: 250px;
+            font: 12px Arial, Helvetica, sans-serif;
+            color: #4D4D4D;
+            margin-top: 10px;
+            text-align: right;
+            }
+            *,
+            *:before,
+            *:after {
+              -webkit-box-sizing: border-box;
+              -moz-box-sizing: border-box;
+              box-sizing: border-box;
+            }
+            
+            body {
+              margin: 0;
+              padding: 2rem 1.5rem;
+              font: 1rem/1.5 "PT Sans", Arial, sans-serif;
+              color: #5a5a5a;
+}
+            
+        </style>
+   
+    <apex:form >
+    <div class="form-style-10">
+        <!--<h1>Apply Now!<span>Sign up and tell us what you think of the MV Clouds!</span></h1>-->
+        <form>
+            <div class="section"><span>1</span>Personal Information</div>
+            <div class="inner-wrap">
+                <label>First Name <apex:inputText label="FirstName" value="{!fName}" id="theTextInput1" /><br/></label>
+                <label>Middle Name <apex:inputText label="MiddleName" value="{!mName}" id="theTextInput2" /><br/></label>
+                <label>Last Name <apex:inputText label="LastName" value="{!lName}" id="theTextInput3" /><br/></label>
+                <label>State<apex:inputText label="State" value="{!state}" id="theTextInput4" /><br/></label>
+                <label>City<apex:inputText label="City" value="{!city}" id="theTextInput5" /><br/></label>
+                <!--<label>DOB <input type="text" id="datepicker" class="datepicker-here" data-language='en' data-multiple-dates="3" data-multiple-dates-separator=", " data-position='top left'/></label>-->
+                <label>DOB<apex:input type="date" value="{!dob}"/></label>
+                <label>Experience</label>
+                <apex:selectList id="Experience" value="{!exp}" size="1">
+                    <apex:selectOption itemValue="1" itemLabel="1"/>
+                    <apex:selectOption itemValue="2" itemLabel="2"/>
+                     <apex:selectOption itemValue="3" itemLabel="3"/>
+                </apex:selectList> 
+            </div>
+            
+            <div class="section"><span>2</span>Contact Information</div>
+            <div class="inner-wrap">
+                <label>Email Address <apex:inputText label="Email" value="{!email}" id="email" /></label>
+                <label>Phone Number 1 <apex:inputText label="Phone1" value="{!phone1}" id="phone1" /></label>
+                <label>Phone Number 2 <apex:inputText label="Phone2" value="{!phone2}" id="phone2" /></label>
+                <label>Any Reference at MV Clouds <apex:inputText label="referenceName" value="{!referenceName}" id="referenceName"/></label>
+                <label>Notice Period</label>
+                <apex:selectList id="NoticePeriod" value="{!noticePeriod}" size="1">
+                    <apex:selectOption itemValue="15 Days" itemLabel="15 Days"/>
+                    <apex:selectOption itemValue="30 Days" itemLabel="30 Days"/>
+                     <apex:selectOption itemValue="More Then 30 Days" itemLabel="More Then 30 Days"/>
+                </apex:selectList>
+            </div>
+            
+            <div class="section"><span>3</span>Attach Your CV</div>
+            <div class="inner-wrap">
+                <table>
+            <tr>
+                <td>CV </td>
+                <td> <apex:inputFile accept="doc, txt, pdf" filename="{!fileName}" contentType="{!contentType}" value="{!resume}"/> </td>
+            </tr>
+        </table>
+            </div>
+            <div class="button-section">
+                <apex:commandButton value="Submit" onclick="onSubmit();" action="{!doInit}" />
+                <span class="privacy-policy">
+                    <apex:inputCheckbox label="Are you ready to relocate at Ahmedabad ?" value="{!check}"/>Are you ready to relocate at Ahmedabad ?
+                </span>
+            </div>
+        </form>
+    </div>
+    </apex:form>
+</apex:page>

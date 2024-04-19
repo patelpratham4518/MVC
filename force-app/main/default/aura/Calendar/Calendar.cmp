@@ -1,0 +1,12 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <ltng:require scripts="{!join(',', 
+                           $Resource.fullcalendar + '/jquery.min.js', 
+                           $Resource.fullcalendar + '/jquery-ui.min.js',
+                           $Resource.fullcalendar + '/moment.min.js', 
+                           $Resource.fullcalendar + '/fullcalendar.min.js')}"
+                  styles="{!$Resource.fullcalendar + '/fullcalendar.min.css'}"
+                  
+                  afterScriptsLoaded="{!c.scriptsLoaded}" />
+    
+    <div id='calendar'></div>
+</aura:component>

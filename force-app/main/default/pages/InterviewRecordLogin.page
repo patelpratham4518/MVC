@@ -1,0 +1,48 @@
+<apex:page controller="InterviewRecordLoginController" sidebar="false" showHeader="false" docType="html-5.0" lightningStylesheets="true" standardStylesheets="false">
+    <apex:slds />
+    
+    <body style="background-image: url('{!$Resource.InterviewPageBackground}'); background-position: center; background-repeat: no-repeat;background-attachment:fixed; width:100%; background-size: cover;">
+        <apex:form >
+            
+            <table style="margin:10% auto; width:30%"> 
+                
+                <tr style="text-align:center;">
+                    <td colspan="2">
+                        <div style="font-size:20px;font-weight:bold; color:solid black;text-align:center"><br/>
+                            Enter Login Details
+                        </div>             
+                    </td>        
+                </tr><br/>
+                <tr>
+                    <td style="width:30%;padding:1%;text-align:right; ">                            
+                        <apex:outputText >User Name :</apex:outputText> 
+                    </td>
+                    <td style="width:60%;padding:1%;">
+                        <apex:inputText value="{!UserID}" id="UserID" label="UserID" required="true" style="width:100%;padding:6px;border:0px;border-radius:4px;" html-placeholder="User Name.." /><br/>  
+                    </td>    
+                </tr>
+                <tr>
+                    <td style="width:30%;padding:1%;text-align:right; ">
+                        <!--<div class="slds-form-element" style="font-size:18px; color:solid black; margin-left:19%; margin-bottom:15px">-->
+                        <apex:outputText >Password :</apex:outputText>
+                    </td>
+                    <td style="width:60%;padding:1%;">
+                        <apex:inputSecret value="{!UPassword}" id="UPassword" label="Password" required="true" style="width:100%;padding:6px;border:0px;border-radius:4px;" html-placeholder="Password.." /><br/>      
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:1%" colspan="2">
+                        <div class="slds-form-element" style="text-align:center;">
+                            <apex:commandButton value="Login" action="{!doLogin}" style="width:32%;padding:6px;border:0px;border-radius:4px;background-color:white" /> 
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="padding:1%">
+                        <apex:messages style="color:white;text-align:center;background-color:maroon;border-radius:4px;font-size:15px;"/>
+                    </td>
+                </tr>
+            </table>
+        </apex:form>
+    </body>
+</apex:page>

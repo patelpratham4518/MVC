@@ -1,0 +1,111 @@
+.THIS .chevron { 
+    display: inline-block;
+    /* box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.35);*/
+    overflow: hidden;
+    border-radius: 5px; 
+    font-family:  verdana; 
+    text-align: center; 
+    width:100%;
+    padding-left:5%;
+    padding-right:5%;
+}
+ 
+.THIS .chevron a {
+    text-decoration: none;
+    outline: none;
+    display: block;
+    float: left;
+    font-size: 12px;
+    line-height: 36px;
+    color: white; 
+    padding: 0 10px 0 60px; 
+    position: relative;
+    height:36px;
+}
+
+.THIS .flipper {
+    transition: 0.6s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.THIS a.visited:hover .flipper{
+        transform: rotateX(180deg);
+}
+
+.THIS .back {
+    transform: rotateX(180deg);
+}
+
+ 
+.THIS .chevron a:first-child {
+    padding-left: 46px;
+    border-radius: 20px 0 0 20px;  
+}
+.THIS .chevron a:first-child:before {
+    left: 14px;
+}
+.THIS .chevron a:last-child {
+    border-radius: 0 20px 20px 0; 
+    padding-right: 20px;
+}
+
+.THIS .chevron a:after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    right: -18px;  
+    width: 36px; 
+    height: 36px; 
+    transform: scale(0.707) rotate(45deg); 
+    z-index: 1;  
+    box-shadow: 
+        2px -2px 0 2px #fff, 
+        3px -3px 0 2px #fff; 
+    border-radius: 0 5px 0 50px;
+} 
+.THIS .chevron a:last-child:after {
+    content: none;
+} 
+.THIS .chevron a:before {  
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin: 8px 0;
+    position: absolute;
+    top: 0;
+    left: 30px; 
+    font-weight: bold;
+} 
+
+.THIS .noaction a, .THIS .noaction a:after {
+    background: #E0E5EE;
+    color: black;
+    transition: all 0.5s;
+}
+.THIS .noaction a:before {
+    background: #E0E5EE;
+    box-shadow: 0 0 0 1px #ccc;
+}
+.THIS .noaction a:hover, .THIS .noaction a:hover:after  {
+    background: #93a5c4; 
+}
+
+.THIS .noaction a.visited, .THIS .noaction a.visited:after{
+    background: #4BCA81;
+    color:white;
+}
+.THIS .noaction a.visited:hover, .THIS .noaction a.visited:hover:after  {
+    background: #30a260; 
+}
+
+.THIS .noaction a.active, .THIS .noaction a.active:after{
+    background: #0070D2;
+    color:white;
+}
+
+.THIS .noaction a.active:hover, .THIS .noaction a.active:hover:after  {
+    background: #00315b;
+    color:white;
+}

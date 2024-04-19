@@ -1,0 +1,212 @@
+<apex:page controller="RegistrationController" sidebar="false" showHeader="false" lightningstylesheets="true">
+    <div style="15%; float:left;">
+        <apex:image id="theImage" value="{!$Resource.MVCloudRegLogo}" width="100" height="50" 
+                    style="margin-left:30px;" />
+    </div>
+    <apex:slds />
+    <head>
+        
+    </head>
+    <style type="text/css">
+        #wrapper {
+        width: 50%;
+        margin: 0 auto;
+        font-family: Verdana, sans-serif;
+        text-align: left;
+        font-size: 15px;
+        }
+        legend {
+        color: black;
+        font-size: 16px;
+        padding: 0 10px;
+        background: #fff;
+        -moz-border-radius: 4px;
+        box-shadow: 0 1px 5px rgba(4, 129, 177, 0.5);
+        padding: 5px 10px;
+        text-transform: uppercase;
+        font-family: Helvetica, sans-serif;
+        font-weight: bold;
+        }
+        fieldset {
+        border-radius: 7px;
+        background: #fff;
+        background: -moz-linear-gradient(#fff, #f9fdff);
+        background: -o-linear-gradient(#fff, #f9fdff);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f9fdff));
+        background: -webkit-linear-gradient(#fff, #f9fdff);
+        padding: 20px;
+        border-color: rgba(4, 129, 177, 0.4);
+        }
+        input,
+        inputText {
+        color: black;
+        background: #fff;
+        border: 1px solid #CCCCCC;
+        color: #000000;
+        font-size: 16px;
+        line-height: 1.5em;
+        width: 40%;
+        height: 40px;
+        margin-bottom: 15px;
+        font-family: Times New Roman, Open-Sans;
+        padding-left: 5px;
+        margin-top: 8px;
+        padding-top: 4px;
+        -moz-border-radius: 15px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        #errorMessage {
+        color: red;
+        font-size: 16px;
+        width: 50%;
+        height: 40px;
+        margin-bottom: 15px;
+        alignment-adjust: center;
+        -moz-border-radius: 15px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .lbl,
+        .k-textbox {
+        float: left;
+        width: 50%;
+        }
+    </style>
+    
+    <body class="slds-scope" style="background-image: url('{!$Resource.RegistrationBackground}'); background-position:center; background-position:fixed; background-repeat: no-repeat ; height:100%; width:100%; background-size: cover;">
+        <div style="margin-left:18%; margin-top:3%;" class="slds-align_absolute-center">
+            <apex:form style="width: 100%; margin-left:12%; margin-bottom:3%;" >
+                <div style="font-size:30px; color:#00CCFF; text-decoration:underline; font-family:Times New Roman, Open-Sans; margin-left:15%;">
+                    Registration Form
+                </div><br/>
+                <div style="font-weight:bold; color:red; font-size:15px;">
+                    <apex:messages style="width:40%;" id="msg"/>
+                </div>
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:14px; color:black; font-weight:bold; ">
+                        <abbr class="slds-required" title="required">* </abbr>First Name : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!FirstName}" id="FirstName" label="FirstName" html-placeholder="Name.." required="true" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Last Name : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!LastName}" id="LastName" label="LastName" required="true" html-placeholder="Last Name.." /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="width:40%; font-size:18px; color:gray;">
+                    <label class="slds-form-element__label" for="select-01" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Gender :</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:selectList value="{!selectedGender}" multiselect="false" size="1" styleClass="slds-select" required="true">
+                                    <apex:selectOptions value="{!genderOptions}" />
+                                </apex:selectList>
+                            </div>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Email : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!Email}" id="Email" label="Email" required="true" html-placeholder="abc.z@gmail.com" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Mobile Number : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!Mobile}" id="Mobile" html-placeholder="+91-9999999999" required="true" maxlength="10" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="width:40%; font-size:18px; color: gray;">
+                    <label class="slds-form-element__label" for="select-01" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Select Degree :</label>
+                        <div class="slds-form-element__control">
+                            <div class="slds-select_container">
+                                <apex:selectList value="{!selectedDegree}" multiselect="false" size="1" styleClass="slds-select" required="true">
+                                    <apex:selectOptions value="{!DegreeOptions}"/>
+                                </apex:selectList>
+                            </div>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>College Name : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!CollegeName}" id="College_Name__c" label="College Name" required="true" html-placeholder="CollegeName" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Branch : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!Branch}" id="Branch__c" label="Branch" required="true" html-placeholder="Branch" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Year of Passing : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!YearOfPassing}" id="Year_Of_Passing__c" label="Year Of Passing" maxlength="4" required="true" html-placeholder="Year Of Passing" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>CGPA/Percentage : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!CGPA}" id="CGPA__c" label="CGPA" html-placeholder="CGPA" maxlength="4" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;">
+                        <abbr class="slds-required" title="required">* </abbr>Experience : </label>
+                        <div class="slds-form-element__control">
+                            <apex:inputText value="{!Experience}" id="Experience__c" label="Experience" maxlength="2" html-placeholder="Experience(in Number)" /><br/>
+                        </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="text-input-id-1" style="font-size:13px; color:black; font-weight:bold;"> Reference Name : </label>
+                    <div class="slds-form-element__control">
+                        <apex:inputText value="{!Reference}" id="Reference_Name__c" label="Reference Name" html-placeholder="Reference" /><br/>
+                    </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:18px;">
+                    <label class="slds-form-element__label" for="textarea-id-01" style="font-size:13px; color:black; font-weight:bold;">Your Message :</label>
+                    <div class="slds-form-element__control">
+                        <apex:inputText value="{!Title}" id="Title" html-placeholder="Text.." /><br/>
+                    </div>
+                </div>
+                
+                <div class="slds-form-element" style="font-size:20px; ">
+                    <label class="slds-form-element__label" for="textarea-id-01" style="font-size:13px; color:black; font-weight:bold;">Your CV :</label>
+                    <div class="slds-form-element__control">
+                        <apex:inputFile value="{!resume}"  accept="doc, txt, pdf" filename="{!fileName}" contentType="{!contentType}" />
+                    </div>
+                </div><br/>
+                
+                <div class="slds-form-element" style="font-size:20px; margin-left:13%;">
+                    <apex:commandButton value="Submit Form" action="{!submit}"   style="font-family:HelveticaNeuE, Open-Sans; font-size:18px;  background:#00CCFF; color:#FFFFFF; width:150px; height:35px; font-weight:bold; " />
+                </div>
+                
+            </apex:form>
+        </div>
+    </body>
+</apex:page>

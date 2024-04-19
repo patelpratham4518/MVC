@@ -1,0 +1,38 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+	<aura:attribute name="selTabId" type="String" default="1"/>
+
+        <div style="width:100%;margin:auto;margin-top:2%;">
+    	<div class="slds-grid slds-gutters mainSection" style="margin:2%;">
+		<div class="slds-col slds-size_1-of-3">
+			<img src="{!$Resource.mvlogo}" style="width:30%;"/>
+       	</div>
+        <div class="slds-col slds-size_2-of-3" style="font-size:10px;text-align:right;padding-top:3%;">
+            <span style="font-size: 15px;font-style: italic;">Username</span>&nbsp;&nbsp;
+            <lightning:buttonMenu aura:id="userSetting" iconName="utility:settings" alternativeText="Show menu" onselect="{! c.handleSelect }">
+                <lightning:menuItem label="My Profile" value="Profile" />
+                <lightning:menuItem label="Change Password" value="ChangePassoword"/>
+                <lightning:menuItem label="Logout" value="Profile" />
+            </lightning:buttonMenu><br/>
+      	</div>
+	</div>
+    <div aura:id="homepage" style="">
+        <!--<div style="width:90%;float:left;">-->
+    	<lightning:tabset selectedTabId="{!v.selTabId}" >
+            <lightning:tab label="Home" id="1" title="Home">
+                <a href="https://dharmikmv-dev-ed.my.salesforce.com/secur/logout.jsp">logout</a>
+                Home
+            </lightning:tab>
+            <lightning:tab label="Project" id="2" title="Project">
+                <c:Project/> 
+            </lightning:tab>            
+            <lightning:tab label="Time Log" id="3" title="Time Log">
+                <c:TimeLog/>   
+            </lightning:tab>
+        </lightning:tabset>
+        <!--</div>-->
+        <!--<div style="width:10%;float:right;padding-left:3%;">
+        	<lightning:button variant="brand" label="Logout"/>
+        </div>-->
+	</div>
+  </div>
+</aura:component>

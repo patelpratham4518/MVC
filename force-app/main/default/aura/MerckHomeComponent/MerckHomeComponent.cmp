@@ -1,0 +1,18 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global">
+	
+        <lightning:tabset>
+            <lightning:tab label="Home">
+                
+            </lightning:tab>
+            <lightning:tab label="Contract" title="Contract">
+                <c:contractComponent/>
+            </lightning:tab>
+            <lightning:tab label="Rebate">
+                <c:RebateComponent/>
+            </lightning:tab>
+            <lightning:tab label="Sales">
+                <c:salesComponent/>
+            </lightning:tab>
+        </lightning:tabset>
+	
+</aura:component>

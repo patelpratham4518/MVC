@@ -1,0 +1,24 @@
+<template>
+    <template if:true={showWaitingPage}>
+        <div class="wait-page">
+            <div class="background-image"></div>
+            <div class="content">
+                <div class="text-box">
+                    <p>Please Wait</p>
+                    <p>Your Exam Will Start on {examinfo} Please refresh page after that.</p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template if:false={showWaitingPage}>
+        <div class="missed-page">
+            <div class="background-image"></div>
+            <div class="content">
+                <div class="text-box">
+                    <p>You Missed the Exam.</p>
+                    <p>Your Exam Was on {examinfo}. Please Contact You Interviewer.</p>
+                </div>
+            </div>
+        </div>
+    </template>
+</template>

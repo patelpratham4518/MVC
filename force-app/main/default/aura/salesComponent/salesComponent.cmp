@@ -1,0 +1,68 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="contractController" access="global">
+    <aura:attribute name="salesList" type="object"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+    
+    <div style="">
+        <div class="slds-page-header" style="width:60%;float:left;">
+        	<div class="slds-media">
+        		<div class="slds-media__figure">
+        			<lightning:icon iconName="action:record" alternativeText="Approved"/>  
+        		</div>
+        		<div class="slds-media__body" style="padding-top: 13px;">
+        			<h1 class="slds-page-header__title slds-truncate slds-align-middle">Sales List</h1>
+        			<p class="slds-text-body_small slds-line-height_reset"></p>
+        		</div>
+        	</div>
+		</div>
+        <div style="text-align: right;padding-right:2%;">
+            <lightning:input type="date" placeholder="Search via due date" aura:id="selectedDueDate" onchange="{!c.searchDate}"/>
+        </div>
+        <div style="padding-top:1%">
+            <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <th scope="col">
+                            <div class="slds-truncate" title="Customer Name">Customer Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Due date">Due Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Business Unit">Business Unit</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Status">Status</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Amount">Amount</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.salesList}" var="sales">
+                        <tr>
+                            <td scope="row" data-label="Customer Name">
+                                <div class="slds-truncate" title="Customer Name">{!sales.Account__r.Name}</div>
+                            </td>
+                            <td data-label="Due Date">
+                                <div class="slds-truncate" title="Due Date">{!sales.Due_Date__c}</div>
+                            </td>
+                            <td data-label="Business Unit">
+                                <div class="slds-truncate" title="Business Unit">{!sales.Business_Unit__c}</div>
+                            </td>
+                            <td data-label="status">
+                                <div class="slds-truncate" title="status">{!sales.Status__c}</div>
+                            </td>
+                            <td data-label="Amount">
+                                <div class="slds-truncate" title="Amount">{!sales.Amount__c}</div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        <div style="text-align:center;padding-top:1%;"><p><b>{!v.message}</b></p></div>
+       	
+       </div>
+ </div>
+</aura:component>

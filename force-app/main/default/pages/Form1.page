@@ -1,0 +1,747 @@
+<apex:page sidebar="false" showHeader="false" docType="html-5.0" controller="HiringFormController">
+    <html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alphardex/aqua.css@master/dist/aqua.min.css"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"/>
+        <title>Form 1</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 95vh;
+                background-image: url('https://www.cultfurniture.com/blog/wp-content/uploads/2015/09/The-Intern-Set-Design.jpg');
+                background-size:  cover; 
+                background-position: center;
+                font-family: 'Roboto Slab', serif !important;
+            }
+            
+            .btn {
+                padding: 8px 20px;
+                border-radius: 0;
+                overflow: hidden;
+            }
+            
+            .btn::before {
+                position: absolute;
+                content: "";
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(120deg, transparent, white, transparent);
+                transform: translateX(-100%);
+                transition: 0.6s;
+            }
+            
+            .btn:hover {
+                background: transparent;
+                box-shadow: 0 0 20px 10px rgba(51, 152, 219, 0.5);
+            }
+            
+            .btn:hover::before {
+                transform: translateX(100%);
+            }
+            
+            .form-input-material {
+                --input-default-border-color: black;
+                --input-border-bottom-color: black;
+            }
+            
+            .form-input-material input {
+                color: white;
+            }
+            
+            .login-form {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 30px 40px;
+                color: white;
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 10px;
+                box-shadow: 0 0.4px 0.4px rgba(128, 128, 128, 0.109), 0 1px 1px rgba(128, 128, 128, 0.155), 0 2.1px 2.1px rgba(128, 128, 128, 0.195), 0 4.4px 4.4px rgba(128, 128, 128, 0.241), 0 12px 12px rgba(128, 128, 128, 0.35);
+                width: 60%;
+                margin: auto;
+            }
+            
+            .login-form h1 {
+                /*margin: 0 0 24px 0;*/
+            }
+            
+            .login-form .form-input-material {
+                margin: 15px 0;
+                width: 90%;
+            }
+            
+            .login-form .btn {
+                width: 40%;
+                margin: 18px 0 9px 0;
+                background-color: #00ccff;
+                border-radius: 24px;
+                box-shadow: 0 10px 20px rgba(20, 219, 209, 0.5);
+                border: 0px !important;
+                color: white !important;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+            
+            .form-input-material::before {
+                background: #00ccff !important;
+            }
+            
+            .form-input-material input {
+                color: black !important;
+            }
+            
+            @media screen and (max-width: 700px) {
+                .login-form {
+                    width: 80%;
+                }
+            }
+            @media (min-width:700px) and (max-width: 1000px){
+              .login-form{
+                width: 70%;
+              }
+            }
+            
+            img.sticky {
+                position: -webkit-absolute;
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                width: 100px;
+                height: 100px;
+            }
+            
+            img.headerImg {
+                width: auto;
+                height: auto;
+            }
+            
+            .headerr {
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .headerr h1 {
+                color: black;
+            
+            }
+            .form-input-material select{
+                width: 100%;
+            }
+        .row{
+            width:100%;
+            justify-content: center;
+        }
+        .column{
+            width:50%;
+        }
+    
+        @media screen and (max-width: 1400px){
+            .container{
+                margin-top: 50px;
+                margin-bottom: 50px;
+            }
+        }    
+        
+        @media screen and (max-width: 800px){
+            .row{
+                display: block;
+            }
+            h1{
+                font-size: 1.5rem;
+            }
+            .column{
+                width: 100%;
+            }
+            .login-form{
+                width: 95%;
+            }
+        }
+       
+        
+        
+        /*======================================Style For Error MESSAGES===================================*/
+        
+        :root{
+          --width: 280px;
+          --height: 180px;
+        }
+        
+        
+        .error-500{
+          
+          color: #1E4B6D;
+          text-shadow: 1px 1px 1px rgba(255, 255, 255, .3);
+        }
+        
+        .error-500:after{
+          content: attr(data-text);
+          display: block;
+          margin-top: calc(var(--height) / 10 + 15px);
+          font-size: 28pt;
+          text-align: center;
+        }
+        
+        /*#error{*/
+        /*    display:none;*/
+        /*}*/
+        /*#mainContent{*/
+        /*    display: block;*/
+        /*}*/
+        
+        #error .row a:hover{
+            text-decoration: none !important;
+        }
+
+
+
+
+
+        /* ======================================STYLE FOR MALE AND FEMALE=========================================== */
+        .btn-switch {
+          font-size: 1em;
+          position: relative;
+          display: inline-block;		
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+          text-align: center;
+        }
+        .btn-switch__radio {
+          display: none;
+        }
+        .btn-switch__label {
+          display: inline-block;	
+          padding: .75em .5em .75em .75em;
+          vertical-align: top;
+          font-size: 1em;
+          font-weight: 700;
+          line-height: 1.5;
+          color: white;
+          cursor: pointer;
+          transition: color .2s ease-in-out;
+        }
+        .btn-switch__label + .btn-switch__label {
+          padding-right: .75em;
+          padding-left: 0;
+        }
+        .btn-switch__txt {
+          position: relative;
+          z-index: 2;
+          display: inline-block;
+          min-width: 1.5em;
+          opacity: 1;
+          pointer-events: none;
+          transition: opacity .2s ease-in-out;
+        }
+        .btn-switch__radio_no:checked ~ .btn-switch__label_yes .btn-switch__txt,
+        .btn-switch__radio_yes:checked ~ .btn-switch__label_no .btn-switch__txt {
+          opacity: 0;
+        }
+        .btn-switch__label:before {
+          content: "";
+          position: absolute;
+          z-index: -1;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background: #f0f0f0;
+          border-radius: 46px;
+          box-shadow: inset 0 .0715em .3572em rgba(43,43,43,.05);
+          transition: background .2s ease-in-out;
+        }
+        .btn-switch__radio_yes:checked ~ .btn-switch__label:before {
+          background: #6ad500;
+          /* background: rgba(106, 213, 0,0.5); */
+        }
+        .btn-switch__radio_no:checked ~ .btn-switch__label:before{
+          background: #00ccff;
+          /* background: rgba(0, 204, 255,0.5);  */
+        }
+        .btn-switch__label_no:after {
+          content: "";
+          position: absolute;
+          z-index: 2;
+          top: .5em;
+          bottom: .5em;
+          left: .5em;
+          width: 2.5em;
+          background: url('https://www.vexels.com/media/users//3/145908/raw/52eabf633ca6414e60a7677b0b917d92.jpg');
+          background-size: cover;
+          border-radius: 28px;	
+          pointer-events: none;
+          box-shadow: 0 .1429em .2143em rgba(43,43,43,.2), 0 .3572em .3572em rgba(43,43,43,.1);
+          transition: left .2s ease-in-out, background .2s ease-in-out;
+        }
+        .btn-switch__radio_yes:checked ~ .btn-switch__label_no:after {
+          left: calc(100% - 2.7em);
+          background: url('data:image/png;base64,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');
+          background-size: cover;
+        }
+        .btn-switch__radio_no:checked ~ .btn-switch__label_yes:before,
+        .btn-switch__radio_yes:checked ~ .btn-switch__label_no:before {
+          z-index: 1;
+        }
+        .btn-switch__radio_yes:checked ~ .btn-switch__label_yes {
+          color: #fff;
+        }
+        .MaF{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .MaF p{
+          /* margin-top: 0rem !important;
+          margin-bottom: 0rem !important; */
+          margin: 15px 0 0 0 !important;
+        }
+
+
+
+
+        /* ==============================STYLE FOR FRESHER OR EXPERIENCE========================== */
+        .cbx {
+          -webkit-user-select: none;
+          user-select: none;
+          cursor: pointer;
+          padding: 6px 8px;
+          border-radius: 6px;
+          overflow: hidden;
+          transition: all 0.2s ease;
+        }
+        .cbx:not(:last-child) {
+          margin-right: 6px;
+        }
+        .cbx:hover {
+          background: rgba(0,119,255,0.06);
+        }
+        .cbx span {
+          float: left;
+          vertical-align: middle;
+          transform: translate3d(0, 0, 0);
+        }
+        .cbx span:first-child {
+          position: relative;
+          width: 18px;
+          height: 18px;
+          border-radius: 4px;
+          transform: scale(1);
+          border: 1px solid gray;
+          transition: all 0.2s ease;
+          box-shadow: 0 1px 1px rgba(0,16,75,0.05);
+        }
+        .cbx span:first-child svg {
+          position: absolute;
+          top: 3px;
+          left: 2px;
+          fill: none;
+          stroke: #fff;
+          stroke-width: 2;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-dasharray: 16px;
+          stroke-dashoffset: 16px;
+          transition: all 0.3s ease;
+          transition-delay: 0.1s;
+          transform: translate3d(0, 0, 0);
+        }
+        .cbx span:last-child {
+          padding-left: 8px;
+          line-height: 18px;
+        }
+        .cbx:hover span:first-child {
+          border-color: #07f;
+        }
+        .inp-cbx {
+          position: absolute;
+          visibility: hidden;
+        }
+        .inp-cbx:checked + .cbx span:first-child {
+          background: #07f;
+          border-color: #07f;
+          animation: wave 0.4s ease;
+        }
+        .inp-cbx:checked + .cbx span:first-child svg {
+          stroke-dashoffset: 0;
+        }
+        .FreOrExp {
+          font-family: "Open Sans", sans-serif;
+          font-size: 16px;
+          -webkit-font-smoothing: antialiased;
+          text-rendering: optimizelegibility;
+          color: #223254;
+          margin: 15px 0 0 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .inline-svg {
+          position: absolute;
+          width: 0;
+          height: 0;
+          pointer-events: none;
+          user-select: none;
+        }
+        @media screen and (max-width: 640px) {
+          .FreOrExp {
+            width: auto;
+            display: inherit;
+            padding: 20px;
+          }
+          .cbx {
+            width: 100%;
+            margin-bottom: 4px;
+            display: inline-block;
+          }
+        }
+        @-moz-keyframes wave {
+          50% {
+            transform: scale(0.9);
+          }
+        }
+        @-webkit-keyframes wave {
+          50% {
+            transform: scale(0.9);
+          }
+        }
+        @-o-keyframes wave {
+          50% {
+            transform: scale(0.9);
+          }
+        }
+        @keyframes wave {
+          50% {
+            transform: scale(0.9);
+          }
+        }
+
+
+
+
+        /* ==================================STYLE FOR EXPERIENCE TIME============================== */
+        .range-slider {
+          width: 90%;
+          display: none;
+          transition: display 5s;
+        }
+        .range-slider__range {
+          -webkit-appearance: none;
+          width: calc(100% - (73px));
+          height: 10px;
+          border-radius: 5px;
+          background: #d7dcdf;
+          outline: none;
+          padding: 0;
+          margin: 0;
+        }
+        .range-slider__range::-webkit-slider-thumb {
+          appearance: none;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #2c3e50;
+          cursor: pointer;
+          transition: background 0.15s ease-in-out;
+        }
+        .range-slider__range::-webkit-slider-thumb:hover {
+          background: #1abc9c;
+        }
+        .range-slider__range:active::-webkit-slider-thumb {
+          background: #1abc9c;
+        }
+        .range-slider__range::-moz-range-thumb {
+          width: 20px;
+          height: 20px;
+          border: 0;
+          border-radius: 50%;
+          background: #2c3e50;
+          cursor: pointer;
+          transition: background 0.15s ease-in-out;
+        }
+        .range-slider__range::-moz-range-thumb:hover {
+          background: #1abc9c;
+        }
+        .range-slider__range:active::-moz-range-thumb {
+          background: #1abc9c;
+        }
+        .range-slider__range:focus::-webkit-slider-thumb {
+          box-shadow: 0 0 0 3px #fff, 0 0 0 6px #1abc9c;
+        }
+        .range-slider__value {
+          display: inline-block;
+          position: relative;
+          width: 60px;
+          color: #fff;
+          line-height: 20px;
+          text-align: center;
+          border-radius: 3px;
+          background: rgba(44, 62, 80,0.6);
+          padding: 5px 10px;
+          margin-left: 8px;
+        }
+        .range-slider__value:after {
+          position: absolute;
+          top: 8px;
+          left: -7px;
+          width: 0;
+          height: 0;
+          border-top: 7px solid transparent;
+          border-right: 7px solid rgba(44, 62, 80,0.6);
+          border-bottom: 7px solid transparent;
+          content: '';
+        }
+        ::-moz-range-track {
+          background: #d7dcdf;
+          border: 0;
+        }
+        .range-slider input::-moz-focus-inner, .range-slider input::-moz-focus-outer {
+          border: 0;
+        }
+        .range-slider label{
+          color: black;
+        }
+
+        </style>
+        
+       
+        
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"/>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+        AOS.init();
+        </script>
+
+    </head>
+
+    <body>
+  
+        
+        <div class="container" id="error" style="display:{!if(toast,"block","none")};">
+            <div class="row">
+                <img src="{!$Resource.mvlogo}" height="200" width="200"/>
+            </div>
+            <div class="row">
+                <!-- <div class="error-500" data-text="{!errorMsg}"></div> -->
+                <div class="error-500" data-text="Comin' in hot..!!"></div>
+            </div>
+            <!-- <div class="row" style="margin-top:40px;">
+                <a href="{!'https://powerbespoke--mvdev--c.visualforce.com/apex/UpdateFromSite?Id='+ContId}">Click Here if you want to re-update</a>
+            </div> -->
+            
+        </div>
+        
+        
+        <div class="container" id="mainContent" style="display:{!if(!toast,"block","none")};" data-aos="zoom-in" data-aos-duration="1000">
+    <apex:outputPanel rendered="{!foundId != false}">
+        <apex:form styleClass="login-form" >
+            
+            <div class="row">
+                <div class="headerr">
+                    <!-- <h1>MV<b>Clouds</b></h1> -->
+                    <img class="headerImg" src="{!$Resource.mvlogo}" alt="MV Clouds" />
+                </div>
+            </div>
+            
+           
+                
+            <div class="row">
+                
+                
+                    <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material" id="firstname" html-placeholder=" " html-autocomplete="off"/>
+                        <label for="firstname">First Name</label>
+                    </div>
+        
+                    <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material"  id="email" html-placeholder=" "/>
+                        <label for="email">Last Name</label>
+                    </div>
+                    
+                    <!-- <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material" id="street" html-placeholder=" "/>
+                        <label for="street">Male &amp; Female</label>
+                    </div> -->
+
+                    <div class="MaF">
+                      <p class="btn-switch">					
+                        <input type="radio" id="yes" name="switch" class="btn-switch__radio btn-switch__radio_yes" />
+                        <input type="radio" checked="true" id="no" name="switch" class="btn-switch__radio btn-switch__radio_no" />		
+                        <label for="yes" class="btn-switch__label btn-switch__label_yes"><span class="btn-switch__txt">Female</span></label>
+                        <label for="no" class="btn-switch__label btn-switch__label_no"><span class="btn-switch__txt">Male</span></label>							
+                      </p>
+                  </div>
+                   
+                    <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material"  id="zip" html-placeholder=" "/>
+                        <label for="zip">Email</label>
+                    </div>
+        
+                    <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material"  id="mcity" html-placeholder=" "/>
+                        <label for="mcity">Mobile</label>
+                    </div>
+                    
+                    <!-- <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material"  id="price" html-placeholder=" "/>
+                        <label for="price">Fresher/Experience</label>
+                    </div>  -->
+                    
+                    <div class="FreOrExp">
+                      <input class="inp-cbx" id="morning" type="checkbox" checked="true"/>
+                      <label class="cbx" for="morning"><span>
+                          <svg width="12px" height="10px">
+                            <use xlink:href="#check"></use>
+                          </svg></span><span>Fresher</span></label>
+                      <input class="inp-cbx" id="noon" type="checkbox"/>
+                      <label class="cbx" for="noon"><span>
+                          <svg width="12px" height="10px">
+                            <use xlink:href="#check"></use>
+                          </svg></span><span>Experienced</span></label>
+                      
+                      <!--SVG Sprites-->
+                      <svg class="inline-svg">
+                        <symbol id="check" viewbox="0 0 12 10">
+                          <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                        </symbol>
+                      </svg>
+                    </div>
+
+                    <script>
+                      $(document).ready(function(){
+                          $('.inp-cbx').click(function() {
+                              $('.inp-cbx').not(this).prop('checked', false);
+                          });
+                          // $('#noon').click(function(){
+                          //   $('.range-slider').css("display", "block");
+                          // });
+                          // $('#morning').click(function(){
+                          //   $('.range-slider').css("display", "none");
+                          // });
+                          $("#noon").change(function() {
+                              if(this.checked) {
+                                // $('.range-slider').css("display", "block");
+                                $('.range-slider').show('1000');
+                              }else{
+                                $('.range-slider').css("display", "none");
+                              }
+                          });
+                          $("#morning").change(function() {
+                              if(this.checked) {
+                                $('.range-slider').css("display", "none");
+                              }
+                          });
+                      });
+                      </script>
+
+
+
+                    <!-- <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material" id="lastname" html-placeholder=" "/>
+                        <label for="lastname">Experience Time</label>
+                    </div> -->
+
+                    <div class="range-slider">
+                      <label>Experience Time</label>
+                      <input class="range-slider__range" type="range" value="0" min="0" max="15" step="0.1"/>
+                      <span class="range-slider__value">0</span>  
+                    </div>
+
+                    <script>
+                      var rangeSlider = function(){
+                        var slider = $('.range-slider'),
+                            range = $('.range-slider__range'),
+                            value = $('.range-slider__value');
+                          
+                        slider.each(function(){
+                      
+                          value.each(function(){
+                            var value = $(this).prev().attr('value');
+                            $(this).html(value);
+                          });
+                      
+                          range.on('input', function(){
+                            $(this).next(value).html(this.value);
+                          });
+                        });
+                      };
+                      
+                      rangeSlider();
+                      </script>
+                    
+                    <div class="form-input-material">
+                        <apex:input required="" styleClass="form-control-material" id="mobile" html-placeholder=" "/>
+                        <label for="mobile">File Upload</label>
+                    </div>
+                    
+                    
+                
+            
+            </div>
+                
+            
+                
+                
+                
+                
+                <div class="row" style="display:flex !important">
+                    <apex:commandButton action="{!submit}" styleClass="btn btn-primary btn-ghost" value="Submit"/>
+                </div>
+            <!--</form>-->
+        </apex:form>
+    </apex:outputPanel>
+</div>
+
+        <script>
+            var disableStyle = function(styleName, disabled) {
+                var styles = document.styleSheets;
+                var href = "";
+                for (var i = 0; i < styles.length; i++) {
+                    // href=style[i];
+                    href = styles[i].href.split("/");
+                    href = href[href.length - 1];
+                    if (href === styleName) {
+                        styles[i].disabled = disabled;
+                        break;
+                    }
+                }
+            };
+
+            disableStyle("common.css", 'true');
+            disableStyle("extended.css", 'true');
+        
+        
+        
+        const error = document.querySelector(".error-500");
+        let i = 0, data = "", text = error.getAttribute("data-text");
+        
+        let typing = setInterval(() => {
+          if(i == text.length){
+            clearInterval(typing);
+          }else{
+            data += text[i];
+            document.querySelector(".error-500").setAttribute("data-text", data);
+            i++;
+          }
+        }, 100);
+
+        
+        </script>
+
+    </body>
+
+    </html>
+
+</apex:page>

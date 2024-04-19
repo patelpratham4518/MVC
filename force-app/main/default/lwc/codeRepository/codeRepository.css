@@ -1,0 +1,83 @@
+.tbl {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tbl thead {
+    background: #0E7CAD;
+    color: #fff;
+}
+
+.tbl thead tr th {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+    letter-spacing: 0.2rem;
+    vertical-align: top;
+    border: 1px solid #aab7b8;
+}
+
+.tbl tbody tr td {
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    font-weight: normal;
+    text-align: center;
+    border: 1px solid #aab7b8;
+    padding: 0.8rem;
+}
+
+.tbl tr:nth-child(even) {
+    background: #f1f1f1;
+    transition: all 0.3s ease-in;
+    cursor: pointer;
+}
+
+.tbl tr:hover td {
+    background: #f1f1f1;
+    color: #000;
+    transition: all 0.3s ease-in;
+    cursor: pointer;
+}
+
+.tbl button {
+    display: inline-block;
+    border: none;
+    margin: 0 auto;
+    padding: 0.4rem;
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn_trash {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn_edit {
+    color: #fff;
+    background: #1e8449;
+}
+
+.slds-vertical-tabs{
+    overflow: auto !important;
+}
+
+.heading{
+    background-color: #0E7CAD;
+    padding: 13px;
+    color: white;
+    border-radius: 7px;
+}
+
+.code{
+    background-color: #EEEEEE;
+    padding: 13px;
+}
+
+.formateCode{
+    white-space: pre-wrap;
+}
+
+.codePart{
+    height: 100vh;
+}

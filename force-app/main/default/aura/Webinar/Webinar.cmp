@@ -1,0 +1,21 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <aura:Attribute name="fname" type="string"/>
+     <aura:Attribute name="lname" type="string"/>
+     <aura:Attribute name="number" type="integer"/>
+     <aura:Attribute name="email" type="string"/>
+     <aura:Attribute name="clgname" type="string"/>
+     <aura:Attribute name="professionname" type="string"/>
+    <lightning:card title="WebinarForm" iconName="custom:custom14">
+        <div class="slds-m-around_medium">
+            <lightning:input name="firstName" label="First Name" type="text" style="width:300px" value="{!v.fname}"></lightning:input>
+            <lightning:input name="lastName" label="Last Name" type="text" style="width:300px" value="{!v.lname}"></lightning:input>
+            <lightning:input name="mobilenumber" label="MobileNumber" type="number" style="width:300px" value="{!v.number}"/>
+            <lightning:input name="mobilenumber" label="Email" type="text" style="width:300px" value="{!v.email}"/>
+            <lightning:input name="collegename" label="CollegeName"  type="text" style="width:300px" value="{!v.clgname}"/>
+            <lightning:input name="Profession"  label="Profession"   type="text" style="width:300px" value="{!v.professionname}"/>
+            <div class="slds-m-around_medium">
+       <lightning:button variant="brand" label="Submit" title="Brand action" onclick="{! c.doInit}" />
+            </div>
+          </div>
+    </lightning:card>
+    </aura:component>

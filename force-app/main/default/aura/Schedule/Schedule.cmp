@@ -1,0 +1,242 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="scheduleinterview">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- For Schedule Interview -->
+    <aura:attribute name="interviewer" type="String" />
+    <aura:attribute name="date" type="date" />
+    <aura:attribute name="time" type="date" />
+    <aura:attribute name="disabled" type="boolean" default="true" />
+    <aura:attribute name="num" type="String" />
+    <aura:attribute name="test" type="string" />
+    <aura:attribute name="picklist1" type="list" />
+    <aura:attribute name="interviewerList" type="list" />
+
+    <!-- For Showing Name and Posting On Schedule and Result Page -->
+    <aura:attribute name="name" type="string" />
+    <aura:attribute name="posting" type="string" />
+
+    <!-- For Reschedule Page -->
+    <aura:attribute name="re" type="string" default="" />
+
+
+    <!-- FOr Result Page -->
+    <aura:attribute name="cs" type="string" default="0"/>
+    <aura:attribute name="sas" type="string" default="0"/>
+    <aura:attribute name="sda" type="string" default="0"/>
+    <aura:attribute name="fs" type="string" default="0"/>
+    <aura:attribute name="js" type="string" default="0"/>
+    <aura:attribute name="gc" type="string" default=""/>
+    <aura:attribute name="dc" type="string" default="0"/>
+    <aura:attribute name="prof" type="string" default="0"/>
+    <aura:attribute name="result" type="String" />
+    <aura:attribute name="picklist2" type="list" />
+    <aura:attribute name="authenticated" type="boolean" default="true" />
+    <aura:attribute name="num1" type="string" />
+
+    <!-- FOr Spinner on page -->
+    <aura:attribute name="spinner" type="Boolean" default="true" />
+
+    <!-- For Showing Resume -->
+    <!-- <aura:attribute name="contype" type="String" /> -->
+    <aura:attribute name="pdfvalue" type="String" />
+
+    <!-- For Showing Success Message -->
+    <aura:attribute name="msg" type="boolean" default="true" />
+    <aura:attribute name="msg1" type="boolean" default="true" />
+
+    <!-- For Contact Details -->
+    <aura:attribute name="con" type="Job_Application__c[]" default="{Email:'',Exp:'',FE:'',phone:''}" />
+
+    <!-- First interview taken by -->
+    <aura:attribute name="firstinter" type="String" />
+    <aura:attribute name="firint" type="boolean" default="false" />
+    
+    <aura:attribute name="meetornot" type="Boolean" default="false"/>
+
+    <div class="slds-grid slds-gutters">
+
+        <div class="slds-col" style="Width:0%">
+            <div class="slds-grid slds-gutters" style="text-align:center;margin-top:2%">
+                <div class="slds-col">
+                    <lightning:icon iconName="utility:email" size="x-small" />&nbsp;<b>{!v.con.Email}</b><br/>
+                    <lightning:icon iconName="utility:dialing" size="x-small" />&nbsp;<b>{!v.con.phone}</b>
+                </div>
+                <div class="slds-col">
+                    <lightning:icon iconName="utility:ribbon" size="x-small" />&nbsp;<b>{!v.con.FE}</b><br/>
+                    <lightning:icon iconName="utility:connected_apps" size="x-small" />&nbsp;<b>{!v.con.Exp}</b>
+                </div>
+            </div>
+            <!-- Resume For Schedule Page -->
+            <div style="margin-left:5%;margin-top:2%;">
+
+                <iframe src="{!v.pdfvalue}" width="100%" height="795px"></iframe>
+
+            </div>
+        </div>
+
+
+        <div class="slds-col" style="Width:0%">
+            <aura:if isTrue="{!v.authenticated}">
+                <aura:if isTrue="{!v.msg}">
+
+                    <!-- Scheduling Page -->
+
+
+
+                    <div class="slds-form-element slds-align_absolute-center slds-m-top_x-large">
+                        <!-- <div class="slds-col slds-size_11-of-12"> -->
+                        <form style="width:100%">
+                            <div class="slds-align_absolute-center slds-m-top_small slds-text-heading_medium" style="text-align:center;">
+                                <span><b>{!v.re}</b>Schedule <b>{!v.num}</b> Round of <b>{!v.name}</b> <br/>for <b>{!v.posting}</b></span>
+                            </div>
+
+                            <aura:if isTrue="{!v.firint}">
+                                <div class="slds-align_absolute-center slds-m-top_small slds-text-heading_medium" style="text-align:center;">
+                                    <span>First Interview Taken by :- <b>{!v.firstinter}</b></span>
+                                </div>
+                            </aura:if>
+
+
+                            <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                <lightning:select value="{!v.interviewer}" class="Widebutton" required="true" aura:id="interviewer" onchange="{!c.validate}" label="Interviewer">
+                                    <option value=''>Choose One..</option>
+                                    <aura:iteration items="{!v.interviewerList}" var="s1">
+                                        <option value="{!s1.Id}">{!s1.Name}</option>
+                                    </aura:iteration>
+                                </lightning:select>
+                            </div>
+
+                            <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                <lightning:input label="Date" class="Widebutton" required="true" type="date" aura:id="date" placeholder="Date Of Interview" onchange="{!c.validate}" value="{!v.date}" />
+                            </div>
+
+                            <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                <lightning:input label="Time" class="Widebutton genral" required="true" type="time" min="08:00:00.000Z" max="20:00:00.000Z" aura:id="time" placeholder="Time Of Interview" onchange="{!c.validate}" value="{!v.time}" />
+                            </div>
+                            
+                            <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                <p>Meeting Link:&nbsp;&nbsp;</p>
+                                <ui:inputCheckbox aura:id="checkbox" value="{!v.meetornot}" label="" change="{!c.onCheck}"/>
+                            </div>
+
+                            <div class="slds-size_1-of-2 slds-align_absolute-center" style="height:4rem">
+                                <lightning:button class="Widebutton" variant="success" disabled="{!v.disabled}" label="Schedule" onclick="{!c.schedule}" />
+                            </div>
+                        </form>
+                        <!-- </div> -->
+                    </div>
+
+                    <aura:set attribute="else">
+
+                        <!-- Message of Successfully Scheduled -->
+                        <div id="success" class="slds-box slds-theme_success slds-theme_alert-texture" style="display:block;text-align:center;">
+                            <p>Scheduled <strong>Successfully</strong>. </p>
+                        </div>
+
+                    </aura:set>
+
+                </aura:if>
+
+                <aura:set attribute="else">
+
+                    <!-- Resume Showing -->
+
+
+
+                    <div class="slds-form-element slds-align_absolute-center slds-m-top_x-large">
+                        <div class="slds-col slds-size_11-of-12">
+
+                            <aura:if isTrue="{!v.msg1}">
+
+                                <!-- Result Page -->
+                                <form>
+                                    <div class="slds-align_absolute-center slds-m-top_small slds-text-heading_medium">
+                                        <span>Result of <b>{!v.num1}</b> Round of <b>{!v.name}</b> for <b>{!v.posting}</b></span>
+                                    </div>
+
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Communication Skills" class="Widebutton" value="{!v.cs}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Communication Skills" value="{!v.cs}"/>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Salesforce Administrator Skills" class="Widebutton" value="{!v.sas}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Salesforce Administrator Skills" value="{!v.sas}"/>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Salesforce Development Skills" class="Widebutton" value="{!v.sda}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Salesforce Development Skills" value="{!v.sda}"/>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Front-end Skills" class="Widebutton" value="{!v.fs}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Front-end Skills" value="{!v.fs}"/>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Java Skills" class="Widebutton" value="{!v.js}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Java Skills" value="{!v.js}"/>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Development Comment" class="Widebutton" value="{!v.dc}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Development Comment" value="{!v.dc}"/>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <!--<lightning:textarea label="Professionalisms" class="Widebutton" value="{!v.prof}" />-->
+                                        <lightning:slider step="0.1" min="0" max="10" class="Widebutton" label="Professionalisms" value="{!v.prof}"/>
+                                    </div>
+                                    
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                        <lightning:textarea label="Comment" class="Widebutton" value="{!v.gc}" />
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center">
+
+                                        <lightning:select value="{!v.result}" class="Widebutton" required="true" label="Result">
+                                            <option value=''>Choose One..</option>
+                                            <aura:iteration items="{!v.picklist2}" var="s1">
+                                                <option value="{!s1}">{!s1}</option>
+                                            </aura:iteration>
+                                        </lightning:select>
+                                    </div>
+
+                                    <div class="slds-size_1-of-2 slds-align_absolute-center" style="height:4rem">
+                                        <lightning:button class="Widebutton" variant="success" label="Submit" onclick="{!c.submit}" />
+                                    </div>
+                                </form>
+
+                                <aura:set attribute="else">
+
+                                    <!-- Result Success message -->
+                                    <div id="success" class="slds-box slds-theme_success slds-theme_alert-texture" style="display:block;text-align:center;">
+                                        <p>Result Upload <strong>Successfully</strong>. </p>
+                                    </div>
+
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                    </div>
+
+
+                </aura:set>
+            </aura:if>
+        </div>
+    </div>
+
+    <!-- Spinner untile page load -->
+    <aura:if isTrue="{!v.spinner}">
+        <div aura:id="spinnerId" class="slds-spinner_container">
+            <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                <span class="slds-assistive-text">Loading...</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>
+    </aura:if>
+
+
+</aura:component>

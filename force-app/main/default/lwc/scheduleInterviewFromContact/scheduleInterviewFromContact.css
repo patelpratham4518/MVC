@@ -1,0 +1,13 @@
+.crateButton{
+    width: fit-content;
+}
+
+.save{
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+
+.Disabled{
+    pointer-events: none;
+}

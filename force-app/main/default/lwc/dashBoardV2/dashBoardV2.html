@@ -1,0 +1,85 @@
+<template>
+	<div class = "maindiv">
+
+		<div class="header">
+			DashBoard
+		</div>
+	
+		<div class ="body">
+			<div class="UpperBody">
+                <div class="ButtonGroupleft">
+                    <div class="combobox">
+                        <lightning-combobox 
+                            label="Status" 
+                            options={StatusOptions}
+                            value={selectedStatus} 
+                            onchange={handleChange} 
+                            placeholder="--Status--"
+                            variant="label-hidden"
+                            >
+                        </lightning-combobox>
+                    </div>
+                </div>
+				<div class="ButtonGroupleft">
+                    <div class="combobox">
+                        <lightning-combobox 
+                            label="Years" 
+                            options={years}
+                            value={selectedYear} 
+                            onchange={handleChange}
+                            placeholder="--Year--" 
+                            variant="label-hidden"
+                            >
+                        </lightning-combobox>
+                    </div>
+                    <div class="combobox">
+                        <lightning-combobox 
+                            label="Months" 
+                            options={months} 
+                            placeholder="--Month--"
+                            value={selectedMonth} 
+                            onchange={handleChange} 
+                            variant="label-hidden"
+                            >
+                        </lightning-combobox>
+                    </div>
+				</div>
+			</div>
+			<div class ="lowerBody">
+				<div class = 'table-container'>
+					<template if:true={timesheetDataList}>
+						<table class="rwd-table" >
+							<thead>
+								<tr> 
+									<th>Contact Name</th>
+									<th>Status</th>
+									<th>Date</th>
+									<th>Total Hours</th>
+								</tr>
+							</thead>
+								<tbody>
+									<template for:each={timesheetData} for:item="row">
+										<tr key={row.Name}>
+											<td data-th="Contant Name"> {row.ContactName} </td>
+											<td data-th="Status"> {row.Status} </td>
+											<td data-th="Date"> {row.Datee} </td>
+											<td data-th="Total Hours"> {row.totalhours} </td>
+										</tr>
+									</template>
+								</tbody>
+						</table>
+					</template>
+
+					<template if:false={timesheetDataList}>
+						
+						<h1 class="header">
+							No Data Found
+						</h1>
+						
+					</template>
+				</div>
+			</div>
+		</div>
+		<br/>
+	</div>
+</template>

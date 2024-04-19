@@ -1,0 +1,8 @@
+<apex:page controller="democlass">
+    <apex:form >
+        
+            <p>{!listc}</p>
+            
+    </apex:form>
+
+</apex:page>

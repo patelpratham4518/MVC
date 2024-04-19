@@ -1,0 +1,22 @@
+.THIS .kushu {
+    text-align: center;
+    border: 1px solid blue;
+    margin:0 auto;
+}
+.THIS .naveen{
+    background-color: white;
+   
+}
+.THIS #label .slds-button{
+    color: black;
+}
+.THIS .slds-button:focus{
+    outline:none;
+    box-shadow: none !important;
+}
+
+
+.THIS .padding{
+    padding-right:4%;
+    padding-left:4%;
+}

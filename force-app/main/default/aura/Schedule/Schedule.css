@@ -1,0 +1,11 @@
+.THIS .Widebutton {
+    width: 100%;
+    border-radius: 1.25em;
+}
+
+.THIS .slds-input {
+    border-radius: 1.25em;
+}
+.THIS .slds-select{
+    border-radius: 1.25em;
+}

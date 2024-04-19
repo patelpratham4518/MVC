@@ -1,0 +1,76 @@
+.popup-header {
+    background: #02ACE1;
+    color: white;
+    font-size: large;
+    font-weight: 700;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.buttoncls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: initial;
+    height: 4vh;
+    width: 15%;
+    min-height: 37px;
+    min-width: 90px;
+    cursor: pointer;
+    border: none;
+}
+
+.slds_Wrap {
+    display: flex;
+    padding: inherit;
+}
+
+.time-field {
+    height: 30px;
+    border: solid #d4d4d4 1px;
+    border-radius: 5px;
+    padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+    width: -webkit-fill-available;
+}
+
+.input-div{
+    margin: auto;
+}
+
+.create-btn {
+    background: #02ACE1;
+    color: white;
+}
+
+.cancel-btn {
+    color: black;
+    background: #E6E7E9;
+}
+
+
+@media screen and (max-width: 600px) {
+    .buttoncls {
+        width: 60px !important;
+        min-width: 0px;
+        font-size: 12px;
+    }
+
+    .slds_Wrap {
+        display: block;
+        padding: inherit;
+    }
+
+    .colon-div {
+        display: none;
+    }
+
+    .input-div {
+        margin: unset;
+        width: 100%;
+    }
+}

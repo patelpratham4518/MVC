@@ -1,0 +1,419 @@
+<template>
+
+    <template if:true={isSpinner}>
+        <div class="slds-spinner_container spinner-center" style="overflow: hidden;">
+            <div class="spinnerContainer">
+                <div class="plane-spinner">
+                    <svg id="b31cb9b3-53d9-4f4c-adfb-406ca50138db" data-name="Layer 1"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300.8 227.9">
+                        <title>delete</title>
+                        <path
+                            d="M1012.25,426a75.19,75.19,0,0,0-53.19,21.87l-149.86,149h53.46l93.43-92.62,29.7-29.43a37.56,37.56,0,0,1,26.73-11.07H1053l-16.2,37.8-17.28,40.77-7.29,17-16.2,37.8h41L1110,426.22h-97.75V426Z"
+                            transform="translate(-809.2 -425.95)" fill="#0684c2" />
+                        <path d="M862.66,596.87l119.89,51a74.47,74.47,0,0,0,29.43,5.94h40.77l-57-57Z"
+                            transform="translate(-809.2 -425.95)" fill="#10ab96" />
+                    </svg>
+                </div>
+                <h1 class="loading-spinnet-txt">Loading...</h1>
+            </div>
+        </div>
+    </template>
+	 	
+    <div class="container">
+        <c-mtp_-toast-message></c-mtp_-toast-message>
+
+            <div class="welcomeText slds-size_12-of-12 slds-align_absolute-center">
+                <h2 class="slds-p-bottom_medium">Manage Leave Applications From Here</h2>
+                <!-- <p class="slds-p-top_xx-large">Manage your leave from here</p> -->
+            </div>
+        
+        <!-- <div class="slds-p-bottom_medium"> -->
+    <div class = 'body'>
+            <div>
+                <!-- <div class="creat-btn" onclick={OpenApplyForLeave}>+</div> -->
+            
+            
+                <template if:true={ShowApplyForLeave}>
+
+                    <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container ">
+                          
+                             
+                                        
+                                        <!-- Body Section Start -->
+                          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+
+                                       <!-- Header Section Start -->
+                          <div class="slds-modal__header">
+                            <h1 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Apply For Leave</h1>
+                          </div>
+
+                            <div style="margin : 10px"></div>
+
+                            <lightning-record-edit-form object-api-name="Leave__c"  onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+
+                            <div class=" slds-p-around_small modal-body" id="modal-content-id-3">
+                            <div class="popup-fields slds_Wrap" style="padding: inherit;">
+                                <div class="slds-col   " >
+                                    <span><abbr class="slds-required" title="required">* </abbr>Start Date<span class="ShowColon">&nbsp; :</span></span>
+                                </div>
+                                    <div class="slds-col slds-size_1-of-12 pm-cl"><span>:</span></div>
+                                <div class="slds-col slds-size_8-of-12 dateInput">
+                                    <lightning-input class="InFields " type="date" name="PopupModalDate" variant="label-hidden" timezone="IST"
+                                    data-id="Start_Date__c" value={Start_Date__c} placeholder="Select Start date..." onchange={handleStartDateChange} required > </lightning-input>
+                                </div>
+                            </div>
+                            <div class="popup-fields slds_Wrap" style="padding: inherit;">
+                                <div class="slds-col   " >
+                                    <span><abbr class="slds-required" title="required">* </abbr>End Date<span class="ShowColon">&nbsp; :</span></span>
+                                </div>
+                                    <div class="slds-col slds-size_1-of-12 pm-cl"><span>:</span></div>
+                                <div class="slds-col slds-size_8-of-12 dateInput">
+                                    <lightning-input class="InFields " type="date" name="PopupModalDate" variant="label-hidden" timezone="IST"
+                                    data-id="End_Date__c" value={End_Date__c} placeholder="Select End date..." required > </lightning-input>
+                                </div>
+                            </div>
+                            <div class="popup-fields slds_Wrap" style="padding: inherit;">
+                                <div class="slds-col   " >
+                                    <span><abbr class="slds-required" title="required">* </abbr>Day Type<span class="ShowColon">&nbsp; :</span></span>
+                                </div>
+                                    <div class="slds-col slds-size_1-of-12 pm-cl"><span>:</span></div>
+                                <div class="slds-col slds-size_8-of-12 dateInput">
+                                    <lightning-combobox
+                                            class="InFields "
+                                            name="Day type"
+                                            variant="label-hidden"
+                                            value={Day__c}
+                                            data-id="Day__c" 
+                                            placeholder="Select Day type"
+                                            options={DayTypePicklist}
+                                            onchange={handleDayTypeSelect} 
+                                            required>
+                                        </lightning-combobox>
+                                </div>
+                            </div>
+                            <div class="popup-fields slds_Wrap" style="padding: inherit;">
+                                <div class="slds-col   " >
+                                    <span><abbr class="slds-required" title="required">* </abbr>Leave Type<span class="ShowColon">&nbsp; :</span></span>
+                                </div>
+                                    <div class="slds-col slds-size_1-of-12 pm-cl"><span>:</span></div>
+                                <div class="slds-col slds-size_8-of-12 dateInput">
+                                    <lightning-combobox
+                                            name="Leave type"
+                                            class="InFields "
+                                            label="Leave Type"
+                                            value={Leave_Type__c}
+                                            variant="label-hidden"
+                                            data-id="Leave_Type__c" 
+                                            placeholder="Select Leave type"
+                                            options={LeaveTypePicklist}
+                                            onchange={handleLeaveTypeSelect}
+                                            required >
+                                        </lightning-combobox>
+                                </div>
+                            </div>
+                            <div class="popup-fields slds_Wrap" style="padding: inherit;">
+                                <div class="slds-col   " >
+                                    <span><abbr class="slds-required" title="required">* </abbr>Leave Reason<span class="ShowColon">&nbsp; :</span></span>
+                                </div>
+                                    <div class="slds-col slds-size_1-of-12 pm-cl"><span>:</span></div>
+                                <div class="slds-col slds-size_8-of-12 dateInput">
+                                    <lightning-textarea class="InFields " type="text" variant="label-hidden"
+                                    data-id="Reason__c" value={Reason__c} placeholder="Type Leave Reason here..." required > </lightning-textarea>
+                                </div>
+                            </div>
+
+                            <!-- <template if:true={ShowMentorName} >
+                                <div class="popup-fields slds_Wrap" style="padding: inherit;">
+                                    <div class="slds-col   " >
+                                        <span><abbr class="slds-required" title="required">* </abbr>Mentor Name<span class="ShowColon">&nbsp; :</span></span>
+                                    </div>
+                                        <div class="slds-col slds-size_1-of-12 pm-cl"><span>:</span></div>
+                                    <div class="slds-col slds-size_8-of-12 dateInput">
+                                        <lightning-textarea class="InFields mentorfield" variant="label-hidden"
+                                        type="text" value={mentorName} disabled="" required > </lightning-textarea>
+                                    </div>
+                                </div>
+                            </template> -->
+                        </div>
+                            <div class="slds-modal__footer slds-modal__footer_directional">
+                                <div class="buttonclass">
+                                    <lightning-button variant="naural" label="Cancel" onclick={CloseApplyForLeave}> </lightning-button>
+                                    <!-- <lightning-button variant="brand" type="submit" label="Apply"></lightning-button>                -->
+                                    <lightning-button variant="brand" type="standard" label="Apply" onclick={handleApply} data-id="SaveBtn" ></lightning-button>               
+                                </div>
+                              </div>
+                        </lightning-record-edit-form>
+                          </div>
+           
+                        </div>
+                      </section>
+                                        <!-- behind Shadow Css -->
+                    <div  onclick={CloseApplyForLeave} >
+                      <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                    </div>
+                </template>
+               
+            </div> 
+    
+        
+
+        <div class="leaveOptions1"> 
+
+          <div class="leaveOptions">
+            <div class="PendingLeaves" onclick={getLeaveList} data-name="PendingLeaves">
+                <div class="DownArrows">
+                <h3> Pending Leaves  </h3> 
+               </div>
+            </div> 
+           
+            <div class="ApprovedLeaves" onclick={getLeaveList} data-name="ApprovedLeaves" >
+                <div class="DownArrows">
+                    <h3> Approved Leaves  </h3> 
+                </div>
+            </div>
+
+            <div class="RejectedLeaves" onclick={getLeaveList} data-name="RejectedLeaves" >
+                <div class="DownArrows">
+                    <h3> Rejected Leaves  </h3> 
+                </div>
+            </div>
+        </div>
+            
+            <div class="TraineeSelectionButton">
+
+                <!-- <template if:true={mentor}>
+                        <div class="TraineeLeaves" onclick={handleNavigateToAppRej} data-name="PendingLeaves">
+                            <div class="DownArrows">
+                            <h3> Trainee Leaves </h3> 
+                           </div>
+                        </div> 
+                </template> -->
+                <!-- <div class="DatePicker">
+                    <lightning-input type="date" name="input1" label="Enter a date" data-id="Selectdate" variant="label-hidden" value={DatepickerDate}></lightning-input>
+                </div> -->
+                    <div class="MonthPicklist">
+                        <lightning-combobox 
+                            label="Months" 
+                            options={Months} 
+                            value={SelectedMonth} 
+                            onchange={HandleMonthchange} 
+                            variant="label-hidden"
+                            class="combobox"
+                            >
+                        </lightning-combobox>
+                    </div>
+
+                    <div class="MonthPicklist">
+                        <lightning-combobox 
+                            label="Years" 
+                            options={years} 
+                            value={SelectedYearValue} 
+                            onchange={HandleYearChange} 
+                            variant="label-hidden"
+                            class="combobox"
+                            >
+                        </lightning-combobox>
+                    </div>
+            </div>
+
+        </div>
+
+        
+       
+                <template if:true={ShowLeaveList} >
+                    <div class="sub_container ">
+                        <div class="stack-top_left" data-name={LeaveStatus}>
+                            <h1>{LeaveStatus} : {TotalLeaves}</h1>
+                            <div class="leave-lst-main">
+                                <template for:each={LeaveDetails} for:item="Lev">
+                                    <div class="leave-block" key={Lev.Id} data-levid={Lev.Id} data-levname={Lev.Name} data-day={Lev.Day__c} data-startdate={Lev.Start_Date__c} data-enddate={Lev.End_Date__c} data-reason={Lev.Reason__c} data-status={Lev.Status__c} data-leavetype={Lev.Leave_Type__c} onclick={getDataValue}>
+                                    <div class="left-tckt-circle"></div>
+                                        <div class="main-lv-blck">
+                                            <div class="lv-info">
+                                                <p class="lv-days" >{Lev.Name} : &nbsp;&nbsp;&nbsp;&nbsp;{Lev.Day__c} Day Application</p>
+                                                <p class="lv-duration">{Lev.Start_Date__c} to {Lev.End_Date__c}</p>
+                                                <p class="lv-type">{Lev.Reason__c}</p>
+                                            </div>
+                                            <!-- <template if:true={mentor} >
+                                            <template if:true={ShowApproveRejectOption}>
+                                                <div class="ApprovOption" data-id={Lev.Id} data-name="ApproveLeaveStatus" onclick={UpdateLeaveStatus} > &#10003; </div>
+                                            </template>
+                                            </template> -->
+                                            <div class="lev-right-tp c-txt" data-name={Lev.Status__c}>
+                                                <p>{Lev.Status__c}</p>
+                                            </div>
+                                            <!-- <div class="PreviewOption" onclick={handleDeleteLeave}>  -->
+                                            <template if:true={ShowDELETEbtn}>
+                                                <lightning-icon icon-name="utility:delete" data-levid={Lev.Id} size="small" title="Preview" onclick={OpenAlertpopup}></lightning-icon>
+                                            </template>
+                                            <!-- </div> -->
+                                            <!-- <template if:true={mentor} > -->
+                                            <!-- <template if:true={ShowApproveRejectOption} > -->
+                                                <!-- <div class="RejectOption" data-id={Lev.Id} data-name="RejectLeaveStatus" onclick={UpdateLeaveStatus}> &#9932; </div> -->
+                                            <!-- </template> -->
+                                            <!-- </template> -->
+                                            
+                                        </div>
+                                            <div class="right-tckt-circle"></div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template if:true={ShowLeaveDetailPopup}>
+                     <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+                        <div class="slds-modal__container ">
+                                           <!-- Header Section Start -->
+                          <div class="slds-modal__header">
+                            <h1 id="modal-heading-02" class="slds-modal__title slds-hyphenate"> Leave Detail </h1>
+                          </div>
+
+                                        <!-- Body Section Start -->
+                          <div class="slds-modal__content PopupBodyBack slds-p-around_medium" id="modal-content-id-2">
+                            <div class="row_div">
+                                
+                                <div class="lev_detail" style="">
+                                    <div class="logo_class logo_class_1 slds-align_absolute-center">
+                                        <lightning-icon class="popUpIcon ct-txt" icon-name={UtilityIcon} size="large"  data-name={Lev_Status}></lightning-icon>
+                                    </div>
+                                    
+                                    <div class="middle_cls">
+                                      <h2>Leave Name</h2><h2></h2><b style="color: #2e2e2e;">{Lev_Name}</b></h2>
+                                    </div>
+
+                                    <div class="middle_cls">
+                                      <h2>Day Type</h2><h2><b style="color: #2e2e2e;">{Lev_DayType} Day Leave</b></h2>
+                                    </div>
+                                </div>
+
+                                <div class="date_cls">
+                                    <div class="sdate_cls">
+                                      <h2>From</h2>
+                                      <div class="start_date"><b style="color: #000000;">{Lev_StartDay}</b></div>
+                                    </div>
+                                    <div class="edate_cls">
+                                        <h2>To</h2>
+                                        <div class="end_date"><b style="color: #000000;">{Lev_EndDay}</b></div>
+                                    </div>
+                                </div>
+
+                                 <div>
+                                        <img class="img2" src={flighticon}>
+                                </div>
+                                <h2 style="color: rgb(104, 104, 104); margin-bottom : 2%;">Leave Type : <b style="color: #000000;">{Lev_LeaveType}</b></h2>
+                                <h2>Leave Reason : </h2>
+                                <div class="reasonInPopup">
+                                    {Lev_Reason}
+                                </div>  
+                                </div>
+                                
+                        
+                        <div class="popupButtons">
+                                <div class="PopupcanselButton" onclick={closeLeaveDeatilPopup}> Cancel</div>
+                                
+                        </div>
+                                                
+                                </div>
+                              </div>
+                    </section>
+                            <!-- behind Shadow Css -->
+                            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <template if:true={ShowDeleteAlertPopup}>
+            <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
+               <div class="slds-modal__container ">
+
+                 <div class="slds-modal__header">
+                   <h1 id="modal-heading-03" class="slds-modal__title slds-hyphenate"> Alert </h1>
+                 </div>
+
+                 <div class="slds-modal__content PopupBodyBack slds-p-around_medium" id="modal-content-id-5">
+                   <div class="row_div AletBlock">
+                        <div class="AlerMsg">
+                            Are you Sure! Do You really want to Delete Leave ? 
+                        </div>
+                        <div class="AlertSubMsg">
+                            Deleting leave means you are canceling your leave. Your Leave will Cancel once you delete your leave..!!
+                        </div>
+                        <lightning-textarea name="PopupModalDescription" label="Cancel Reason :"
+                            data-id="CancelReason" >
+                        </lightning-textarea>
+                    </div>
+                </div>
+                <div class="slds-modal__footer slds-modal__footer_directional">
+                <div class="popupButtons">
+                    <lightning-button variant="naural" label="Cancel" onclick={CloseAlertpopup}> </lightning-button>        
+                    <lightning-button variant="destructive" type="standard" label="Delete" onclick={handleDeleteLeave} data-id={recordid}  ></lightning-button>      
+                </div>  
+                </div>                  
+            </div>
+           </section>
+                   <!-- behind Shadow Css -->
+                   <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>
+
+
+        
+
+                        <template if:true={ShowIllustration}>
+                            <div class="not-task-div">	
+                                <div class="emptystate__container">
+                                    <div class="illustration__container">
+                                        <div class="illustration__containerBackground">
+                                            <svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M95.4364 -6.41777C121.205 -3.10253 147.172 0.915383 164.56 20.1773C183.302 40.9388 194.658 69.1155 188.155 96.2932C181.715 123.21 157.27 139.576 132.853 152.7C106.412 166.912 77.8003 180.117 49.1956 170.983C15.5703 160.245 -14.6761 136.331 -24.4277 102.475C-34.7443 66.6577 -27.9705 24.0501 -0.352662 -1.03982C24.5259 -23.6412 62.0665 -10.711 95.4364 -6.41777Z" stroke="#D2E9FF"/>
+                                                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M90.9802 24.8397C107.335 26.9558 123.817 29.5205 134.853 41.8153C146.749 55.0673 153.956 73.0525 149.829 90.3999C145.742 107.581 130.226 118.027 114.729 126.404C97.9461 135.476 79.7865 143.905 61.631 138.074C40.2889 131.22 21.0914 115.956 14.9021 94.3457C8.35409 71.4836 12.6534 44.2873 30.1826 28.2725C45.9731 13.846 69.8002 22.0993 90.9802 24.8397Z" stroke="#D2E9FF"/>
+                                                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M86.2972 45.9442C96.2986 47.2315 106.377 48.7916 113.126 56.271C120.4 64.3326 124.808 75.2736 122.284 85.8266C119.785 96.2782 110.297 102.633 100.82 107.729C90.557 113.248 79.4522 118.375 68.3499 114.828C55.299 110.659 43.5595 101.373 39.7746 88.227C35.7705 74.3192 38.3996 57.7748 49.1188 48.0324C58.7749 39.2563 73.3454 44.2771 86.2972 45.9442Z" stroke="#D2E9FF"/>
+                                                <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M93.8221 5.49329C115.943 8.33241 138.235 11.7733 153.161 28.2689C169.25 46.0487 178.999 70.1787 173.417 93.4532C167.888 116.504 146.903 130.52 125.942 141.759C103.244 153.93 78.6824 165.239 54.1268 157.416C25.2613 148.221 -0.703657 127.741 -9.07492 98.7472C-17.9312 68.0738 -12.1162 31.5855 11.5922 10.0989C32.9492 -9.2566 65.1758 1.81662 93.8221 5.49329Z" stroke="#D2E9FF"/>
+                                            </svg>
+                                        </div>
+                                        <div class="illustration__elements">
+                                            <div class="illustration__element illustration__element--right illustration__element--1">
+                                                <div class="illustration__elementType">
+                                                    <lightning-icon class="mailIcon" icon-name="utility:email" size="x-small"></lightning-icon>
+                                                </div>
+                                                <div class="illustration__elementWireframe">
+                                                </div>
+                                            </div>
+                                            <div class="illustration__element illustration__element--left illustration__element--2">
+                                                <div class="illustration__elementType">
+                                                    <lightning-icon class="mailIcon" icon-name="utility:email" size="x-small"></lightning-icon>
+                                                </div>
+                                                <div class="illustration__elementWireframe">
+                                                </div>
+                                            </div>
+                                            <div class="illustration__element illustration__element--right illustration__element--3">
+                                                <div class="illustration__elementType">
+                                                    <lightning-icon class="mailIcon" icon-name="utility:email" size="x-small"></lightning-icon>
+                                                </div>
+                                                <div class="illustration__elementWireframe">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="emptystate__body">
+                                        <h2>Opps! There is No {LeaveStatus}</h2>
+                                        <p>Apply For Leave in Easy Way.</p>
+                                    </div>
+                                </div>
+                            </div>						
+        </template>
+
+    </div>
+        <div class="crt-tmst">
+            <button class="crt-tmst crt-btn-pos " onclick={OpenApplyForLeave}>
+                <span class="plusSign">
+                    +
+                </span>
+                <span>
+                Apply For Leaves
+                </span>
+            </button>
+            </div>
+    </div>   
+
+</template>

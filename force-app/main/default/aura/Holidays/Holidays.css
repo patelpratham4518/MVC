@@ -1,0 +1,18 @@
+.THIS {
+}
+
+.THIS .circleBase {
+    	border-radius: 50%;
+    	behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+}
+
+.THIS .taskDiv {
+    width: 50px;
+    height: 50px;
+    background: #fbfd62;
+    border: 2px solid #d4d64e;
+    line-height: 47px;
+    text-align: center;
+    color: #c3b50d;
+    font-size: 23px;
+}

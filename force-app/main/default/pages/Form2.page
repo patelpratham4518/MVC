@@ -1,0 +1,378 @@
+<apex:page sidebar="false" showHeader="false" docType="html-5.0" html-lang="en-US">
+<html>
+<head>
+<meta name="viwport" content="width=device-width,initial-scale=1.0"/>
+<link rel="stylesheet" href="https://www.yudiz.com/?w3tc_minify=dec15.css"/>
+<title>Form 2</title>
+<style>
+body { font-family: sans-serif; }
+
+.scene {
+  width: 100%;
+  height: 900px;
+  /*border: 1px solid #CCC;*/
+  margin: 40px 0;
+  perspective: 600px;
+}
+
+.card {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  /*cursor: pointer;*/
+  position: relative;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card__face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  line-height: 260px;
+  color: white;
+  /*text-align: center;*/
+  font-weight: bold;
+  font-size: 40px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.card__face--front {
+  background: white;
+}
+
+.card__face--back {
+  background: white;
+  transform: rotateY(180deg);
+}
+
+
+
+
+
+
+
+ :root {
+          --base-grid: 8px;
+          --colour-body-background: white;
+          /*--colour-background: #fff;*/
+          /*--colour-text: #1a1a1a;*/
+          /*--colour-background-folded: #f5f5f5;*/
+          /*--colour-background-stripes: rgba(255,255,255,.5);*/
+          --colour-background: #00ccff;
+          --colour-background-folded: #00ccff;
+          --colour-background-stripes: rgba(0, 204, 255,0.5);
+          --colour-text: white;
+        }
+        
+        *, :after, :before {
+          box-sizing: border-box;
+          margin: 0;
+        }
+        
+        body {
+          background: var(--colour-body-background);
+          font-family: Bitter;
+          
+        }
+        
+        .articles {
+          margin: calc(var(--base-grid)*2) auto calc(var(--base-grid)*5);
+          display: grid;
+          grid-row-gap: calc(var(--base-grid)*8);
+          grid-column-gap: calc(var(--base-grid)*6);
+          grid-template-columns: repeat(auto-fit,minmax(calc(var(--base-grid)*35),1fr));
+          justify-items: center;
+        }
+        
+        .articles__article {
+          cursor: pointer;
+          display: block;
+          position: relative;
+          perspective: 1000px;
+          animation-name: animateIn;
+          animation-duration: .35s;
+          animation-delay: calc(var(--animation-order)*100ms);
+          animation-fill-mode: both;
+          animation-timing-function: ease-in-out;
+        }
+        
+        .articles__article:before {
+          content: "";
+          position: absolute;
+          top: calc(var(--base-grid)*-2);
+          left: calc(var(--base-grid)*-2);
+          border: 2px dashed var(--colour-background);
+          background-image: repeating-linear-gradient(-24deg,transparent,transparent 4px,var(--colour-background-stripes) 0, var(--colour-background-stripes) 5px);
+          z-index: -1;
+        }
+        
+        .articles__article,
+        .articles__article:before {
+          width: calc(var(--base-grid)*35);
+          height: calc(var(--base-grid)*35);
+        }
+        
+        .articles__link {
+          background-color: var(--colour-body-background);
+          border: 2px solid var(--colour-background);
+          display: block;
+          width: 100%;
+          height: 100%;
+        }
+        
+        .articles__link:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: calc(var(--base-grid)*3);
+          width: calc(var(--base-grid)*2);
+          height: calc(var(--base-grid)*2);
+          margin-top: calc(var(--base-grid)*-1);
+          clip-path: polygon(75% 0,100% 50%,75% 100%,0 100%,25% 50%,0 0);
+          -webkit-clip-path: polygon(75% 0,100% 50%,75% 100%,0 100%,25% 50%,0 0);
+          background-color: var(--colour-background);
+          opacity: 0;
+          transition: opacity .5s ease-in,transform .3s ease-in-out 0ms;
+        }
+        
+        .articles__content {
+          background-color: var(--colour-background);
+          color: var(--colour-text);
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          padding: calc(var(--base-grid)*2);
+          display: flex;
+          flex-direction: column;
+          border: 2px solid var(--colour-background);
+        }
+        
+        .articles__content--lhs {
+          clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
+          -webkit-clip-path: polygon(0 0,51% 0,51% 100%,0 100%);
+        }
+        
+        .articles__content--rhs {
+          clip-path: polygon(50% 0,100% 0,100% 100%,50% 100%);
+          -webkit-clip-path: polygon(50% 0,100% 0,100% 100%,50% 100%);
+          transition: transform .5s ease-in-out,background-color .4s ease-in-out;
+        }
+        
+        .articles__title {
+          font-size: calc(var(--base-grid)*4);
+          line-height: 1.125;
+          font-weight: 700;
+          letter-spacing: -.02em;
+        }
+        
+        .articles__footer {
+          margin-top: auto;
+          font-size: calc(var(--base-grid)*2);
+          line-height: calc(var(--base-grid)*2);
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-end;
+        }
+        .articles__footer img{
+            width: 70px;
+            height: 70px;
+            filter: invert(100%);
+        }
+        
+        .articles__link:hover .articles__content--rhs {
+          background-color: var(--colour-background-folded);
+          transform: rotateY(-50deg);
+        }
+        
+        .articles__link:hover:after {
+          opacity: 1;
+          transform: translateX(calc(var(--base-grid)*1.5));
+          transition: opacity .5s ease-in,transform .3s ease-in-out .25s;
+        }
+
+
+h2.wow{
+    color: black !important;
+}
+
+</style>
+</head>
+<body>
+<div class="scene scene--card">
+  <div class="card">
+    <div class="card__face card__face--front">
+        
+        
+        <ol class="articles">
+  
+  <li class="articles__article" style="--animation-order:1"><a class="articles__link">
+      <div class="articles__content articles__content--lhs">
+        <h2 class="articles__title">Salesforce Admin</h2>
+        <div class="articles__footer">
+          <!--<p>Ahmedabad</p>-->
+          <time>1-2 YEARS</time>
+          <img src="https://cdn3.iconfinder.com/data/icons/user-with-laptop/100/user-laptop-512.png"/>
+        </div>
+      </div>
+      <div class="articles__content articles__content--rhs" aria-hidden="true">
+        <h2 class="articles__title">Salesforce Admin</h2>
+        <div class="articles__footer">
+          <!--<p>Ahmedabad</p>-->
+          <time>1-2 YEARS</time>
+          <img src="https://cdn3.iconfinder.com/data/icons/user-with-laptop/100/user-laptop-512.png"/>
+        </div>
+      </div></a></li>
+      
+  <li class="articles__article" style="--animation-order:2"><a class="articles__link">
+      <div class="articles__content articles__content--lhs">
+        <h2 class="articles__title">Salesforce Developer</h2>
+        <div class="articles__footer">
+          <!--<p>Ahmedabad</p>-->
+          <time>MIN 2 YEARS</time>
+          <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/web-developing-1570270-1330856.png"/>
+        </div>
+      </div>
+      <div class="articles__content articles__content--rhs" aria-hidden="true">
+        <h2 class="articles__title">Salesforce Developer</h2>
+        <div class="articles__footer">
+          <!--<p>Ahmedabad</p>-->
+          <time>MIN 2 YEARS</time>
+          <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/web-developing-1570270-1330856.png"/>
+        </div>
+      </div></a></li>
+      
+  <li class="articles__article" style="--animation-order:3"><a class="articles__link">
+      <div class="articles__content articles__content--lhs">
+        <h2 class="articles__title">Salesforce Intership</h2>
+        <div class="articles__footer">
+          <time>Fresher</time>
+          <!--<p>Ahmedabad</p>-->
+          <img src="https://static.thenounproject.com/png/40716-200.png"/>
+        </div>
+      </div>
+      <div class="articles__content articles__content--rhs" aria-hidden="true">
+        <h2 class="articles__title">Salesforce Intership</h2>
+        <div class="articles__footer">
+          <time>Fresher</time>
+          <!--<p>Ahmedabad</p>-->
+          <img src="https://static.thenounproject.com/png/40716-200.png"/>
+        </div>
+      </div></a></li>
+</ol>
+   
+        
+        
+    </div>
+    <div class="card__face card__face--back">
+        
+        <div id="content" class="site-content">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main">
+			<article id="post-18818" class="post-18818 join-our-team type-join-our-team status-publish hentry join-our-team-category-freshers join-our-team-category-experience">
+				<div class="entry-content">
+					<div class="common-section">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-8 col-lg-7">
+									<div class="jod-title-block">
+										<p class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;">Posted on 21 Sep, 2020</p>
+										<h2 class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;">HR Recruiter</h2>
+										<h6 class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"><strong>0 - 1 YEAR</strong></h6></div>
+									<div class="job-desc-block wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+										<p><strong>Job description</strong></p>
+										<ul>
+											<li>Handling end to end recruitment process</li>
+											<li>Sourcing candidates through different channels of Recruitment like Job Portals.</li>
+											<li>Determining applicant requirements by studying job description.</li>
+											<li>Conducting Pre and post interview follow-up with the candidate.</li>
+										</ul>
+										<p>&nbsp;
+											<br/> <strong>Required Candidate profile</strong></p>
+										<ul>
+											<li>Candidate with Good communication skills.</li>
+											<li>People with consultancy’s experience will be preferred.</li>
+										</ul>
+									</div>
+									<div class="theme-btn solid-blue wow fadeIn" style="visibility: visible; animation-name: fadeIn;">
+										<a class="apply-btn" data-href="#single-job-form">
+											<canvas class="fireworks" width="318" height="104" style="width: 159px; height: 52px;"></canvas>Apply Now</a>
+									</div>
+								</div>
+								<div class="col-sm-4 col-lg-offset-1 col-lg-3 job-list-sidebar">
+									<h6 class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;">Other Jobs</h6>
+									<ul>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/react-native-developer/">React Native Developer<small>MIN 2 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/business-analyst/">Business Analyst<small>3 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/python-developer/">Python Developer<small>MIN 2 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/react-js-developer/">React JS Developer<small>1 - 5 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/wordpress-fresher/">Jr. WordPress Developer<small>1 - 2 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/node-js-developer/">Node JS Developer<small>1 - 5 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/android-developer/">Android Developer<small>1.5 - 3 YEARS</small></a></li>
+										<li class="wow fadeIn" style="visibility: visible; animation-name: fadeIn;"> <a href="https://www.yudiz.com/join-our-team/mean-stack-developer/">Mean Stack Developer<small>1 - 2 YEARS</small></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</article>
+			
+		</main>
+	</div>
+	<script>
+	jQuery(function() {
+		jQuery('li#responsive-menu-item-1151').addClass('responsive-menu-current-item');
+	});
+	</script>
+</div>
+            
+    </div>
+  </div>
+</div>
+
+<script>
+var cardd = document.querySelector('.articles__link');
+cardd.addEventListener( 'click', function() {
+    var card = document.querySelector('.card');
+  card.classList.toggle('is-flipped');
+});
+
+
+var ss = document.querySelector('.apply-btn');
+ss.addEventListener( 'click', function() {
+    var card = document.querySelector('.card');
+  card.classList.toggle('is-flipped');
+});
+
+</script>
+
+
+<script>
+  // DIsable two link css 
+  var disableStyle = function(styleName, disabled) {
+          var styles = document.styleSheets;
+          var href = "";
+          for (var i = 0; i < styles.length; i++) {
+            // href=style[i];
+              href = styles[i].href.split("/");
+              href = href[href.length - 1];
+            if (href === styleName) {
+                  styles[i].disabled = disabled;
+                  break;
+              }
+          }
+      };
+      disableStyle("common.css",'true');
+      disableStyle("extended.css",'true');
+</script>
+</body>
+</html>
+</apex:page>

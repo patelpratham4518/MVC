@@ -1,0 +1,329 @@
+<apex:page sidebar="false" showHeader="false" controller="WebinarThankyouController" action="{!AddtoMeetup}">
+   <!-- <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+        <img src="{!$Resource.MVCloudRegLogo}" width="250" height="160" />
+    </div>
+    <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+        Thank You !
+    </div>
+    <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+        <p>
+            We received your details.
+            <br/> kindly check your email for information.
+        </p>
+    </div> -->
+    <html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.0/handlebars.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<!-- CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Maitree"/>
+    
+    <title>Thank You</title>
+<style>
+.sweet-alert .icon {
+	 width: 80px;
+	 height: 80px;
+	 border: 4px solid #808080;
+	 border-radius: 50%;
+	 margin: 20px auto;
+	 box-sizing: content-box;
+	 position: relative;
+}
+ .sweet-alert .icon.warning {
+	 border-color: #f8bb87;
+}
+ .sweet-alert .icon.warning .body {
+	 position: absolute;
+	 left: 50%;
+	 top: 10px;
+	 width: 5px;
+	 height: 47px;
+	 margin-left: -2px;
+	 border-radius: 2px;
+	 background: #f8bb87;
+}
+ .sweet-alert .icon.warning .dot {
+	 position: absolute;
+	 left: 50%;
+	 bottom: 10px;
+	 width: 7px;
+	 height: 7px;
+	 margin-left: -3px;
+	 border-radius: 50%;
+	 background: #f8bb87;
+}
+ .sweet-alert .icon.error {
+	 border-color: #f27373;
+}
+ .sweet-alert .icon.error .line {
+	 position: absolute;
+	 top: 37px;
+	 width: 47px;
+	 height: 5px;
+	 background: #f27373;
+	 display: block;
+}
+ .sweet-alert .icon.error .line.left {
+	 left: 17px;
+	 transform: rotate(45deg);
+}
+ .sweet-alert .icon.error .line.right {
+	 right: 16px;
+	 transform: rotate(-45deg);
+}
+ .sweet-alert .icon.info {
+	 border-color: #cadbe2;
+}
+ .sweet-alert .icon.info:before {
+	 content: '';
+	 position: absolute;
+	 top: 19px;
+	 left: 50%;
+	 margin-left: -3px;
+	 width: 7px;
+	 height: 7px;
+	 border-radius: 50%;
+	 background: #cadbe2;
+}
+ .sweet-alert .icon.info:after {
+	 content: '';
+	 position: absolute;
+	 bottom: 17px;
+	 left: 50%;
+	 margin-left: -2px;
+	 height: 29px;
+	 width: 5px;
+	 border-radius: 2px;
+	 background: #cadbe2;
+}
+ .sweet-alert .icon.success {
+	 border-color: #a4db84;
+}
+ .sweet-alert .icon.success .line {
+	 position: absolute;
+	 height: 5px;
+	 background-color: #a4db84;
+}
+ .sweet-alert .icon.success .line.tip {
+	 width: 25px;
+	 left: 14px;
+	 top: 46px;
+	 transform: rotate(45deg);
+	 z-index: 2;
+}
+ .sweet-alert .icon.success .line.long {
+	 width: 47px;
+	 top: 38px;
+	 right: 8px;
+	 transform: rotate(-45deg);
+	 z-index: 2;
+}
+ .sweet-alert .icon.success::before, .sweet-alert .icon.success::after {
+	 content: '';
+	 position: absolute;
+	 height: 120px;
+	 width: 60px;
+	 background: #fff;
+	 transform: rotate(45deg);
+}
+ .sweet-alert .icon.success::before {
+	 left: -33px;
+	 top: -7px;
+	 transform: rotate(-45deg);
+	 transform-origin: 60px 60px;
+	 border-radius: 120px 0 0 120px;
+}
+ .sweet-alert .icon.success::after {
+	 top: -11px;
+	 left: 30px;
+	 transform: rotate(-180deg);
+	 transform-origin: 0 60px;
+	 border-radius: 0 120px 120px 0;
+}
+ .sweet-alert .icon.success .placeholder {
+	 width: 80px;
+	 height: 80px;
+	 border: 4px solid rgba(164,219,132,0.2);
+	 position: absolute;
+	 left: -4px;
+	 top: -4px;
+	 box-sizing: content-box;
+	 border-radius: 50%;
+	 z-index: 2;
+}
+ .sweet-alert .icon.success .fix {
+	 position: absolute;
+	 left: 28px;
+	 top: 8px;
+	 width: 5px;
+	 height: 90px;
+	 background: #fff;
+	 transform: rotate(-45deg);
+	 z-index: 1;
+}
+ @keyframes pulseWarning {
+	 0% {
+		 border-color: #f8d487;
+	}
+	 100% {
+		 border-color: #f8bb87;
+	}
+}
+ .pulseWarning {
+	 animation: pulseWarning .75s infinite alternate;
+}
+ @keyframes pulseWarningIns {
+	 0% {
+		 background-color: #f8d487;
+	}
+	 100% {
+		 background-color: #f8bb87;
+	}
+}
+ .pulseWarningIns {
+	 animation: pulseWarningIns .75s infinite alternate;
+}
+ @keyframes animateSuccessTip {
+	 0%, 54% {
+		 left: 1px;
+		 top: 19px;
+		 width: 0;
+	}
+	 70% {
+		 left: -8px;
+		 top: 37px;
+		 width: 50px;
+	}
+	 84% {
+		 left: 21px;
+		 top: 48px;
+		 width: 17px;
+	}
+	 100% {
+		 left: 14px;
+		 top: 45px;
+		 width: 25px;
+	}
+}
+ .animateSuccessTip {
+	 animation: animateSuccessTip 2s infinite;
+}
+ @keyframes animateSuccessLong {
+	 0%, 65% {
+		 right: 46px;
+		 top: 54px;
+		 width: 0;
+	}
+	 84% {
+		 right: 0;
+		 top: 35px;
+		 width: 55px;
+	}
+	 100% {
+		 right: 8px;
+		 top: 38px;
+		 width: 47px;
+	}
+}
+ .animateSuccessLong {
+	 animation: animateSuccessLong 2s infinite;
+}
+ @keyframes rotatePlaceholder {
+	 0%, 5% {
+		 transform: rotate(-45deg);
+	}
+	 100%, 12% {
+		 transform: rotate(-405deg);
+	}
+}
+ .sweet-alert .icon.success.animate::after {
+	 animation: rotatePlaceholder 12s ease-in infinite;
+}
+ @keyframes animateXMark {
+	 0%, 50% {
+		 margin-top: 26px;
+		 opacity: 0;
+		 transform: scale(.4);
+	}
+	 80% {
+		 margin-top: -6px;
+		 transform: scale(1.15);
+	}
+	 100% {
+		 margin-top: 0;
+		 opacity: 1;
+		 transform: scale(1);
+	}
+}
+ .animateXMark {
+	 animation: animateXMark .5s;
+}
+ @keyframes animateErrorIcon {
+	 0% {
+		 opacity: 0;
+		 transform: rotateX(100deg);
+	}
+	 100% {
+		 opacity: 1;
+		 transform: rotateX(0deg);
+	}
+}
+ .animateErrorIcon {
+	 animation: animateErrorIcon .5s;
+}
+body{
+font-family: 'Maitree', serif;
+}
+</style>
+    <script>
+    	window.onload = function(){
+            	var hh = window.innerHeight + 'px';
+            	document.getElementById('hh').style.height = hh;
+            }
+    </script>
+</head>
+<body class="d-flex align-items-center" id="hh">
+<div class="container">
+<div class="row justify-content-center">
+<div class="sweet-alert">
+
+  <div class="icon success animate">
+    <span class="line tip animateSuccessTip"></span>
+    <span class="line long animateSuccessLong"></span>
+    <span class="placeholder"></span>
+    <span class="fix"></span>
+  </div>
+  </div>
+</div>
+<div class="row justify-content-center text-center" style="display:{!IF(AlreadyVeirified == false, 'flex','none')}">
+<h2>You've successfully verified.</h2>
+</div>
+<div class="row justify-content-center text-center" style="display:{!IF(AlreadyVeirified != false, 'flex','none')}">
+    <h2>You've Already verified.</h2>
+</div>
+<div class="row justify-content-center">
+<h4>Check your inbox to see event.</h4>
+</div>
+</div>
+     <script>
+         var disableStyle = function(styleName, disabled) {
+                  var styles = document.styleSheets;
+                  var href = "";
+                  for (var i = 0; i < styles.length; i++) {
+                    // href=style[i];
+                      href = styles[i].href.split("/");
+                      href = href[href.length - 1];
+                    if (href === styleName) {
+                          styles[i].disabled = disabled;
+                          break;
+                      }
+                  }
+              };
+              disableStyle("common.css",'true');
+              disableStyle("extended.css",'true');
+      </script>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,35 @@
+<template>
+    <template if:false={alreadySubmited}>
+        <div class="container">
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png"/>
+                </div>
+                <div>
+                    <img class="back-img" src="https://img.freepik.com/premium-vector/thank-you-people-great-design-any-purposes-vector-illustration_123447-3885.jpg?w=2000" width="560" />
+                    <p class="txt-div" style="padding-top: 1rem;">Your exam has been submitted</p>
+                    <p class="txt-div" style="padding-top: 1rem;">Hi {contactData.Name},</p> <br/>
+                    <p class="txt-div">Thank you for attending our Campus Drive!</p>
+                    <p class="txt-div">You have completed the first round of interview.</p>
+                    <p class="txt-div">Please wait for futher information.</p> <br/>
+                    <p class="txt-div">-MV Clouds Team</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template if:true={alreadySubmited}>
+        <div class="container">
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png"/>
+                </div>
+                <div>
+                    <img class="back-img" src="https://www.processmaker.com/wp-content/uploads/2020/08/59877-768x558.jpg" width="560" />
+                    <p class="txt-div" style="padding-top: 5rem;">Your Exam has already Submitted</p>
+                </div>
+            </div>
+        </div>
+    </template>
+
+</template>

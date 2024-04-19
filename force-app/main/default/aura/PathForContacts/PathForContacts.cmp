@@ -1,0 +1,27 @@
+<aura:component controller="ReadOnlyChevronController" implements="force:hasRecordId,flexipage:availableForAllPageTypes">
+    <aura:handler name="init" value="{!this}" action="{!c.loadChevron}"/> 
+    <aura:attribute name="fieldName" Description="API Name of Picklist Value" type="String" />
+    <aura:attribute name="recordId" type="Id" description="Id of record on which this component is hosted." />
+    <aura:attribute name="records" type="object[]" description="Records for Chevron calculated by Apex class" access="private" />  
+    <div style="width:100%" class="slds-align_absolute-center">
+        <div class="chevron noaction">
+            <aura:iteration items="{!v.records}" var="item" indexVar="i"> 
+               <a href="#" class="{#item.cssClass}" style="{! 'width:'+item.width}">
+                    <aura:if isTrue="{!item.cssClass == 'visited'}">
+                        <div class="flipper">
+                            <div class="front"> 
+                                <lightning:icon iconName="utility:check" size="x-small" variant="inverse"/>
+                            </div> 
+                            <div class="back">
+                                {#item.val}
+                            </div>
+                        </div> 
+                        <aura:set attribute="else"> 
+                            {#item.val} 
+                        </aura:set> 
+                    </aura:if> 
+               </a>
+            </aura:iteration> 
+        </div>
+    </div> 
+</aura:component>

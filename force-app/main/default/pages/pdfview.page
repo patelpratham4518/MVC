@@ -1,0 +1,7 @@
+<apex:page sidebar="false" showHeader="false" controller="pdfview">
+
+   <!-- <iframe src="data:{!attach.ContentType};base64,{!pdfvalue}" width="100%" height="900px"></iframe> -->
+   {!attach.ContentType}<br/>
+   {!pdfvalue}
+    
+</apex:page>

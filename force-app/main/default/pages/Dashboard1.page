@@ -1,0 +1,294 @@
+<apex:page sidebar="false" showHeader="false" html-lan="en-US" docType="html-5.0">
+    <!-- <c:DashboardHeader/> -->
+    <html>
+        <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+            <link rel="preconnect" href="https://fonts.gstatic.com"/>
+            <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+            <title>Dashboard - MV Clouds</title>
+            <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+            <style>
+
+                /* ============================================CSS FOR ACCORDIAN TABLE======================================== */
+                .tabs {
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.5);
+                }
+
+                .tab {
+                    width: 100%;
+                    overflow: hidden;
+                }
+                .tab-label {
+                    display: flex;
+                    justify-content: space-between;
+                    /* padding: 1em 0; */
+                    /* background: #2c3e50; */
+                    font-weight: bold;
+                    cursor: pointer;
+                /* Icon */
+                }
+                .tab-label::after {
+                    content: "❯";
+                    width: 1em;
+                    height: 1em;
+                    text-align: center;
+                    transition: all 0.35s;
+                }
+                .tab-content {
+                    max-height: 0;
+                    padding: 0 1em;
+                    transition: all 0.35s;
+                }
+                .tab-close {
+                    display: flex;
+                    justify-content: flex-end;
+                    padding: 1em;
+                    font-size: 0.75em;
+                    background: #2c3e50;
+                    cursor: pointer;
+                }
+                .tab-close:hover {
+                    background: #1a252f;
+                }
+
+                input:checked + .tab-label {
+                    /* background: #1a252f; */
+                }
+                input:checked + .tab-label::after {
+                    transform: rotate(90deg);
+                }
+                input:checked ~ .tab-content {
+                    max-height: 100vh;
+                    padding: 1em;
+                }
+                .tab input{
+                    position: absolute;
+                    opacity: 0;
+                    z-index: -1;
+                }
+
+
+                /* ========================================CUSTOM CSS============================================================ */
+                body{
+                    font-family: 'Poppins',sans-serif;
+                }
+                .tab-header{
+                    justify-content: space-around;
+                    align-items: center;
+                    padding: 15px 0;                    
+                    box-shadow: 0px 2px 6px -2px #000000;
+                    border-radius: 10px;                    
+                }
+                .my-20{
+                    margin-top:20px !important;
+                    margin-bottom: 20px !important;
+                }
+                .my-40{
+                    margin-top:40px !important;
+                    margin-bottom: 40px !important;
+                }
+                .w-80{
+                    width: 80% !important;
+                }
+                .w-90{
+                    width: 90% !important;
+                }
+                .w-60{
+                    width: 60% !important;
+                }
+                p{
+                    margin: 0 !important;
+                }
+                .heading-title{
+                    font-size:  2rem;
+                    font-weight: bolder;
+                }
+                .inp{
+                    width: 100%;
+                    height: 100$;
+                    outline: 0;
+                    border: 1px solid #E3E3E3;
+                    padding: 10px;
+                    border-radius: 4px;
+                }
+                .bton{
+                    width: 100%;
+                    height:100%;
+                    background-color: #55CE63;
+                    color: white;
+                    border: 0;
+                    outline: 0;
+                    border-radius: 4px;
+                }
+                .col-2{
+                    padding-left: 5px !important;
+                    padding-right: 5px !important;
+                }
+                #tabCol > *{
+                    border-top: 2px solid gray;
+                    padding: 10px 0;
+                }
+                .men-image{
+                    width: 40px !important;
+                    height: auto !important;
+                    padding-right: 5px;
+                }
+
+                /*===============================MOBILE MEDIA QUOERY CSS===================================*/
+                @media all and (min-width:1400px){
+                    
+                }
+            </style>
+        </head>
+        <body>
+            <c:DashboardHeader />
+            
+            <div class="container-fluid text-center">
+                
+                <div class="row mx-auto tab-header my-20 w-60">
+                    <p>Dashboards</p>
+                    <p>Applications</p>
+                    <p>Interviewee</p>
+                </div>
+                
+                <div class="row mx-auto heading-title my-20 w-90">
+                    <p>Applicant Details</p>
+                </div>
+                
+                <div class="row mx-auto my-20 w-90">
+                    <div class="col-2">
+                        <input type="text" class="inp" placeholder="Employee Name"/>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="inp" placeholder="Employee Name"/>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="inp" placeholder="Employee Name"/>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="inp" placeholder="Employee Name"/>
+                    </div>
+                    <div class="col-2">
+                        <input type="text" class="inp" placeholder="Employee Name"/>
+                    </div>
+                    <div class="col-2">
+                        <button type="button" class="bton">Search</button>
+                    </div>
+                </div>
+
+                <!-- <div class="row mx-auto my-20 w-90">
+                    <div class="col-12">
+                        <div class="tabs">
+                          <div class="tab">
+                            <input type="checkbox" id="chck1"/>
+                            <label class="tab-label" for="chck1">Item 1</label>
+                            <div class="tab-content">
+                              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                            </div>
+                          </div>
+                          <div class="tab">
+                            <input type="checkbox" id="chck2"/>
+                            <label class="tab-label" for="chck2">Item 2</label>
+                            <div class="tab-content">
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit. A, in!
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="row mx-auto my-20 w-90">
+                    <div class="col-12" id="tabCol">
+
+                        <div class="row">
+                            <div class="col-3">
+                                <p>Applicant</p>
+                            </div>
+                            <div class="col-2">
+                                <p>Applied On</p>
+                            </div>
+                            <div class="col-2">
+                                <p>Interviewee</p>
+                            </div>
+                            <div class="col-2">
+                                <p>Step</p>
+                            </div>
+                            <div class="col-2">
+                                <p>Status</p>
+                            </div>
+                            <div class="col-1">
+                                <p>Actions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="tab">
+                                <input type="checkbox" id="chck1"/>
+                                <label class="tab-label" for="chck1">
+                                    
+                                    <div class="col-3">
+                                        <div class="row">
+                                            <img class="men-image" src="https://cdn.imgbin.com/24/16/4/imgbin-avatar-icon-fashion-men-avatar-man-illustration-yrsijCsUZh6ini7fz4sSSGFL0.jpg"/>
+                                            <div>
+                                                <p>John Doe</p>
+                                                <p>Web Designer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <p>27 Feb 2019</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <p>1 Day</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <p>Going to The First</p>
+                                    </div>
+                                    <div class="col-2">
+                                        <button type="button" class="">Approved</button>
+                                    </div>
+                                    <div class="col-1">
+                                        ⚡
+                                    </div>
+
+                                </label>
+                                <div class="tab-content">
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+
+
+            
+
+            <!-- SCRIPT FOR REMOVE SALESFORCE BYDEFAULT CSS -->
+            <script>
+                var disableStyle = function(styleName, disabled) {
+                         var styles = document.styleSheets;
+                         var href = "";
+                         for (var i = 0; i < styles.length; i++) {
+                           // href=style[i];
+                             href = styles[i].href.split("/");
+                             href = href[href.length - 1];
+                           if (href === styleName) {
+                                 styles[i].disabled = disabled;
+                                 break;
+                             }
+                         }
+                     };
+                     disableStyle("common.css",'true');
+                     disableStyle("extended.css",'true');
+             </script>
+        </body>
+    </html>
+
+</apex:page>

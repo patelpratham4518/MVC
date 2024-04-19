@@ -1,0 +1,19 @@
+<template>
+    <div class="maindiv">
+            <div class="slds-modal__header popup-header">
+                <p>{label}</p>
+            </div>
+        <lightning-modal-body>
+            <p class="heading"> 
+                Are you sure ?  
+            </p>
+            <p class="subheading">
+                {content}
+            </p>
+        </lightning-modal-body>
+        <div class="slds_modal__footer footer">
+            <lightning-button label="No" onclick={handleCancel} variant="netural" ></lightning-button>
+            <lightning-button label="Yes" onclick={handleYes} disabled={OnClick} variant="Brand"></lightning-button>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,45 @@
+@media all and (max-width: 980px) {
+    .THIS .myclass{
+        width:98%;
+    }
+}
+@media all and (min-width: 980px) {
+    .THIS .myclass{
+        width:40% ;
+    }
+}
+@media all and (max-width: 980px) {
+    .THIS .mybox{
+        border-radius:10px;
+        padding:0%;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.10);
+        margin-top: -8px;
+    }
+}
+@media all and (min-width: 980px) {
+    .THIS .mybox{
+        border-radius:10px;
+        padding:0%;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.10);
+        margin-top: -33px;
+    }
+}
+@media all and (max-width: 980px) {
+   .THIS .logo{
+      padding-top: -3%!important;        
+      max-width: 32%;
+      height: auto;
+    }
+}    
+
+@media all and (min-width: 980px) {
+    .THIS .logo{  
+      max-width: 100%;
+      height: auto;
+    }
+}
+@media all and (max-width: 980px) {
+    .THIS .page{
+    font-size: 215%!important;
+     }
+}

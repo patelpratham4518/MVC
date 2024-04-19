@@ -1,0 +1,45 @@
+<template>
+    <template if:true={isSpinner}>
+        <lightning-spinner variant="brand" size="medium"></lightning-spinner>    
+    </template>
+
+    <template if:false={showSecondModal}>
+        <lightning-quick-action-panel header="New Job Application">
+            <lightning-record-edit-form object-api-name="Job_Application__c" onsuccess={handleFirstModalSuccess}>
+                <lightning-input-field field-name='Contact__c' value={recordId} class="Disabled"></lightning-input-field>
+                <lightning-input-field field-name='Job_Posting__c' required="true"  onchange={handleJobPostingChange}></lightning-input-field>
+                <div class="save slds-p-top_x-small">
+                    <lightning-button label="Cancel" title="Cancel" onclick={closeModal} class="slds-m-left_x-small"></lightning-button>
+                    <lightning-button class="crateButton slds-p-left_small" type="submit" label="Save & Next" variant="brand" onclick={handleRecordSave} disabled={isNextButtonDisabled}></lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </lightning-quick-action-panel> 
+    </template>
+
+    <template if:true={showSecondModal}>
+        <lightning-quick-action-panel header="New Interview">
+            <lightning-record-edit-form object-api-name="Interview__c" onsuccess={handleSecondModalSuccess}>
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name="Job_Application__c" value={jobApplicationId} class="Disabled"></lightning-input-field>
+                        <lightning-input-field field-name='Contact__c' value={recordId} class="Disabled"></lightning-input-field>
+                        <lightning-input-field field-name='Job_Posting__c' value={jobPostingValue}  class="Disabled" ></lightning-input-field>
+                        <lightning-combobox name="Interview_Round_Name__c" label="Interview Round Name" value={RoundName} 
+                                placeholder="Select Round" options={options} onchange={handlePicklistChange} 
+                                field-name="Interview_Round_Name__c" required="true"></lightning-combobox>
+                        <lightning-input-field field-name='Meeting_Link__c' value={Meetinglink} onchange={LinkChange}></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-input-field field-name='Interviewer__c' value={Interviewer} required="true" onchange={InterviewerChange}></lightning-input-field>
+                        <lightning-input-field field-name='Time__c' required="true" onchange={timeChange} value={timeValue}></lightning-input-field>
+                        <lightning-input-field field-name='Date__c' required="true" onchange={dateChange} value={dateValue}></lightning-input-field>
+                    </div>
+                </div>            
+            </lightning-record-edit-form>
+            <div slot="footer">
+                <lightning-button label="Cancel" title="Cancel" onclick={closeModal} class="slds-m-left_x-small"></lightning-button>
+                <lightning-button type="submit" label="Save" variant="brand" style="margin-left:15px;" onclick={handleSubmit} disabled={disableSubmit}></lightning-button>
+            </div>
+        </lightning-quick-action-panel>
+    </template>
+</template>

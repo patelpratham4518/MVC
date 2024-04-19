@@ -1,0 +1,23 @@
+<template>
+
+    <template if:true={isSpinner}>
+		<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+	</template>
+    <div class="maindiv">
+        <div class="slds-modal__header popup-header">
+            Timesheet Details
+        </div>        
+        <div class="input-field">
+            <lightning-record-view-form record-id={selectedRecordId} object-api-name={objectName} >
+                <template for:each={fields} for:item="fld">
+                    <div class="EachInputFields" key={fld.apiname}>
+                    <lightning-output-field field-name={fld.apiname} key={fld.apiname}></lightning-output-field>
+                </div>
+                </template>
+            </lightning-record-view-form>
+        </div>
+        <lightning-modal-footer>
+            <lightning-button label="Close" variant="neutral" onclick={handleClose}></lightning-button>
+        </lightning-modal-footer>
+    </div>
+</template>

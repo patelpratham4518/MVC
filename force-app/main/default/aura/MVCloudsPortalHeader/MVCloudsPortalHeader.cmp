@@ -1,0 +1,122 @@
+<aura:component controller="MVCloudsPortalController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+    
+    <!--aura attribute declared here-->
+    <aura:attribute name="modalPopupProfile" type="Boolean" default="false"/>
+	<aura:attribute name="modalPopupChangePassword" type="Boolean" default="false"/>
+	<aura:attribute name="userInfo" type="user" />
+	<aura:attribute name="passCmp" type="Boolean" default="false"/>
+	<aura:attribute name="passCheck" type="Boolean" default="false"/>
+	<aura:attribute name="prevPass" type="Boolean" default="false"/>
+	<aura:attribute name="profileInfo" type="List" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+	<div class="slds-grid slds-gutters">
+      <div class="slds-col">
+        <span><img src="{!$Resource.mvlogo}" style="width:50%;height:50px;"/></span>
+      </div>
+      <div class="slds-col">
+        <span style="font-size:40px;font-weight: bolder;color:#00ccff;font-family:fantasy;">Welcome to MV Clouds</span>
+      </div>
+      <div class="slds-col" style="text-align:right;padding-right:1%;">
+          <br/>
+        <span>
+        	<lightning:buttonMenu aura:id="menu" onselect="{! c.openPopup }" variant="bare" alternativeText="Show menu">
+                <lightning:menuItem value="ChangePassoword" label="Change Password" />
+                <lightning:menuItem value="MyProfile" label="My Profile" />
+                <lightning:menuItem value="Logout" label="Logout"></lightning:menuItem>
+    		</lightning:buttonMenu>
+        </span>&nbsp;&nbsp;
+        <span style="font-size:15px;font-family:monospace;font-weight:bold;color: #00ccff;">{!v.userInfo.Name}</span>
+      </div>
+	</div>
+	
+	<!-- MY Profile Popup -->
+    <aura:if isTrue="{!v.modalPopupProfile}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <p id="modal-heading-01" class="slds-text-heading_medium">Profile</p>
+                </header>
+                
+                <!-- MODAL BOX BODY Part Start-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div class="slds-media" style="padding-left:8%;">
+                                <div class="slds-media__figure">
+                                    <span class="slds-icon slds-icon--small">
+                                        <div class="circleBase taskDiv"><img src="{!$Resource.employeeAvatar}"/></div>
+                                    </span>
+                                </div>
+                                <div class="slds-media__body" style="padding-left:10%;  padding-top:5%;">
+                                    <p style="font-size: 15px;padding:1%;">{!v.userInfo.FirstName}&nbsp;{!v.userInfo.LastName}</p>
+                                    <p style="font-size: 15px;padding:1%;">{!v.userInfo.Title}</p>
+                                    <p style="font-size: 15px;padding:1%;">{!v.userInfo.Email}</p>
+                                    <p style="font-size: 15px;padding:1%;">{!v.userInfo.CompanyName}</p>
+                                </div>
+                            </div>
+                            <br/>
+                    </div>
+                <!-- MODAL BOX FOOTER Part Start -->
+                
+                <footer class="slds-modal__footer">
+                    <lightning:button variant="neutral" label="Close" title="View Detail" onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.addTopic}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!-- MY Profile Popup -->
+    
+    <!-- Change Password Popup -->
+    <aura:if isTrue="{!v.modalPopupChangePassword}">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+            <div class="slds-modal__container">
+                <!--  MODAL BOX HEADER Start -->
+                <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                    <lightning:buttonIcon iconName="utility:close"
+                                          onclick="{! c.closeModel }"
+                                          alternativeText="close"
+                                          variant="bare-inverse"
+                                          class="slds-modal__close"/>
+                    <p id="modal-heading-01" class="slds-text-heading_medium">Change Password</p>
+                </header>
+                
+                <!-- MODAL BOX BODY Part Start-->
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <div style="width:60%; margin-left:20%;">
+                        <!--<lightning:input label="Current Password" aura:id="currentPassword" required="true"/>-->
+                       <lightning:input label="New Password" aura:id="NewPassword" required="true"/>
+                        <lightning:input label="Confirm Password" aura:id="confirmPassword" required="true"/>
+                        
+                    </div>
+                </div>
+                <!-- MODAL BOX FOOTER Part Start -->
+                
+                <footer class="slds-modal__footer">
+                    <span style="float:left; margin-top:1%;">
+                        <aura:if isTrue="{!v.passCmp}">
+                            <span style="color:red"><b>New Password and conform Password not matched!</b></span>
+                            {!v.user}
+                        </aura:if>
+                        <aura:if isTrue="{!v.passCheck}">
+                            <span style="color:Green"><b>Password changed Successfully!</b></span>
+                        </aura:if>
+                        <aura:if isTrue="{!v.prevPass}">
+                            <span style="color:#ff661a"><b>You have previously used these password. please enter another one.</b></span>
+                        </aura:if>
+                    </span>
+                    <lightning:button variant="neutral" label="Close" title="View Detail" onclick="{! c.closeModel }"/>
+                    <lightning:button variant="brand" label="Save" onclick="{!c.lalit}"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </aura:if>
+    <!-- Change Password Popup -->
+</aura:component>

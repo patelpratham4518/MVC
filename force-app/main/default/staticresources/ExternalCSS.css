@@ -1,0 +1,9 @@
+.slds-modal_medium .slds-modal__container {
+    max-width: 40rem !important;
+    padding: 0px;
+}
+
+.slds-modal__content {
+    max-height: 450px !important;
+    overflow: auto !important;
+}

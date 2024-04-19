@@ -1,0 +1,131 @@
+<template>
+
+    <template if:true={isSpinner}>
+		<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+	</template>
+
+	<div class="container">
+
+        <!-- Toast Message -->
+        <div class="mainnotification" if:true={iserror}>
+            <div class="notification danger" >
+                <i class="fa-solid fa-exclamation"></i>
+                <span>{errormsg}</span>
+                <i class="fa-solid fa-times"></i>
+            </div>
+        </div>
+        <!-- End Toast Message -->
+
+        <div class="headercls">
+            <h1>College Candidates</h1>
+        </div>
+
+        <div>
+            <lightning-combobox name="college" label="Select a College" value={selectedValue} 
+                options={collegeOptions} onchange={handleSelection} class="collegeCombo">
+            </lightning-combobox>
+        </div>
+
+		<div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Enrollment Number</th>
+						<th>Name</th>
+                        <th>College Details</th>
+                        <th>Description</th>
+						<!-- <th>Email</th> -->
+                        <th>Aptitude Mark</th>
+                        <!-- <th>Aptitude Result</th> -->
+                        <th>Practical Answers</th>
+                        <th>Practical Result</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<template for:each={contactlst} for:item="con" for:index="index">
+						<tr key={con.Id}>
+                            <td>{index}</td>
+							<td>{con.ErNo}</td>
+							<td>{con.Name}</td>
+                            <td>{con.College}</td>
+                            <td>{con.Description}</td>
+							<!-- <td>{con.Email}</td> -->
+							<td>{con.AptitudeMarks}</td>
+							<!-- <td>{con.AptitudeResult}</td> -->
+							<td>{con.PracticalAnswer}</td>
+							<td>{con.PracticalResult}</td>
+							<td class="action">
+								<button data-id={con.Id} onclick={detailclk}>See Detail</button>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+    <div if:true={showdetail}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h1 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Candidate Detail</h1>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                   <div>
+                       <div class="detailcls">
+                           <h2>Candidate Name: {answerData.Contact__r.Name}</h2>
+                           <h2>Enrollment Number: {answerData.Contact__r.Enrollment_No__c}</h2>
+                           <h2>Apptitude Result: <span style="background: skyblue;padding: 10px;border-radius: 5px;">{answerData.Aptitude_Marks__c}</span></h2>
+                           <h2>Practical Result: <span style="background: skyblue;padding: 10px;border-radius: 5px;">{answerData.Practical_Result__c}</span></h2>
+                       </div>
+                       <div class="detailcls">
+                           <p><b>Question 1:</b></p>
+                           <lightning-formatted-rich-text if:true={answerData.Question_1__c} value={answerData.Question_1__r.Question__c}></lightning-formatted-rich-text><br/><br/>
+                           <p><b>Answer 1:</b><br/> {answerData.Answer_1__c}</p>
+                       </div>
+                       <div class="detailcls">
+                            <p><b>Question 2:</b></p>
+                           <lightning-formatted-rich-text if:true={answerData.Question_2__c} value={answerData.Question_2__r.Question__c}></lightning-formatted-rich-text><br/><br/>
+                           <p><b>Answer 2:</b><br/> {answerData.Answer_2__c}</p>
+                       </div>
+                       <div class="detailcls">
+                            <p><b>Question 3:</b></p>
+                           <lightning-formatted-rich-text if:true={answerData.Question_3__c} value={answerData.Question_3__r.Question__c}></lightning-formatted-rich-text><br/><br/>
+                           <p><b>Answer 3:</b><br/> {answerData.Answer_3__c}</p>
+                       </div>
+                       <div class="detailcls">
+                            <p><b>Question 4:</b></p>
+                           <lightning-formatted-rich-text if:true={answerData.Question_4__c} value={answerData.Question_4__r.Question__c}></lightning-formatted-rich-text><br/><br/>
+                           <p><b>Answer 4:</b><br/> {answerData.Answer_4__c}</p>
+                       </div>
+                       <div class="detailcls">
+                            <p><b>Question 5:</b></p>
+                           <lightning-formatted-rich-text if:true={answerData.Question_5__c} value={answerData.Question_5__r.Question__c}></lightning-formatted-rich-text><br/><br/>
+                           <p><b>Answer 5:</b><br/> {answerData.Answer_5__c}</p>
+                       </div>
+                       <div class="detailcls">
+                            <p><b>Question 6:</b></p>
+                           <lightning-formatted-rich-text if:true={answerData.Question_6__c} value={answerData.Question_6__r.Question__c}></lightning-formatted-rich-text><br/><br/>
+                           <p><b>Answer 6:</b><br/> {answerData.Answer_6__c}</p>
+                       </div>
+                   </div>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_destructive" data-name="Fail" data-id={answerData.Id} onclick={onbtnclk} title="Fail">Fail</button>
+                    <button class="slds-button slds-button_brand" data-name="Pass" data-id={answerData.Id} onclick={onbtnclk} title="Pass">Pass</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
+</template>

@@ -1,0 +1,55 @@
+<apex:component >
+  <html>
+    <head>
+  
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet"/>
+    <style>
+    .row img{
+    width:100px;
+    height: auto;
+    }
+    body{
+      font-family: 'Poppins', sans-serif;
+    }
+    .header-row{
+    background-color: #303030;
+    justify-content: space-around;
+    padding: 10px 0;
+    align-items:center;
+    }
+    .row .row-header{
+    height:100%;
+    }
+    .row-header input{
+      width: 330px;
+      border-radius: 8px;
+      outline:0;
+      border:0;
+      padding: 5px;
+    }
+    </style>
+    </head>
+    <body>
+  
+    <div class="container-fluid">
+      <div class="header-row row">
+        
+          <img src="{!$Resource.MvWhite1}"/>
+        
+        <div class="row-header">
+          <input type="text" placeholder="Search"/>
+        </div>
+        
+        <div class="row-header" style="display:flex;align-items:end;">
+          <object type="image/svg+xml" data="{!$Resource.RectangleSVG}"></object>
+          <object type="image/svg+xml" data="{!$Resource.Rectangle1SVG}"></object>
+        </div>
+      </div>
+    </div>
+  
+    </body>
+    </html>
+</apex:component>

@@ -1,0 +1,18 @@
+<template>
+    <div class="maindiv">
+        <div class="slds-modal__header popup-header">
+            {label}
+        </div>
+        <lightning-record-edit-form record-id={selectedRecordId} object-api-name="Timesheet_Detail__c" onsubmit={handleClose}>
+            <lightning-modal-body>
+                <p>{description}</p>
+                <lightning-input-field field-name="Comments__c" label="commnet" varian="label-hidden" required></lightning-input-field>
+            </lightning-modal-body>
+            <lightning-modal-footer >
+                <lightning-button label="Cancel" variant="neutral" type="button" onclick={handleClose}></lightning-button>
+                &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                <lightning-button label="Update" variant="brand" type="submit"></lightning-button>
+            </lightning-modal-footer>
+        </lightning-record-edit-form>
+    </div>
+</template>

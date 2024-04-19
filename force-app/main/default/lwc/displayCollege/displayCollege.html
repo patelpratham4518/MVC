@@ -1,0 +1,202 @@
+<!-- Ensure that the closing </template> tag is present -->
+<template>
+    <template if:true={isSpinner}>
+		<lightning-spinner alternative-text="Loading..." variant="brand" style="position: fixed;"> </lightning-spinner>
+	</template>
+
+    <div if:true={showCollegeList}>
+        
+        <div class="main-tb-div">
+        <!-- <lightning-card> -->
+            
+            <div class="top-hdr-tb">
+                <div class="tbd-hdt-txt">College List</div>
+                <div>
+                    <lightning-button label="Add College" onclick={openModal} variant="Brand"></lightning-button>
+                </div>
+            </div>
+
+            <!-- Display college list -->
+            <template if:true={colleges}>
+                <lightning-datatable
+                    data={colleges}
+                    columns={columns}
+                    key-field="Id"
+                    onrowaction={callRowAction}
+                    hide-checkbox-column>
+                </lightning-datatable>
+            </template>
+            
+            <!-- Add college button -->
+            <template if:true={newCollegePopup}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop slds-backdrop_open">
+                    <div class="slds-modal__container">
+                        <!-- Modal Header -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 class="slds-text-heading_medium slds-hyphenate">Add New College</h2>
+                        </header>
+
+                        <!-- Modal Body -->
+                        <div class="slds-modal__content slds-p-around_medium">
+                            <lightning-input label="Name" value={newCollegeName} onchange={handleInputChange}></lightning-input>
+                        </div>
+
+                        <!-- Modal Footer -->
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={closeModal}>Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick={saveCollege}>Save</button>
+                        </footer>
+                    </div>
+                </section>
+            </template>
+            <template if:true={confirmPopup}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop slds-backdrop_open">
+                    <div class="slds-modal__container">
+                        <!-- Modal Header -->
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeConfirmPopup}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 class="slds-text-heading_medium slds-hyphenate">Confirm Delete</h2>
+                        </header>
+    
+                        <!-- Modal Body -->
+                        <div class="slds-modal__content slds-p-around_medium slds-text-align_center">
+                            Are you sure, you want to delete this item?
+                        </div>
+    
+                        <!-- Modal Footer -->
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={closeConfirmPopup}>Cancel</button>
+                            <button class="slds-button slds-button_destructive" onclick={deleteCollegeRec}>Delete</button>
+                        </footer>
+                    </div>
+                </section>
+            </template>
+        
+        <!-- </lightning-card> -->
+        </div>
+    
+    </div>
+
+    <div if:false={showCollegeList}>
+        <div class="slds-box slds-theme_default">
+            <div>
+                <h2 class="slds-text-heading_medium slds-m-left_medium"><b>{collegeDetails.Name} Exam Details</b></h2>
+            </div>
+            <!-- College Name -->
+            <div>
+                <div>
+                    
+                    <!-- Back button -->
+                    <div class="slds-text-align_right slds-m-bottom_medium slds-m-right_medium">
+                        <lightning-button label="Back" onclick={displayCollegeList} variant="brand"></lightning-button>
+
+                        <span class="slds-p-left_medium" if:true={displayTestEmailBtn}>
+                            <lightning-button variant="brand" label="Test Email" onclick={handleEmail}></lightning-button>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tabset -->
+                <lightning-tabset active-tab-value="detail" variant="standard" onclick={handleTabs} data-id="tabset">
+
+                    <!-- Details tab -->
+                    <lightning-tab label="Details" value="detail">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-2 element datetime-div">
+                                <lightning-input type="date" label="Exam date" value={examDateTime.date} data-id="date"></lightning-input>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2 element datetime-div">
+                                <lightning-input type="time" label="Exam time" value={examDateTime.time} data-id="time"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div if:true={contacts}>
+                            <h2 class="slds-text-heading_small"><b>Registered Contacts</b></h2>
+                            <br/>
+                            <lightning-datatable key-field="id" data={contacts} columns={contactColumns} hide-checkbox-column></lightning-datatable>
+                        </div>
+                    </lightning-tab>
+                        
+                    <!-- Register email tab -->
+                    <lightning-tab label="Registration Email" value="register">
+                        <div class="email-div" contenteditable="true" data-id="register"></div>
+                    </lightning-tab>
+                        
+                    <!-- Reminder email tab -->
+                    <lightning-tab label="Reminder Email" value="reminder">
+                        <div class="email-div" contenteditable="true" data-id="reminder"></div>
+                    </lightning-tab>
+                    
+                    <!-- Exam link email tab -->
+                    <lightning-tab label="Exam Link Email" value="exam">
+                        <div class="email-div" contenteditable="true" data-id="exam"></div>
+                    </lightning-tab>
+                </lightning-tabset>
+                <br/>
+                
+                <!-- Email popup -->
+                <template if:true={emailPopup}>
+                    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop slds-backdrop_open">
+                        <div class="slds-modal__container">
+                            <!-- Modal Header -->
+                            <header class="slds-modal__header">
+                                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeEmailPopup}>
+                                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                </button>
+                                <h2 class="slds-text-heading_medium slds-hyphenate">Send Email</h2>
+                            </header>
+
+                            <!-- Modal Body -->
+                            <div class="slds-modal__content slds-p-around_medium">
+                                <lightning-input type="email" label="Email" data-id="email"></lightning-input>
+                            </div>
+
+                            <!-- Modal Footer -->
+                            <footer class="slds-modal__footer">
+                                <button class="slds-button slds-button_neutral" onclick={closeEmailPopup}>Cancel</button>
+                                <button class="slds-button slds-button_brand" onclick={sendEmail}>Send</button>
+                            </footer>
+                        </div>
+                    </section>
+                </template>
+            </div>
+            <div class="slds-text-align_right slds-m-bottom_small slds-m-right_small">
+                <lightning-button variant="brand" label="Schedule Batch" onclick={openSchedulePopup} disabled={disableSchedule}></lightning-button>
+            </div>
+
+            <template if:true={confirmSchedulePopup}>
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open slds-backdrop slds-backdrop_open">
+                    <div class="slds-modal__container">
+                        <header class="slds-modal__header">
+                            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeSchedulePopup}>
+                                <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                            <h2 class="slds-text-heading_medium slds-hyphenate">Confirm Schedule</h2>
+                        </header>
+    
+                        <div class="slds-modal__content slds-p-around_medium slds-text-align_center">
+                            Are you sure, you want to schedule this exam?
+                        </div>
+    
+                        <footer class="slds-modal__footer">
+                            <button class="slds-button slds-button_neutral" onclick={closeSchedulePopup}>Cancel</button>
+                            <button class="slds-button slds-button_brand" onclick={handleSchedule}>Schedule</button>
+                        </footer>
+                    </div>
+                </section>
+            </template>
+
+        </div>
+    </div>
+
+</template>

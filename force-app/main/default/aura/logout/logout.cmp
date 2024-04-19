@@ -1,0 +1,17 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" controller="contractController" access="global">
+    <aura:attribute name="userName" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+       <div class="slds-page-header">
+            <div class="slds-media">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container slds-icon-standard-opportunity" title="Description of icon when needed">
+                            <img src="{!$Resource.merckWhite}" style="width:200px;height:80px;"/>
+                        </span>
+                    </div>
+                    <div class="slds-media__body" style="text-align:right;margin-top: 2%;">
+                        <!--<span Style="color:#228b22"><b><span style="color:black">Welcome : &nbsp;</span> Ashish&nbsp;&nbsp;&nbsp;</b></span><a href="https://dharmikmv-developer-edition.ap4.force.com/s/login/"><lightning:button label="Logout" variant="brand"/></a>-->
+                        <lightning:button label="Logout" variant="brand" onclick="{!c.logout}"/>
+                	</div>
+            </div>
+        </div>
+</aura:component>

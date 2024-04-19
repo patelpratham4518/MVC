@@ -1,0 +1,119 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="AutoLead" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="leadObj" type="Lead"  default="{'sobjectType':'lead',
+                                                         'FirstName':'',
+                                                         'LastName':'',
+                                                         'Company':'',
+                                                         'Phone':'',
+                                                         'CollegeName__c':'',
+                                                         'Profession__c':'',	
+                                                         'Email':''}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"  />
+    <aura:attribute name="showError" type="boolean" default="true"/> 
+    <aura:Attribute name="errorMessage" type="string"/>
+    <aura:attribute name="rId" type="Id"/>
+    <aura:attribute name="message" type="Boolean" default="true"/>
+    <aura:attribute name="spinner" type="Boolean" default="true" />
+    <aura:attribute name="disabled" type="Boolean" default="true"/>
+    <aura:attribute name="see" type="Boolean" default="true"/>
+    <!--  <aura:attribute name="errors" type="string"/> -->
+    
+    
+    <!--HEADER PART-->
+    <div style="width:100%">
+        <aura:if isTrue="{!v.showError}">
+            <div class="myclass" style="margin:10px auto; padding:1%;">
+                <div style="overflow:hidden;border:1px solid rgb(221, 219, 218);border-radius:10px;padding:2%;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.10);" class="slds-align_absolute-center;"  >
+                    <table>
+                        <tr>
+                            <td style="width:80%;" class="slds-text-heading_medium">
+                                <!-- <  class="slds-text-heading_medium" style="text-align:center;margin:20px auto;"><b>Job Posting</b></div> -->
+                                <div class="slds-text-heading_medium" style=" '35px SalesforceSans,Arial,sans-serif; text-align:center;margin:'20px' auto;font-size:35px;SalesforceSans,Arial,sans-serif"><b>Webinar Application</b></div>
+                            </td>
+                            <td style="width:20%;"><img src="{!$Resource.MVCloudRegLogo}" width="100" height="100" style="float:right;overflow:hidden"></img>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            
+            <!-- FORM PART  -->
+            <div class="myclass" style="margin:5px auto; padding:1%; height: 100px;">
+                
+                <div class="mybox" >
+                    <lightning:card  >
+                        <div class="slds">
+                            <div class="slds-form-element" style="padding:15px;"> 
+                                <lightning:input aura:id="FirstName" label="First Name" value="{!v.leadObj.FirstName}" placeholder="First Name" required="true" pattern="[a-zA-Z]+" messageWhenPatternMismatch="Please Enter Valid Name" type="text" onchange="{!c.validateAge}" />
+                            </div> 
+                            <div class="slds-form-element" style="padding:15px;">
+                                <lightning:input aura:id="LastName" name="type" label="Last Name" value="{!v.leadObj.LastName}" placeholder="Last Name"  required="true" pattern="[a-zA-Z]+" messageWhenPatternMismatch="Please Enter Valid Name" onchange="{!c.validateAge}"/>
+                            </div>
+                            <div class="slds-form-element" style="padding:15px;">
+                                <lightning:input aura:id="Company" name="type" label="Company" value="{!v.leadObj.Company}" placeholder="Company"   pattern="[a-zA-Z]+" messageWhenPatternMismatch="Please Enter Valid CompanyName" onchange="{!c.validateAge}"/>
+                            </div>
+                            <div class="slds-form-element" style="padding:15px;">
+                                <lightning:input aura:id="Email" name="type" label="Email" value="{!v.leadObj.Email}" placeholder="eg.abcd@gmail.com"  required="true" pattern="^\S+@\S+\.\S+$" messageWhenPatternMismatch="Please Enter Valid Email" onchange="{!c.validateAge}"/>
+                            </div>
+                            <div class="slds-form-element" style="padding:15px;"> 
+                                <lightning:input aura:id="Phone" name="type" label="Phone" value="{!v.leadObj.Phone}" placeholder="eg.9888877777"  required="true" pattern="^[0-9]{10}$" type="phone" messageWhenPatternMismatch="Please Enter Valid Phonenumber" onchange="{!c.validateAge}"/>      
+                            </div>
+                            <div class="slds-form-element" style="padding:15px;"> 
+                                <lightning:input aura:id="CollegeName__c" name="type" label="College Name" value="{!v.leadObj.CollegeName__c}" placeholder="College Name" pattern="[a-zA-Z]+" messageWhenPatternMismatch="Please Enter Valid CollegeName" onchange="{!c.validateAge}" />
+                            </div>
+                            <div class="slds-form-element" style="padding:15px;"> 
+                                <lightning:input aura:id="Profession__c" name="type"   label="Profession" value="{!v.leadObj.Profession__c}" placeholder="Profession"  required="true" pattern="[a-zA-Z]+" messageWhenPatternMismatch="Please Enter Profession" onchange="{!c.validateAge}" />
+                            </div> 
+                            <div class="slds-form-element" style="padding:15px;"> 
+                                <div class="slds_align_absolute-center" style="padding:25px"> 
+                                    <lightning:button variant="brand" label="Register" title="Brand action" onclick="{!c.doAction}" class="slds-align_absolute-center" disabled="{!v.disabled}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </lightning:card>
+                </div>
+            </div>
+            
+            
+            <aura:set attribute="else">
+                
+                <!-- Show the message to ui -->
+                <!-- <div style="margin-top:-4%;margin-bottom:7%">
+                    <ui:message title="Error" severity="error" closable="true" class="slds_align_absolute-center;">
+                        We have your information available for this webinar
+                    </ui:message>             
+                </div> -->
+                <aura:if isTrue="{!v.see}">
+                    <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+                        <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100" class="logo"></img>
+                    </div>
+                    
+                    <div class="page" style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px" >
+                        You have already applied.
+                    </div>
+                    <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                        We will contact you shortly.
+                    </div>
+                    <div style="text-align:center;margin-top:10px">
+                        <lightning:button variant="brand" label="GO TO FORM" title="Brand action" onclick="{!c.Form}" class="slds-align_absolute-center"/>
+                    </div>
+                    <aura:set attribute="else">
+                        <div class="logo" style="margin:200px auto;text-align:center;margin-bottom:20px">
+                            <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100"></img>
+                        </div>
+                        <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px" class="page">
+                            Sucessfully Applied.
+                        </div>
+                        <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                            Please check your mail.
+                        </div>     
+                    </aura:set>
+                </aura:if>
+            </aura:set>
+        </aura:if> 
+        <div>
+        </div>
+        
+    </div> 
+</aura:component>

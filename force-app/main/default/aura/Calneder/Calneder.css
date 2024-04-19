@@ -1,0 +1,80 @@
+.THIS .fc-right{
+	display: none;
+}
+.THIS .fc-day-grid-container{
+    height:620px !important;
+}
+.THIS .fc-row{
+    height: 103px !important;
+}
+.THIS .fc-widget-header{
+    height:20px !important;
+}
+.THIS .fc-today-button{
+    width: 74px;
+    height: 31px;
+    color: #fdfeff;
+    background: #1c4fa5;
+} 
+
+.THIS .fc-prev-button{
+    width: 45px;
+    height: 31px;
+    color: #f5f5f9;
+    background: #086abf;
+}
+
+.THIS .fc-next-button{
+    width: 45px;
+    height: 31px;
+    color: #f5f5f9;
+    background: #086abf;
+    margin-left: 3px;
+}
+
+.THIS .fc-center{
+    margin-top: 1%;
+    
+}
+.THIS .fc-title{
+    font-size: 13px !important;
+    margin-left: 5% !important;
+}
+
+.THIS .fc-time{
+    display: none;
+}
+
+.THIS td.fc-day.fc-widget-content.fc-sun::after{
+    content: 'WO';
+    padding-left: 10% !important;
+    padding-top: 10% !important;
+    font-style: italic !important;
+    color: gray;
+}
+
+.THIS td.fc-day.fc-widget-content.fc-sat::after{
+    content: 'WO';
+    padding-left: 10% !important;
+    padding-top: 10% !important;
+    font-style: italic !important;
+    color: gray;
+}
+
+.THIS td.fc-today{
+    background: rgba(248, 252, 227, 0.24);
+}
+
+.THIS .fc-content{
+    /*width: 50px !important;*/
+    /*height: 20px !important;*/
+    /*margin-top: 14% !important;*/
+}
+.THIS .fc-day-grid-event{
+    background: rgba(0, 0, 0, 0);
+    color: green;
+    /*width: 15% !important;*/
+    margin-top: 17% !important;
+    margin-left: 5% !Important;
+    border: none;
+}

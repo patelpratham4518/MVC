@@ -1,0 +1,306 @@
+<apex:page docType="html-5.0" standardController="Contact" extensions="whapinCalloutController" title="Whapin" sidebar="false" showHeader="false" standardStylesheets="false" >
+    <html lang="en">
+    <head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+      <link rel="stylesheet" href="{!$Resource.whapinStyleSheet}"/>
+      <!-- Font Awesome File -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <script type="text/javascript">
+          $(".heading-compose").click(function() {
+          $(".side-two").css({
+            "left": "0"
+          });
+        });
+    
+        $(".newMessage-back").click(function() {
+          $(".side-two").css({
+            "left": "-100%"
+          });
+        });
+    </script>
+    <script type="text/javascript">
+        function divReply(){
+            var messagezToBeDelivered = document.getElementById('comment').value;
+            alert('Your message '+messagezToBeDelivered);
+            calloutToSendMessage(messagezToBeDelivered)
+        }
+        function callJavascript(){
+        	refreshMessageBody();
+        }
+    </script>
+    <apex:form >
+    <body style="background: url('{!$Resource.whapinBackImage}') no-repeat fixed center;background-size:cover;overflow:hidden;" >
+      <div class="container app" id="appid">
+        <div class="row app-one">
+          <div class="col-sm-4 side">
+            <div class="side-one">
+              <!-- Heading -->
+              <div class="row heading">
+                <div class="col-sm-12 col-xs-12 ">
+                  <div class="">
+                   <p style="text-align:center;font-size:18px;padding-top:15px;" class="title-wappin"> 3.Mensajes Whappin</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Heading End -->
+              
+              <!-- SearchBox -->
+              <div class="row searchBox">
+                <div class="col-sm-12 searchBox-inner">
+                  <div class="form-group has-feedback">
+                    <input id="searchText" type="text" class="form-control" name="searchText" placeholder="Search"/>
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- Search Box End -->
+              
+              <!-- sideBar -->
+             <apex:repeat value="{!contactList}" var="con">
+             <div class="row sideBar">
+                 <div class="row sideBar-body">
+                  <div class="col-sm-12 col-xs-12 sideBar-main">
+                    <div class="row">
+                        <div class="col-sm-10 col-xs-10 sideBar-name">
+                            <span class="name-meta"><span class="name">{!con.Name}</span> {!con.Account.Name}  </span>
+                            <span class="reading pull-right">5</span>
+                            <br/>
+                            <span class="name-meta info-contact"><i class="number">{!con.phone}</i>{!con.Email}</span>
+                        </div>
+                        <div class="col-sm-2 col-xs-2 pull-right sideBar-time">
+                            <span class="time-meta pull-right">14:18</span>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+             </div>
+             </apex:repeat>
+             <!-- Sidebar End -->
+            </div>
+    
+            <div class="side-two">
+              <!-- Heading -->
+              <div class="row newMessage-heading">
+                <div class="row newMessage-main">
+                  <div class="col-sm-2 col-xs-2 newMessage-back">
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  </div>
+                  <div class="col-sm-10 col-xs-10 newMessage-title">
+                    New Chat
+                  </div>
+                </div>
+              </div>
+              <!-- Heading End -->
+    
+              <!-- ComposeBox -->
+              <div class="row composeBox">
+                <div class="col-sm-12 composeBox-inner">
+                  <div class="form-group has-feedback">
+                    <input id="composeText" type="text" class="form-control" name="searchText" placeholder="Search People"/>
+                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                  </div>
+                </div>
+              </div>
+              <!-- ComposeBox End -->
+            </div>
+          </div>
+          <!-- New Message Sidebar End -->
+    
+          <!-- Conversation Start -->
+          <div class="col-sm-8 conversation">
+            <!-- Heading -->
+            <div class="row heading">
+              <div class="col-sm-12 col-xs-10 heading-name">
+                <div class="col-lg-3">
+                	<a class="heading-name-meta name-wappin">{!Contact.Name}</a>
+              	</div>
+                <div class="col-lg-9 col-md-3">
+                    <img style="width: 130px;float:right;" src="{!$Resource.whapinInCompanyLogo}"/>
+                </div>
+                <div class="col-lg-12">
+                    <a class="wbtn btn" href="" data-toggle="modal" data-target="#Oportunidad">Crear Oportunidad</a>
+                    <a class="wbtn btn" href="" data-toggle="modal" data-target="#Evento">Crear Evento</a>
+                    <a class="wbtn btn" href="" data-toggle="modal" data-target="#Tarea">Crear Tarea</a>
+                    <a class="wbtn btn" href="" >Enviar Email</a>
+                    <a class="wbtn btn" href="" >Ficha cliente</a>
+              	</div>
+               
+              </div>
+              <!-- <div class="col-sm-1 col-xs-1  heading-dot pull-right">
+                <i class="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+              </div> -->
+            </div>
+            <!-- Heading End -->
+            <!-- Message Box -->
+            <apex:actionPoller action="{!incrementCounter}" oncomplete="callJavascript();" rerender="messageBodyRefresh" interval="15"/>
+            <apex:pageBlock id="messageBodyRefresh">
+            	<div class="row message" id="conversation" style="">
+              <div class="row message-previous">
+                <div class="col-sm-12 previous">
+                  <a onclick="previous(this)" id="ankitjain28" name="20">
+                  	Ver mensajes previos
+                  </a>
+                </div>
+              </div>
+              <apex:repeat value="{!messagesList}" var="msg">
+                <div class="row message-body">
+                <div class="col-sm-12 message-main-receiver">
+                  <div class="receiver">
+                    <div class="message-text">
+                        {!msg.Name}
+                    </div>
+                    <span class="message-time pull-right">
+                      {!msg.CreatedDate}
+                      <i class="fa fa-check"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </apex:repeat>
+              <div class="row message-body">
+                <div class="col-sm-12 message-main-sender">
+                  <div class="sender">
+                    <div class="message-text">
+                      Holaa!
+                    </div>
+                    <span class="message-time pull-right">
+                      9/8/2018
+                       <i style="color: #07a2df;" class="fa fa-check"></i>
+                        <i style="color: #07a2df;" class="fa fa-check"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </apex:pageBlock>
+            <!-- Message Box End -->
+            <!-- Reply Box -->
+            <div class="row reply">
+              <div class="col-sm-1 col-xs-1 reply-emojis">
+                <i class="fa fa-paperclip fa-2x"></i>
+              </div>
+              <div class="col-sm-9 col-xs-9 reply-main" >
+                <textarea class="form-control" rows="1" id="comment" placeholder="Type a message here..."></textarea>
+              </div>
+              <apex:actionFunction name="calloutToSendMessage" action="{!sendMessage}" rerender="appid">
+                  <apex:param id="msgID" name="messageToBeSent" value=""/>
+              </apex:actionFunction>
+             <!--  <div class="col-sm-1 col-xs-1 reply-recording">
+                <i class="fa fa-microphone fa-2x" aria-hidden="true"></i>
+              </div> -->
+              <div class="col-sm-1 col-xs-1 reply-send" id="sendButtonId" onclick="divReply();">
+                <i class="fa fa-send fa-2x" aria-hidden="true"></i>
+              </div>
+            </div>
+            <!-- Reply Box End -->
+          </div>
+          <!-- Conversation End -->
+        </div>
+        <!-- App One End -->
+      </div>
+      <!-- App End -->
+      <!-- Modal -->
+      <div class="modal fade" id="Oportunidad" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Crear Oportunidad</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-lg-6">
+                  <label for="email">Nombre de la oportunidad:</label>
+                  <input type="email" class="form-control" id="email" placeholder="l" name="email"/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="pwd">Etapa:</label>
+                  <input type="text" class="form-control" id="pwd" placeholder="" name="pwd"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn wbtn">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+       <!-- Modal -->
+      <div class="modal fade" id="Evento" role="dialog">
+        <div class="modal-dialog">
+        
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Crear Evento</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-lg-6">
+                  <label for="email">Nombre del evento:</label>
+                  <input type="email" class="form-control" id="email" placeholder="" name="email"/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="pwd">Descripcion:</label>
+                  <input type="text" class="form-control" id="" placeholder="" name=""/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="email">Fecha Inicio:</label>
+                  <input type="email" class="form-control" id="email" placeholder="" name="email"/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="pwd">Fecha Final:</label>
+                  <input type="text" class="form-control" id="" placeholder="" name=""/>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn wbtn">Guardar</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+       <!-- Modal -->
+      <div class="modal fade" id="Tarea" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Crear Tarea</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group col-lg-6">
+                  <label for="email">Nombre de la tarea:</label>
+                  <input type="email" class="form-control" id="email" placeholder="l" name="email"/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="pwd">Prioridad:</label>
+                  <input type="text" class="form-control" id="pwd" placeholder="" name="pwd"/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="email">Asunto:</label>
+                  <input type="email" class="form-control" id="email" placeholder="l" name="email"/>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="pwd">Fecha de vencimiento:</label>
+                  <input type="text" class="form-control" id="pwd" placeholder="" name="pwd"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerra</button>
+              <button type="submit" class="btn wbtn">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
+   </apex:form>
+</html>
+</apex:page>

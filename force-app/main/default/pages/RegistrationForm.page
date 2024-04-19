@@ -1,0 +1,322 @@
+<apex:page controller="RegistrationFormController" sidebar="false" showHeader="false" standardStylesheets="false" docType="html-5.0" lightningStyleSheets="true" >
+<apex:slds />
+
+
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        lang="en">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<style>
+body{
+    background-color:blue;
+}
+    .padTable{
+        padding : 5px;
+    }
+    .visibilityBox{
+        visibility:hidden;
+    }
+    .labelCls{
+        margin-bottom:0px;
+    }
+    .mainCls{
+        width:40%;
+        margin:0 auto;
+        
+    }
+    .errorCls{
+        color:firebrick;
+        font-size:11px;
+        height:10px;
+    }
+    .padTableMobile{
+        font-size:70px;
+        padding-top:5%;
+    }
+    .emptyLabel{
+        height:18px!important;
+    }
+    
+    
+  @media all and (max-width: 980px) {
+    .mainCls {
+        width:100%;
+        /*background-color:black;*/
+        /*color:white;*/
+    }
+    .form-control{
+        padding:10px;
+        font-size:30px!important;
+        /*color:grey;*/
+    }
+    .slds-form-element__label{ 
+        font-size:25px!important;
+        /*color:white!important;*/
+    }
+    .emptyLabel{
+        height:40px!important;
+    }
+    .btnSize{
+        font-size:30px!important;
+        /*width:100%;*/
+    }
+    .uploadBtn{
+        height:40px!important;
+    }
+    .custom-file-label::after{
+        padding-top: 18px;
+        padding-bottom: 30px;
+    }
+    .custom-file-label{
+        padding: 24px;
+    }
+    .slds-button_brand{
+    	width:100%;
+    }
+ }
+    
+</style>
+<script>
+    $(function() {
+  $('input[type=file]').change(function(){
+    var t = $(this).val();
+    var labelText = 'File : ' + t.substr(12, t.length);
+    $(this).prev('label').text(labelText);
+  })
+});
+</script>
+  <apex:form >
+      
+<apex:outputText rendered="{!IF(Applied == false,true,false)}">
+    <body>
+        <div class="mainCls">
+
+        <table style="width:96%;margin:2%">
+            <tr>
+                <td colspan="2">
+                    <apex:outputPanel rendered="{!!isMobile}">
+                        <div style="margin:0 auto;text-align:center;">
+                            <apex:image id="theImage" value="{!$Resource.MVCloudRegLogo}" width="100" height="50" style="margin:0 auto;" />
+                        </div>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!isMobile}">
+                        <div style="margin:0 auto;text-align:center;">
+                            <apex:image id="theImageMobile" value="{!$Resource.MVCloudRegLogo}" width="30%" height="50" style="margin:0 auto;" />
+                        </div>
+                    </apex:outputPanel>
+                </td>
+            </tr>
+            <tr>
+                <td> 
+                    <div class="slds-form-element padTable ">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Name</label>
+                        <div class="slds-form-element__control slds-has-error">
+                            <apex:inputField value="{!ConObj.FirstName}" styleClass="form-control " html-placeholder="First Name" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['FirstName'] != '',true, false)}" >{!errorMap['FirstName']}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label emptyLabel" for="input-id-01"></label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.LastName}" styleClass="form-control" html-placeholder="Last Name" required="true"/>
+                        </div>
+                        <div  class="errorCls" visibility="{!IF(errorMap['LastName'] != '',true, false)}">{!errorMap['LastName']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="slds-form-element padTable">
+                    <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Gender</label>
+                        <div class="slds-form-element padTable">
+                            <apex:inputField value="{!ConObj.Gender__c}" styleClass="form-control" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Gender__c'] != '',true, false)}">{!errorMap['Gender__c']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"> 
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Email</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Email}" styleClass="form-control" html-placeholder="Email" required="true" />
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Email'] != '',true, false)}">{!errorMap['Email']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Mobile Number</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.MobilePhone}" styleClass="form-control" html-placeholder="Mobile Number" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['MobilePhone'] != '',true, false)}">{!errorMap['MobilePhone']}</div>
+                    </div>
+                </td>
+                <td> 
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01">Alternate Phone</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Phone}" styleClass="form-control" html-placeholder="Phone"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Phone'] != '',true, false)}">{!errorMap['Phone']}</div>
+                    </div>
+                </td>
+            </tr>
+              
+            <tr>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Degree</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Degree__c}" styleClass="form-control" html-placeholder="Degree" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Degree__c'] != '',true, false)}">{!errorMap['Degree__c']}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Branch</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Branch__c}" styleClass="form-control" html-placeholder="ex. Computer, IT" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Branch__c'] != '',true, false)}">{!errorMap['Branch__c']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"> 
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>College Name</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.College_Name__c}" styleClass="form-control" html-placeholder="College Name" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['College_Name__c'] != '',true, false)}">{!errorMap['College_Name__c']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>CGPA (in %)</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.CGPA_or_Percentage__c}" styleClass="form-control" html-placeholder="CGPA of Last Year" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['CGPA_or_Percentage__c'] != '',true, false)}">{!errorMap['CGPA_or_Percentage__c']}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Year of Passing</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Year_Of_Passing__c}" styleClass="form-control" html-placeholder="Year Of Passing" required="true"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Year_Of_Passing__c'] != '',true, false)}">{!errorMap['Year_Of_Passing__c']}</div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick"></span>Experience</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Total_Experience__c}" styleClass="form-control" html-placeholder="Experience"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Total_Experience__c'] != '',true, false)}">{!errorMap['Total_Experience__c']}</div>
+                    </div>
+                </td>
+                <td>
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01">Past Company</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.Past_Company__c}" styleClass="form-control" html-placeholder="Past Company Name"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['Past_Company__c'] != '',true, false)}">{!errorMap['Past_Company__c']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="slds-form-element padTable">
+                        <label class="slds-form-element__label" for="input-id-01">Skills</label>
+                        <div class="slds-form-element__control">
+                            <apex:inputField value="{!ConObj.skills__c}" styleClass="form-control" html-placeholder="Write your skills here"/>
+                        </div>
+                        <div class="errorCls" visibility="{!IF(errorMap['skills__c'] != '',true, false)}">{!errorMap['skills__c']}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <div class="slds-form-element padTable">
+                        
+                        <!--<apex:pageBlock>-->
+                            <label class="slds-form-element__label" for="input-id-01"><span style="color:firebrick">* </span>Upload Resume</label>
+                            <div class="slds-form-element__control">
+                                <div class="custom-file">
+                                    <label class="custom-file-label" for="fileInput"><apex:outputPanel >{!fileName}</apex:outputPanel></label>
+                                    <apex:inputFile value="{!resume}"  accept="pdf" filename="{!filename}" contentType="{!contentType}" id="customFileLang" styleClass="uploadBtn custom-file-input" />
+                                </div>
+                            </div>
+                            <!--</apex:pageBlock>-->
+                         
+                        <div class="errorCls" visibility="{!IF(errorMap['resume'] != '',true, false)}">{!errorMap['resume']}</div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" style="padding-top:10px;">
+                    <div class="padTable">
+                     
+                        <apex:commandButton value="Submit" styleClass="btn btnSize slds-button_brand" onclick="setState();return false;"/>
+                   
+                    </div>
+                </td>
+            </tr>
+        </table>
+    <!--</apex:outputPanel>-->
+    
+
+</div>
+    </body>
+  <apex:actionFunction id="setState" rerender="rerenderId" status="pageStatus" action="{!Submit}"   name="setState" />
+    
+</apex:outputText>
+
+<apex:actionStatus id="pageStatus">
+    <apex:facet name="start">
+        <apex:outputPanel id="rerenderId">
+            <img src="/img/loading32.gif" width="25" height="25" />
+            <apex:outputLabel value="Loading..."/>
+        </apex:outputPanel>            
+    </apex:facet>
+</apex:actionStatus>
+
+
+<apex:outputPanel rendered="{!Applied}" id="newPage">      
+    <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+        <apex:image value="{!$Resource.MVCloudRegLogo}" width="200" height="150" style="margin:0 auto;" />
+    </div>
+    <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+        Thank you for applying
+    </div>
+    <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px"> 
+        We will contact you shortly.
+    </div>
+    
+  
+</apex:outputPanel>
+
+</apex:form>
+</html>
+</apex:page>

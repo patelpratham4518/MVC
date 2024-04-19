@@ -1,0 +1,75 @@
+<template>
+    <div class="container">
+        <div class="time-div">
+            <div class="inputArea"></div>  
+            <h1 class="time" style="font-size: 18px;">{timeVal}</h1>   
+        </div>
+        <div class="card">
+            <div class="card-image">
+                <h2 class="card-heading">
+                    Aptitude Questions
+                </h2>
+                <img src="https://mvclouds.com/wp-content/uploads/2020/08/mvclouds-logo.png"/>
+            </div>
+            <div class="header">
+                <p>You have 30 Aptitude Questions</p>
+            </div>
+            <template for:each={currentAptitudeQuestion} for:item="aptitudeQuestion">
+                <div  key={aptitudeQuestion.questionId}>
+                    <div class="que-main-div">
+                        <span class="que-count">
+                            <p>{aptitudeQuestion.questionNumber}.</p>
+                        </span>
+                        <span>
+                            <div class="que-sub-div">
+                                <lightning-formatted-rich-text class="questions" value={aptitudeQuestion.question}></lightning-formatted-rich-text>
+                            </div>
+                            <lightning-radio-group class="option-cls" data-id={aptitudeQuestion.questionId} name={aptitudeQuestion.questionId} options={aptitudeQuestion.radioOptions} value={aptitudeQuestion.selectedAnswer} type="radio" onchange={handleOptionChange}></lightning-radio-group>
+                        </span>
+                    </div>
+                    <hr/>
+                </div>
+            </template>
+            <div class="btn-div">
+                <p>{currentAptPage} of 3</p>
+            </div>
+            <div class="btn-div">
+                <template if:false={disablePreviousApt}>
+                    <button class="action-button" onclick={handlePreviousApt}>Previous</button>
+                </template>
+                <template if:false={disableNextApt}>
+                    <button class="action-button" onclick={handleNextApt}>Next</button>
+                </template>
+                <template if:true={disableNextApt}>
+                    <button class="action-button" onclick={submitAptHandel}>Submit & Start </button>
+                </template>
+            </div>
+        </div>
+        
+    </div>
+
+    <template if:true={confirmAptPopup}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeAptPopup}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Submit Aptitude Test</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+                <center>
+                    <p>Are you sure you want to submit your aptitude answers and start the practical test?</p>
+                </center>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeAptPopup} title="Cancel">Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={submitAptitude} title="Submit & Start">Submit & Start</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+</template>

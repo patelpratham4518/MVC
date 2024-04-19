@@ -1,0 +1,46 @@
+<apex:page >
+    <apex:includeScript value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/codemirror.min.js')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/codemirror.min.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/theme/dracula.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/mode/htmlmixed/htmlmixed.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/mode/css/css.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/mode/javascript/javascript.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/mode/clike/clike.js')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.CodeMirror, 'CodeMirrorLib/mode/python/python.js')}"/>
+
+    <style>
+        .CodeMirror {
+            height: 300px;
+            border: 1px solid #ddd;
+        }
+    </style>
+
+    <div>
+        <h2>Code Editor with Live Output</h2>
+        <textarea id="codeEditor" class="code"></textarea>
+        <button onclick="executeCode()">Execute</button>
+    </div>
+
+    <h2>Output:</h2>
+    <pre id="output"></pre>
+
+    <script>
+        var editor = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+            lineNumbers: true,
+            theme: "dracula",
+            mode: "javascript"
+        });
+
+        function executeCode() {
+            var code = editor.getValue();
+            var language = editor.getMode().name;
+            CodeEditorController.executeCode(code, language, function(result, event) {
+                if (event.status) {
+                    document.getElementById("output").innerHTML = result;
+                } else if (event.type === 'exception') {
+                    console.log(event.message);
+                }
+            });
+        }
+    </script>
+</apex:page>

@@ -1,0 +1,26 @@
+<aura:component >
+    
+	<div style="margin:3%">
+	    <p style="font-size:17px;color:#00dcff;font-weight:bolder;">PROJECT DETAILS</p><br/><br/>
+        <lightning:input label="Project Name" placeholder="Project Name" style="width:20%;"/>
+        <br/>
+        <lightning:input label="Client" placeholder="Client(Lookup)" style="width:20%;"/>
+        <br/>
+        <lightning:input type="date" placeholder="Start Date" label="Start Date"/>
+        <br/>
+        <lightning:input type="date" placeholder="POC Date" label="POC Date"/>
+        <br/>
+        <lightning:input type="date" placeholder="End Date" label="End Date"/>
+        <br/>
+        <lightning:input label="Project Duration" placeholder="Project Duration" style="width:20%;"/>
+        <br/>
+        <lightning:textarea label="Description" placeholder="Description" style="width:20%;"/>
+        <br/><br/>
+        <div>
+        	<lightning:button label="Save" variant="brand"/>
+	        <lightning:button label="Cancel" variant="brand"/>
+
+        </div>
+    </div>
+    
+</aura:component>

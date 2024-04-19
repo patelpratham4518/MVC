@@ -1,0 +1,18 @@
+<template>
+    <div class="maindiv">
+        <div class="slds-modal__header popup-header">
+            Reject Reason
+        </div>
+        <lightning-record-edit-form record-id={selectedRecordId} object-api-name="Timesheet_Detail__c" onsubmit={handleRejectTimesheet} onsuccess={handleSuccess}>
+            <lightning-modal-body>
+                <p>Are you sure you want to reject this timesheet?</p>
+                <lightning-input-field field-name="Rejected_Reason__c" label="Reject Reason" value={rejectReason} data-value ='RejectReason'  required></lightning-input-field>
+            </lightning-modal-body>
+            <lightning-modal-footer >
+                <lightning-button label="Cancel" variant="neutral" type="button" onclick={handleCancel}></lightning-button>
+                &nbsp;  &nbsp;  &nbsp;  &nbsp;
+                <lightning-button label="Reject" variant="brand" type="submit"></lightning-button>
+            </lightning-modal-footer>
+        </lightning-record-edit-form>
+    </div>
+</template>

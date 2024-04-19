@@ -1,0 +1,27 @@
+.THIS {
+   background-image: url("paper.gif");
+}
+
+.THIS .slds-tabs_scoped__nav{
+    background-color: #043b6b;
+    border: 1px solid #043b6b;
+    color:#ffffff !important;
+ }
+
+.THIS .slds-tabs_scoped__link{
+    color:#abadb0;
+    font-weight:bold;
+}
+
+.THIS .slds-tabs_scoped__nav :hover{
+    background-color:  #043b6b;
+ }
+
+.THIS .homeCmpTd{
+    width:32%;
+    box-shadow: 3px 6px 4px 2px #024376;
+}
+
+.THIS .slds-size_3-of-4{
+    width: 95%;
+}

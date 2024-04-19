@@ -1,0 +1,246 @@
+body {
+    font-family: "DM Sans", sans-serif;
+    line-height: 1.5;
+    background-color: #f1f3fb;
+    padding: 0 2rem;
+}
+
+.time-div{
+    position: fixed;
+    right: 0;
+    padding: 10px;
+}
+
+.card {
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 45rem;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px 0 rgba(153, 153, 153, 0.25);
+    padding: 1rem;
+}
+
+.card-image {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.card-image img {
+    width: auto;
+    height: 30px;
+}
+
+.header {
+    margin: 1em 0 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.6em;
+    border-bottom: 0.1em solid #c0bfd2;
+}
+
+.card-heading {
+    left: 3%;
+    top: 15%;
+    right: 10%;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #04cbff;
+    line-height: 1.222;
+}
+
+.card-form {
+    padding: 0rem 1rem 0;
+}
+
+.input {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    padding-top: 1.5rem;
+}
+
+.input+.input {
+    margin-top: 1.5rem;
+}
+
+.input-label {
+    color: #8597a3;
+    position: absolute;
+    top: 1.5rem;
+    transition: 0.25s ease;
+}
+
+.input-field {
+    border: 0;
+    z-index: 1;
+    background-color: transparent;
+    border-bottom: 2px solid #eee;
+    font: inherit;
+    font-size: 1.125rem;
+    padding: 0.25rem 0;
+}
+
+.input-field:focus,
+.input-field:valid {
+    outline: 0;
+    border-bottom-color: #04cbff;
+}
+
+.input-field:focus+.input-label,
+.input-field:valid+.input-label {
+    color: #04cbff;
+    transform: translateY(-1.5rem);
+}
+
+.action {
+    margin-top: 2rem;
+}
+
+.action-button {
+    font: inherit;
+    font-size: 1.50rem;
+    padding: 0.5em;
+    width: 100%;
+    font-weight: 500;
+    background-color: #04cbff;
+    border-radius: 6px;
+    color: #FFF;
+    border: 0;
+}
+
+.action-button:focus {
+    outline: 0;
+}
+
+.action-button[disabled] {
+    opacity: 0.5;
+}
+
+.action-button.nextpage {
+    padding: 0 0.2em !important;
+    width: 20% !important;
+    margin-bottom: 5px !important;
+}
+
+.card-info {
+    padding: 1rem 1rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: #8597a3;
+}
+
+.card-info a {
+    display: block;
+    color: #04cbff;
+    text-decoration: none;
+}
+
+
+
+label,
+input {
+    cursor: pointer;
+}
+
+label,
+.checkbox-style {
+    display: flex;
+    align-items: center;
+    column-gap: 1ch;
+}
+
+.checkbox-style::before,
+.checkbox-style::after {
+    content: "";
+}
+
+.checkbox-style::before {
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid #04cbff;
+    border-radius: 2px;
+}
+
+.checkbox-style::after {
+    /* width: 0.3em;
+    height: 0.56em;
+    top: 45%;
+    left: 5px; */
+    width: 6px;
+    height: 10px;
+    top: 38%;
+    left: 3px;
+    position: absolute;
+    transform: rotate(45deg) translateY(-50%);
+    border-bottom: 3px solid transparent;
+    border-right: 3px solid transparent;
+}
+
+input[type=checkbox] {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    margin-bottom: 0;
+    display: none;
+}
+
+input[type=checkbox]:checked+.checkbox-style::before {
+    background-color: white;
+}
+
+input[type=checkbox]:checked+.checkbox-style::after {
+    border-bottom-color: #04cbff;
+    border-right-color: #04cbff;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    box-sizing: border-box;
+    border: 0;
+}
+
+body {
+    min-height: 100vh;
+    /* color: #6666ff; */
+    font-family: sans-serif;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+body,
+form>fieldset,
+.card-form>fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: 1rem;
+}
+
+label {
+    flex-grow: 1;
+}
+
+.header {
+    margin: 1em 0 1.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.6em;
+    border-bottom: 0.1em solid #c0bfd2;
+}
+
+.errorcls {
+    color: red;
+}

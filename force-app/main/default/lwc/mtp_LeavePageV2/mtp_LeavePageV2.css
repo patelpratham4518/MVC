@@ -1,0 +1,1477 @@
+html{
+    font-size: 2px;
+}
+
+.container{
+    background: #ffffff;
+    background: #D7E0FC;
+    height: 100%;
+    width: 100%;
+    padding: 30px;
+    /* background-image: url('/resource/mtp_Timesheet_bg_image'); */
+    background-size: 100% 30%;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #a698f6d9 9%, #FFFFFF 40%);
+    overflow-x: hidden;
+}
+
+/* ======================================[ Spineer CSS ]========================================================= */
+
+.spinnerContainer {
+    width: 50%;
+    margin: 100px auto 0 auto;
+    text-align: center;
+
+}
+
+.plane-spinner {
+    width: 50%;
+    max-width: 200px;
+    position: relative;
+    animation-name: move;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+.ideagen-spinner {
+    max-width: 200px;
+    margin: 0 auto;
+    animation-name: spinner;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+@keyframes move {
+    0% {
+        right: -75%;
+        opacity: 0;
+        transform: rotate(10deg) translateY(-3em);
+    }
+    25% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+        transform: rotate(0deg) translateY(2em);
+    }
+    100% {
+        right: 0%;
+        opacity: 0;
+        transform: rotate(0deg) translateY(2em);
+    }
+}
+
+.loading-spinnet-txt {
+    margin-top: 9%;
+    font-size: 2em;
+}
+
+/* ======================================[ Heading text CSS ]========================================================= */
+
+.welcomeText {
+    width: 100%;
+    background-color: #000000;
+    margin-top: 4%;
+    margin-bottom: 2%;
+}
+
+.welcomeText h2 {
+    position: absolute;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 25px;
+    color: #000000;
+}
+
+.welcomeText p {
+    position: absolute;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #000000;
+    padding-top: 3.5%;
+}
+
+
+/* ============================================[ Center Body & Buttons]===================================================== */
+
+.body{
+    overflow: hidden;
+    padding: 10px;
+    /* margin-top: 2%; */
+    /* background-color: #ffffff; */
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    max-height: 67.5vh;
+    min-height: 74.5vh;
+}
+.leaveOptions1{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.leaveOptions{
+    display: flex;
+    flex-direction: row;
+    /* width: 100%; */
+    align-items: center;
+    z-index: 1;
+}
+
+
+.PendingLeaves{
+    background-color: rgb(255, 255, 255);
+    /* width: 10%;
+    height: 3vh; */
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 120px;
+    /* border-style: solid; */
+    border-width: 2px;
+    border-color: #7a7a7a85;
+    border-radius: 8px;
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.2s;
+    
+}
+.PendingLeaves:hover{
+    /* background-color: rgb(134, 134, 134); */
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.559);
+}
+.PendingLeaves:active{
+    margin-top: 2px;
+}
+
+.ApprovedLeaves{
+    text-align: center;
+    background-color: rgb(0 151 32);
+    COLOR: WHITE;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 120px;
+    /* border-style: solid; */
+    border-width: 2px;
+    /* border-color: #00ff22cf; */
+    border-radius: 8px;
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.2s;
+    background-image: linear-gradient(315deg, #79e78f 0%, #03c853 74%);
+
+}
+.ApprovedLeaves:hover{
+    /* background-color: rgb(0, 255, 55); */
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.559); 
+}
+.ApprovedLeaves:active{
+    margin-top: 2px;
+}
+
+
+
+.RejectedLeaves{
+    text-align: center;
+    background-color: rgb(201 0 0);
+    COLOR: WHITE;
+    padding: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    min-width: 120px;
+    /* border-style: solid; */
+    border-width: 2px;
+    border-color: #ff000085;
+    border-radius: 8px;
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.2s;   
+    background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
+}
+.RejectedLeaves:hover{
+    /* background-color: rgba(255, 0, 0, 0.925); */
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.559);
+}
+.RejectedLeaves:active{
+    margin-top: 2px;
+}
+
+.DownArrows{
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+}
+/* #combobox-button-4{
+    padding: 5%;
+    background-color: #d2ccfb;
+} */
+
+.TraineeSelectionButton{
+ 
+    /* width: 100px; */
+    color: #6963a3;
+    /* position: absolute;
+    right: 10%; */
+    margin-top: 0.75%;
+    padding: 1.5%;
+    /* margin-bottom: 2%; */
+    display: flex;
+    flex-direction: row;
+    /* justify-content: flex-start; */
+    gap: 10px;
+    align-items: center;
+}
+
+.TraineeLeaves{
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    padding-block: 7px;
+    padding-inline: 10px;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
+    min-width: 10px;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: #828282;
+    border-radius: 4px;
+    box-shadow: 1.5px 1.5px 7px 0px rgb(0 0 0 / 14%);
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 0.2s;
+
+    margin-left: -8px;
+    width: 97px;
+    font-size: 10px;
+    
+}
+
+.YearSelection{
+    margin-top: -18px;
+    width: 25%;
+}
+   
+  .slds-input_faux {
+      background-color: var(--slds-c-input-color-background, var(--sds-c-input-color-background, var(--lwc-colorBackgroundInput,rgb(254, 194, 255))));
+  }
+
+
+/* ============================================[ Apply Forl Leave Button And ModalBox CSS]===================================================== */
+
+button.crt-tmst {
+    display: flex;
+    /* justify-content: center; */
+    
+   }
+   
+button.crt-tmst span {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+   }
+   .plusSign{
+    font-size: 14px;
+    padding-right: 2%;
+   }
+   
+   button:hover.crt-tmst {
+    background-color: #bc00e2;
+    box-shadow: 1.5px 1.5px 7px 0px rgba(0, 0, 0, 0.559);
+
+   }
+
+.crt-btn-pos {
+    border: 2px solid rgb(165 36 251 / 60%);
+    background-color: rgb(162 36 251 / 60%);
+    width: 170px;
+    border-radius: 0.9em;
+    padding: 0.8em 1.2em 0.8em 1em;
+    -webkit-transition: all ease-in-out 0.2s;
+    transition: all ease-in-out 0.2s;
+    font-size: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-inline: auto;
+    margin-top: 10px;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
+}
+
+
+.buttonclass{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.mentorfield{
+    margin-bottom: 10px;
+}
+
+.slds-modal__header{
+    border-bottom-style: hidden;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.37);
+    background-color: rgb(223, 181, 255);
+    border-bottom-right-radius: var(--slds-c-modal-radius-border, var(--sds-c-modal-radius-border, var(--lwc-borderRadiusMedium,0.25rem)));
+    border-bottom-left-radius: var(--slds-c-modal-radius-border, var(--sds-c-modal-radius-border, var(--lwc-borderRadiusMedium,0.25rem)));
+    
+}
+
+.slds-modal__footer {
+    border-top-style: hidden;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.37);
+    background-color: rgb(225, 186, 255);
+    border-top-right-radius: var(--slds-c-modal-radius-border, var(--sds-c-modal-radius-border, var(--lwc-borderRadiusMedium,0.25rem)));
+    border-top-left-radius: var(--slds-c-modal-radius-border, var(--sds-c-modal-radius-border, var(--lwc-borderRadiusMedium,0.25rem)));
+}
+
+
+
+.slds-illustration.slds-illustration_small .slds-illustration__svg {
+    width: 80%;
+    max-width: 500px;
+    max-height: 300px;
+    margin-bottom: var(--lwc-spacingMedium,1rem);
+}
+
+/* .slds-modal__content{
+     background: linear-gradient(#e1ddff 9%, #d8d2ff , #e1ddff 91%);
+} */
+
+/* .RecordForm{
+    box-shadow: 0px 0px 3px rgb(0 0 0 / 50%);
+    padding: 1%;
+    margin-bottom: 6px;
+    border-radius: 8px;
+} */
+ 
+
+
+/* ==================================[ Leave List Contaniner CSS]================================================= */
+
+
+.sub_container {
+    
+    display: flex;
+    justify-content: center;
+
+}
+
+.stack-top_left {
+    width: 100%;
+    height: 53vh;
+    background-color: #edeaea00;
+    margin-inline: 1%;
+    border: 1px solid #edeaea00;
+    border-radius: 15px;
+}
+.stack-top_left h1 {
+    color: #000000;
+    background: rgba(137, 126, 251, 0.38);
+    border-bottom: 1px solid rgba(128, 128, 128, 0.334);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 140%;
+    line-height: 40px;
+    padding-left: 5%;
+    border: 0px solid #edeaea00;
+    border-radius: 15px;
+    box-shadow: -1px 4px 2px #0000003b;
+}
+
+.stack-top_left h1[data-name^="Approved"].ctc-txt {
+    color: #1B7D03 !important;
+    /* background: rgba(46, 193, 10, 0.38) !important; */
+}
+
+.leave-block {
+    background: #b3a8f726;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    height: 10vh;
+    min-height: 90px;
+    margin-inline: 5%;
+    margin-top: 2%;
+    margin-bottom: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.leave-block:hover{
+    background: #b3a8f776;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.465);
+} 
+
+.left-tckt-circle {
+    height: 45px;
+    width: 45px;
+    margin-left: -18px;
+    background: #ffffff;
+    border-radius: 50%;
+    margin-right: 2%;
+    box-shadow: inset -2px 0px 2px #00000033;
+}
+
+.right-tckt-circle {
+    height: 45px;
+    width: 45px;
+    margin-right: -18px;
+    background: #ffffff;
+    border-radius: 50%;
+    margin-left: 2%;
+    box-shadow: inset 2px 0px 2px #00000033;
+}
+
+.main-lv-blck {
+    width: 85%;
+    align-items: center;
+    /* width: 85%; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.lv-info {
+    /* width: 75%; */
+    width: 67%;
+}
+
+.lv-duration {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 130%;
+    margin-bottom: 5px;
+    color: #000000;
+}
+
+.lv-type {
+    color: #F4B40D;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 85%;
+}
+
+.lv-type-Approved {
+    color: #0df41c;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 85%;
+}
+
+.lv-type-Rejected {
+    color: #f41c0d;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 85%;
+}
+
+.lv-days {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 100%;
+    line-height: 14px;
+    color: #000000;
+    margin-bottom: 5px;
+}
+
+.lev-right-tp {
+    background: rgba(244, 180, 13, 0.33);
+    border-radius: 5px;
+    color: #F4600D;
+    height: 30px;
+    width: 150px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-right: 2%;
+    text-align: center;
+    /* min-width: 150px; */
+}
+.lev-right-tp p{
+    font-size: 14px;
+}
+
+.leave-lst-main {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 52vh;
+}
+
+.lev-right-tp[data-name^="Approved"].c-txt {
+    color: #1B7D03 !important;
+    background: rgba(46, 193, 10, 0.38) !important;
+}
+
+.lev-right-tp[data-name^="Pending for Approval"].c-txt {
+    color: #F4600D !important;
+    background: rgba(244, 180, 13, 0.33) !important;
+}
+
+.lev-right-tp[data-name^="Rejected"].c-txt {
+    color: #DB0909 !important;
+    background: rgba(219, 9, 9, 0.31) !important;
+}
+
+.ApprovOption{
+    background-color: rgba(140, 255, 129, 0);
+    color: #29c400;;
+    width: 32px;
+    padding: 6px;
+    /* padding-block: 5px; */
+    font-size: 11px;
+    text-align: center;
+    border-style: solid;
+    border-color: rgb(9, 255, 0);
+    border-width: 1px;
+    border-radius: 6px; 
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 0px #000000ab;
+}
+.ApprovOption:hover{
+    background-color: rgba(43, 255, 23, 0.856);
+    color: rgb(255, 255, 255);
+    box-shadow: -1px -1px 2px 0px #000000ab;
+}
+
+.RejectOption{
+    background-color: rgba(255, 129, 129, 0);
+    color: rgb(255, 47, 47);
+    width: 32px;
+    padding: 6px;
+    /* padding-block: 5px; */
+    font-size: 11px;
+    text-align: center;
+    border-style: solid;
+    border-color: red;
+    border-width: 1px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0px 0px 2px 0px #000000ab;
+}
+.RejectOption:hover{
+    background-color: rgba(255, 38, 23, 0.856);
+    color: rgb(255, 255, 255);
+    box-shadow: -1px -1px 2px 0px #000000ab;
+}
+
+.RejectOption{
+    /* background-color: rgba(255, 129, 129, 0); */
+    color: rgb(255, 47, 47);
+    width: 32px;
+    padding: 1px;
+    /* padding-block: 5px; */
+    /* font-size: 11px; */
+    /* text-align: center; */
+    /* border-style: solid; */
+    /* border-color: red; */
+    /* border-width: 1px; */
+    /* border-radius: 6px; */
+    cursor: pointer;
+    /* box-shadow: 0px 0px 2px 0px #000000ab; */
+}
+
+/* ================>  [Single Leave Detail Popup box CSS]  <================== */
+
+.row_div {
+    border-radius: 8px;
+    padding: 1%;
+    margin-bottom: 1%;
+    box-shadow: 0px 0px 4px #00000099;
+  }
+  .lev_detail{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* margin-bottom: -10%; */
+  }
+  .logo_class {
+    border-radius: 50%;
+    width: 67px;
+    height: 67px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .logo_class_1 {
+    margin: 5% 2% 5% 5%;
+    border: 0.5px solid #000000;
+    background-image: url('/resource/mtp_MVClouds_Logo_White');
+    background-color: #FFFFFF;
+  }
+
+  .date_cls{
+    display: flex;
+    justify-content: space-around;;
+  }
+  .sdate_cls {
+    width: 27%;
+    font-size: 14px;
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+  }
+  
+  .sdate_cls h2 {
+    color: #949191;
+    align-self: flex-start;
+    margin-left: 10%;
+  }
+  
+  .start_date {
+    width: 80%;
+  }
+  .middle_cls {
+    width: 35%;
+    font-size: 14px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  
+  .middle_cls h2 {
+    color: #949191;
+    
+  }
+  
+  .edate_cls {
+    width: 17%;
+    font-size: 14px;
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+  }
+  
+  .edate_cls h2 {
+    color: #949191;
+    align-self: flex-start;
+    margin-left: 10%;
+  }
+  
+  .end_date {
+    width: 80%;
+  }
+  .img1{
+    
+  }
+  .img2{
+    /* display: none; */
+    width: 80%;
+    margin-left: 10%;
+  }
+  /* .reason_cls{
+    color: #000000; 
+    font-size: 14px;
+
+  } */
+
+  .reasonInPopup{
+    width: 100%;
+    height: 100px;
+    padding: 1%;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: #0000005e;
+    margin-block: 1%;
+    overflow-y: scroll;
+    box-shadow:  0px 3px 6px #00000052;
+  }
+  .PopupBodyBack{
+    background: linear-gradient(to bottom, rgb(255 255 255) 57%, rgb(235 215 250) 87%);
+    z-index: -1;
+  }
+  
+  .popupButtons{
+    display: flex;
+    justify-content: center;
+    gap: 4%;
+    flex-wrap: nowrap;
+    margin-top: 4%;
+}
+  
+  .PopUpApproveButton{
+    text-align: center;
+    background-color: #0df41c;
+    padding: 1.2%;
+    padding-inline: 2%;
+    border-radius: 6px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.377);
+    cursor: pointer;
+    order: 1;
+    background-image: linear-gradient(315deg, #79e78f 0%, #03c853 74%);
+
+  }
+  .PopUpRejectButton{
+    text-align: center;
+    background-color: red;
+    padding: 1.2%;
+    padding-inline: 2%;
+    border-radius: 6px;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.377);
+    cursor: pointer;
+    order: 3;
+    background: linear-gradient(0deg, rgba(255,27,0,1) 0%, rgba(251,75,2,1) 100%);
+  }
+  .PopupcanselButton{
+    text-align: center;
+    padding: 1.2%;
+    padding-inline: 2%;
+    border-radius: 6px;
+    border-style: solid;
+    border-width: 1px;
+    background-color: white;
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.377);
+    cursor: pointer;
+    order: 2;
+  }
+
+.popUpIcon[data-name^="Rejected"].ct-txt {
+     --sds-c-icon-color-foreground-default: rgb(246, 88, 88);
+}
+.popUpIcon[data-name^="Approved"].ct-txt {
+     --sds-c-icon-color-foreground-default: rgb(102, 255, 140);
+}
+.popUpIcon[data-name^="Pending for Approval"].ct-txt {
+     --sds-c-icon-color-foreground-default: rgb(246, 209, 88);
+}
+
+
+
+
+/* ====================================[ Illutration Animation CSS ]=================================================================== */
+
+
+.emptystate__container {
+  width: 94%;
+  padding-top: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 40%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.emptystate__body {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px 40px;
+  box-sizing: border-box;
+  text-align: center;
+}
+.illustration__container {
+  width: 160px;
+  height: 160px;
+  background-color: #f0f8ff;
+  box-sizing: border-box;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.illustration__container:hover .illustration__containerBackground svg {
+  animation: pulse 4s ease-in-out infinite;
+}
+.illustration__containerBackground {
+  width: 160px;
+  height: 160px;
+  position: absolute;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.illustration__elements {
+  animation: float 6s ease-in-out infinite;
+  background-color: none;
+  animation-delay: 2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translatey(5px);
+}
+.illustration__element {
+  margin-bottom: 15px;
+  background-color: #ffffff;
+  width: 140px;
+  border-radius: 6px;
+  transform: scale(O);
+  opacity: 0;
+  box-shadow: 0 5px 15px 0px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.illustration__element--right.illustration__element--1 {
+  transform: translatex(-30px);
+  animation: popInRight 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+  transform-origin: top left;
+}
+.illustration__element--right.illustration__element--3 {
+  transform: translatex(-30px);
+  animation: popInRight 0.3s ease-in-out 0.6s;
+  animation-fill-mode: forwards;
+  transform-origin: top left;
+  margin: 0;
+}
+.illustration__element--left {
+  transform: translatex(30px);
+  animation: popInLeft 0.3s ease-in-out 0.3s;
+  animation-fill-mode: forwards;
+  transform-origin: top right;
+}
+.illustration__elementType {
+  width: 24px;
+  height: 24px;
+  padding-bottom: 5%;
+font-size: 212%;
+  background-color: #9b8bfa;
+  border-radius: 6px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  margin-right: 10px;
+}
+.illustration__elementWireframe {
+  width: 100px;
+  height: 8px;
+  background-color: #dddddd;
+  border-radius: 6px;
+}
+
+.mailIcon{
+    --sds-c-icon-color-foreground-default: rgb(255, 255, 255);
+    /* --sds-c-icon-color-size: 24px; */
+    
+}
+
+
+@keyframes float {
+  0% {
+    transform: translatey(5px);
+  }
+  50% {
+    transform: translatey(-5px);
+  }
+  100% {
+    transform: translatey(5px);
+  }
+}
+@keyframes popInRight {
+  0% {
+    transform: scale(0) translatex(0px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translatex(-30px);
+    opacity: 100%;
+  }
+}
+@keyframes popInLeft {
+  0% {
+    transform: scale(0) translatex(0px);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translatex(30px);
+    opacity: 100%;
+  }
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.overlay{
+    overflow: auto;
+    position: relative;
+    background-color: rgba(255, 0, 0, 0.274);
+     height: 30px;
+    width: 20%;
+    margin-right: 2%;
+    min-width: 150px;
+    z-index: 1;
+}
+.slds_Wrap{
+    display: flex;
+    align-items: center;
+}
+.AletBlock{
+    padding: 10px;
+}
+.AlerMsg{
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 7px;
+}
+.AlertSubMsg{
+    margin-bottom: 7px;
+}
+.DatePicker{
+    width: 130px;
+}
+/* =====================================> Media Query <=================================================== */
+
+@media only screen and (max-width: 1366px) {
+
+    .welcomeText {
+        margin-top: 3.5%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 22px;
+    }
+
+    .lev_detail{
+        margin-bottom: -10%;
+      }
+    .logo_class {
+        width: 60px;
+        height: 60px;
+    }
+    .logo_class_1 {
+        margin: 15% -5% 15% 0%;
+    }
+    .TraineeSelectionButton{
+        right: 10%;
+        margin-top: 0.9%;
+       
+      }
+    .sdate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .edate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .middle_cls {
+        width: 32%;
+    font-size: 15px;
+    }
+    .img2{
+        width: 80%;
+    margin-left: 9%;
+    }
+
+      
+ 
+}
+
+@media only screen and (max-width: 1080px) {
+
+    .welcomeText {
+        margin-top: 10%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 22px;
+    }
+    .ApprovOption{
+        display: none;
+    }
+    .RejectOption{
+        display: none;
+    }
+    .TraineeSelectionButton{
+        right: 10%;
+        margin-top: 0.9%;
+      }
+
+
+    .logo_class {
+        width: 60px;
+        height: 60px;
+    }
+    .logo_class_1 {
+        margin: 15% -5% 15% 0%;
+    }
+    .sdate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .edate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .middle_cls {
+        width: 30%;
+    font-size: 15px;
+    }
+    .img2{
+        width: 80%;
+    margin-left: 9%;
+    }
+
+}
+
+@media only screen and (max-width: 900px) {
+
+    .welcomeText {
+        margin-top: 11%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 22px;
+    }
+    .leave-block {
+        height: 9.5vh;
+        min-height: 0px;
+    }
+
+
+
+    .logo_class {
+        width: 60px;
+        height: 60px;
+    }
+    .logo_class_1 {
+        margin: 15% -5% 15% 0%;
+    }
+    .sdate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .edate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .middle_cls {
+        width: 30%;
+    font-size: 15px;
+    }
+    .img2{
+        width: 80%;
+    margin-left: 9%;
+    }
+
+   
+      
+}
+
+
+
+@media only screen and (max-width: 767px) {
+    .welcomeText {
+        margin-top: 12%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 20px;
+    }
+    .leave-block {
+        height: 9.5vh;
+        min-height: 0px;
+    }
+    .lev-right-tp{
+        height: 30px;
+        width: 140px;
+    }
+    .lv-days{
+        font-size: 90%;
+        line-height: 14px;
+        margin-bottom: 2px;
+    }
+    .lv-duration{
+        font-size: 110%;
+        margin-bottom: 3px;
+    }
+    .lv-type{
+        font-size: 100%;
+    }
+    .TraineeSelectionButton{
+        right: 10%;
+        margin-top: 1.25%;
+      }
+
+
+    .logo_class {
+        width: 60px;
+        height: 60px;
+    }
+    .logo_class_1 {
+        margin: 15% -5% 15% 0%;
+    }
+    .sdate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .edate_cls {
+        width: 30%;
+        font-size: 15px;
+    }
+    .middle_cls {
+        width: 30%;
+    font-size: 15px;
+    }
+    .img2{
+        width: 80%;
+    margin-left: 9%;
+    }
+
+
+}
+
+@media only screen and (max-width: 670px) {
+    .container{
+        padding: 10px;
+    }
+    .welcomeText {
+        margin-top: 16%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 19px;
+    }
+    .leave-block {
+        height: 9vh;
+        min-height: 0px;
+        margin-top: 3%;
+    }
+    .lev-right-tp{
+        height: 35px;
+        width: 123px;
+    }
+    .lev-right-tp p{
+        font-size: 12px;
+    }
+    .lv-days{
+        font-size: 80%;
+        line-height: 14px;
+        margin-bottom: 2px;
+    }
+    .lv-duration {
+        font-size: 100%;
+        margin-bottom: 3px;
+    }
+    .lv-type{
+        font-size: 90%;
+    }
+    .TraineeSelectionButton{
+        right: 10%;
+        margin-top: 1.5%;
+      }
+
+
+            .logo_class {
+                width: 60px;
+                height: 60px;
+            }
+            .logo_class_1 {
+                margin: 15% -5% 15% 0%;
+            }
+            .sdate_cls {
+                width: 30%;
+                font-size: 15px;
+            }
+            .edate_cls {
+                width: 30%;
+                font-size: 15px;
+            }
+            .middle_cls {
+                width: 30%;
+            font-size: 15px;
+            }
+            .img2{
+                width: 80%;
+            margin-left: 9%;
+            }
+      
+   
+    
+}
+
+@media only screen and (max-width: 600px) {
+    .InFields{
+        width: 150%;
+    }
+    .welcomeText {
+        margin-top: 18%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 18px;
+    }
+        .leaveOptions {
+            width: 100%; 
+        }
+        
+        .leave-block {
+            height: 9vh;
+            min-height: 0px;
+            margin-top: 4%;
+            margin-inline: 2%;
+        }
+            .lev-right-tp{
+                height: 45px;
+                width: 100px;
+            }
+            .lev-right-tp p{
+                font-size: 12px;
+            }
+            .lv-days{
+                font-size: 80%;
+                line-height: 14px;
+                margin-bottom: 2px;
+            }
+            .lv-duration {
+                font-size: 100%;
+                margin-bottom: 0px;
+            }
+            .lv-type{
+                font-size: 90%;
+            }
+            .TraineeSelectionButton{
+                right: 10%;
+                margin-top: 2.1%;
+            }
+
+                    .logo_class {
+                        width: 60px;
+                        height: 60px;
+                    }
+                    .logo_class_1 {
+                        margin: 15% -5% 15% 0%;
+                    }
+                    .sdate_cls {
+                        width: 30%;
+                        font-size: 15px;
+                    }
+                    .edate_cls {
+                        width: 30%;
+                        font-size: 15px;
+                    }
+                    .middle_cls {
+                        width: 30%;
+                    font-size: 15px;
+                    }
+                    .img2{
+                        width: 80%;
+                    margin-left: 9%;
+                    }
+                    .ShowColon{
+                        display: inline-block !important;
+                    }
+                    .pm-cl{
+                        display:none;
+                       }
+                    .slds_Wrap{
+                        display: block;
+                    }
+    
+}
+
+@media only screen and (max-width: 500px){
+
+    .welcomeText {
+        margin-top: 17%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 17px;
+    }
+        .leaveOptions {
+            width: 100%; 
+        }
+        .PendingLeaves, .ApprovedLeaves, .RejectedLeaves{
+            padding: 5px;
+            margin-top: 10px;
+            margin-left: 0px;
+            margin-right: 5px;
+            min-width: 0px;
+        }
+        .leave-block {
+            height: 9vh;
+            min-height: 0px;
+            margin-top: 4%;
+            margin-inline: 1%;
+        }
+        .lev-right-tp{
+            height: 45px;
+            width: 70px;
+        }
+        .lev-right-tp p{
+            font-size: 11px;
+        }
+        .lv-days{
+            font-size: 80%;
+            line-height: 14px;
+            margin-bottom: 2px;
+        }
+        .lv-duration {
+            font-size: 100%;
+            margin-bottom: 0px;
+        }
+        .lv-type{
+            font-size: 90%;
+        }
+            .TraineeSelectionButton{
+                right: 10%;
+                margin-top: 2.5%;
+            }
+
+                    .logo_class {
+                        width: 60px;
+                        height: 60px;
+                    }
+                    .logo_class_1 {
+                        margin: 15% -5% 15% 0%;
+                    }
+                    .sdate_cls {
+                        width: 32%;
+                        font-size: 14px;
+                    }
+                    .edate_cls {
+                        width: 32%;
+                        font-size: 14px;
+                    }
+                    .middle_cls {
+                        width: 30%;
+                    font-size: 13px;
+                    }
+                    .img2{
+                        width: 84%;
+                    margin-left: 7%;
+                    }
+
+        
+          
+
+}
+
+@media only screen and (max-width: 400px){
+    .welcomeText {
+        margin-top: 20%;
+        margin-bottom: 2.5%;
+    }
+    .welcomeText h2 {
+        font-size: 15px;
+    }
+        .leaveOptions {
+            width: 100%; 
+        }
+            .stack-top_left h1 {
+            font-size: 120%;
+            }
+
+                .logo_class {
+                    width: 50px;
+                    height: 50px;
+                }
+                .logo_class_1 {
+                    margin: 15% -5% 15% 0%;
+                }
+                .sdate_cls {
+                    width: 35%;
+                    font-size: 13px;
+                }
+                .edate_cls {
+                    width: 35%;
+                    font-size: 13px;
+                }
+                .middle_cls {
+                    width: 27%;
+                font-size: 12px;
+                }
+                .img2{
+                    width: 84%;
+                margin-left: 7%;
+                }
+                 
+                .TraineeLeaves{
+                    padding-block: 8px;
+                    margin-left: -8px;
+                    width: 97px;
+                    font-size: 10px;
+                    
+                }
+                .DatePicker{
+                    width: 100px;
+                }
+
+
+}
+
+input[type="number"] {
+    width: 100px;
+  }
+  
+  input + span {
+    padding-right: 30px;
+  }
+  
+  input:invalid + span::after {
+    position: absolute;
+    content: "✖";
+    padding-left: 5px;
+  }
+  
+  input:valid + span::after {
+    position: absolute;
+    content: "✓";
+    padding-left: 5px;
+  }
+  .ShowColon{
+    display: none;
+}

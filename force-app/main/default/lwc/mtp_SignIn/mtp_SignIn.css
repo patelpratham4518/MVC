@@ -1,0 +1,329 @@
+.container {
+    width: 100%;
+     height: 100vh;
+    background-size: cover;
+    /* position: absolute; */
+}
+
+.loginConrainer {
+    width: 100%;
+    margin: auto;
+    display: flex;                  /**/
+    justify-content: center;        /**/
+     
+} 
+
+.loginDIv {
+    position: absolute;
+    background: #fff;
+    padding: 2rem 2.5rem 3rem;
+    top: 30%;
+    max-width: 27rem;                  /**/
+    width: 35.95%;                      /**/
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    max-height: 410px;
+    height: 50vh;                   /**/
+}
+
+.loginTitle {
+    text-align: center;
+    font-size: 23px;
+    font-weight: 600;
+    /* padding: 5px; */
+    padding: 3%;                    /**/
+    position: relative;
+}
+
+.loginDisc {
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
+    /* padding: 5px; */
+    padding: 3%;                    /**/
+    width: 75%;
+    margin: 0 auto 5%;
+}
+
+.loginBtnDiv {
+    padding: 5%;
+}
+
+.loginInput {
+    padding: 3% 0;
+}
+
+.loginInput .slds-input {
+    border: 1px solid;
+    line-height: 35px;
+}
+.loginBtnDiv .slds-button {
+    width: 100%;
+    background: #02ACE1;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.loginLink {
+    text-align: center;
+    padding: 5%;
+}
+
+.loginLink a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.leftImg {
+    position: absolute;
+    left: 0%;
+    bottom: 0%;
+    max-width: 300px;           /**/
+    width: 21.5%;               /**/
+}
+
+.rightImg {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    max-width: 450px;           /**/
+    width: 38.7%;               /**/
+}
+.topLogoContainer{              /**/
+    position: fixed;
+    top: 10%;
+    width: 100%;
+    display: flex;
+    justify-content:center;
+}
+.topLogo {
+        padding: 0%;
+       
+}
+
+@media only screen and (max-width: 1800px) {
+    .topLogo {
+        right: 45%;
+    }
+}
+
+@media only screen and (max-width: 1400px) {
+    .topLogo {
+        right: 44%;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .topLogo {
+        right: 43%;
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .topLogo {
+        right: 43%;
+    }
+}
+
+/* --------> Media Query For width <---------------- */
+@media only screen and (max-width: 1800px){
+    .loginDIv{
+        width: 90%;
+    }
+}
+/* -------->End Media Query For width <---------------- */
+
+/* --------> Media Query For Height <---------------- */
+@media only screen and (max-height: 768px) {
+    /* For The Resolution between 768px-720px */ 
+    .loginConrainer {       
+        width: 100%; 
+    }
+    .loginDIv {
+        width: 90vw;
+    }
+    .loginTitle{
+    margin-top: -2%;
+    }
+    .loginDisc{
+        margin-top: -2%;
+    }
+    .loginInput{
+        margin-top: -2%;
+    }
+    .loginBtnDiv{
+        margin-top: -2%;
+    }
+    .loginLink{
+        margin-top: -1%;
+    }
+}
+
+@media only screen and (max-height: 820px) { 
+    /* For The Resolution between 820Px-600px */
+    .loginConrainer {       
+        width: 100%; 
+    }
+    .loginDIv {
+        position: absolute;
+        top: 25%;
+        width: 90vw;
+        height: 65vh; 
+    }
+    .loginTitle{
+    margin-top: -4%;
+    }
+    .loginDisc{
+        margin-top: -1%;
+    }
+    .loginInput{
+        margin-top: -1%;
+    }
+    .loginBtnDiv{
+        margin-top: -1%;
+    }
+    .loginLink{
+        margin-top: 0%;
+    }
+    .leftImg {
+    width: 19%;               /**/
+}
+
+.rightImg {
+    width: 30%;               /**/
+}
+.topLogoContainer{              /**/
+    position: fixed;
+    top: 4%;
+}
+.topLogo {
+        padding: 0%;  
+        width: 120px;    
+}
+}
+
+@media only screen and (max-height: 600px) { 
+    /* For The Resolution Less Than 600Px */
+    .loginConrainer {       
+        width: 100%; 
+    }   
+    .loginDIv {
+        position: absolute;
+        top: 25%;
+        width: 90vw;
+        height: 65vh; 
+    }
+    .loginTitle{
+    margin-top: -5%;
+    }
+    .loginDisc{
+        margin-top: -5%;
+    }
+    .loginInput{
+        margin-top: -5%;
+    }
+    .loginBtnDiv{
+        margin-top: -5%;
+    }
+    .loginLink{
+        margin-top: -5%;
+    }
+    .leftImg {
+    width: 19%;               /**/
+}
+
+.rightImg {
+    width: 30%;               /**/
+}
+.topLogoContainer{              /**/
+    position: fixed;
+    top: 4%;
+}
+.topLogo {
+        padding: 0%;  
+        width: 100px;    
+}
+}
+
+/* -------->End Media Query For Height <---------------- */
+
+/* SPinner */
+
+.spinner-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.25;
+    }
+    100% {
+        transform: rotate(360deg);
+        opacity: 1;
+    }
+}
+
+@keyframes move {
+    0% {
+        right: -75%;
+        opacity: 0;
+        transform: rotate(10deg) translateY(-3em);
+    }
+    25% {
+        opacity: 1;
+        /* 		width:100%; */
+        /* 		transform:rotateY(0deg); */
+    }
+    50% {
+        opacity: 1;
+        transform: rotate(0deg) translateY(2em);
+    }
+    100% {
+        right: 0%;
+        opacity: 0;
+        transform: rotate(0deg) translateY(2em);
+    }
+}
+
+.spinnerContainer {
+    width: 50%;
+    margin: 100px auto 0 auto;
+    text-align: center;
+    position: relative;
+}
+
+.plane-spinner {
+    width: 50%;
+    max-width: 200px;
+    position: relative;
+    animation-name: move;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+.ideagen-spinner {
+    max-width: 200px;
+    margin: 0 auto;
+    /* 	transform:rotate(260deg); */
+    animation-name: spinner;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+.loading-spinnet-txt {
+    margin-top: 9%;
+    font-size: 2em;
+}
+
+
+/* Spinner End */

@@ -1,0 +1,234 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global"
+    controller="ApplicationUIController">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Male', 'value': 'Male'},
+    {'label': 'Female', 'value': 'Female'}
+    ]" />
+    <aura:attribute name="Gender" type="String" default="" />
+    <!--<aura:attribute name="ConOBj" type="Object" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <aura:attribute name="FirstName" type="String" default="" />
+    <aura:attribute name="LastName" type="String" default="" />
+    <aura:attribute name="Email" type="String" default="" />
+    <aura:attribute name="Mobile" type="String" default="" />
+    <aura:attribute name="Experience" type="Decimal" default="" />
+    <aura:attribute name="File" type="String" />
+    <aura:attribute name="fileName" type="String" default="No File Selected.." />
+    <aura:attribute name="FE" type="String" default="" />
+    <aura:attribute name="exp" type="Boolean" default="false" />
+    <aura:attribute name="applied" type="Boolean" default="false" />
+    <aura:attribute name="isdisabled" type="boolean" />
+
+    <aura:attribute name="city" type="string" default="" />
+    <aura:attribute name="state" type="string" default="" />
+
+    <aura:attribute name="dis" type="boolean" default="false" />
+
+    <aura:attribute name="spinner" type="Boolean" default="true" />
+    <aura:attribute name="postingId" type="String" />
+    <aura:attribute name="postingName" type="String" default="" />
+    <aura:attribute name="emailerror" type="Boolean" default="true" />
+    <aura:attribute name="error" type="Boolean" default="true" />
+    <aura:attribute name="JobStatus" type="Boolean" default="true" />
+    <aura:attribute name="Month" type="string" default="" />
+    <aura:attribute name="dateOfBirth" type="string" default="" />
+    <aura:attribute name="currentcity" type="string" default="" />
+    <aura:attribute name="percity" type="string" default="" />
+    <aura:attribute name="permanentcity" type="string" default="" />
+    <aura:attribute name="relocate" type="string" default="" />
+    <aura:attribute name="ccity" type="Boolean" default="false" />
+    <aura:attribute name="pcity" type="Boolean" default="false" />
+    <aura:attribute name="peecity" type="Boolean" default="false" />
+    <aura:if isTrue="{!v.error}">
+        <aura:if isTrue="{!v.JobStatus}">
+
+
+            <div class="mainWidth">
+
+                <aura:if isTrue="{!!v.applied}">
+                    <div class="pcWidth">
+                        <div class="headerCard"
+                            style="border:1px solid rgb(221, 219, 218);border-radius:7px;padding:2%;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.10);">
+                            <table>
+                                <tr>
+                                    <td style="width:80%;" class="slds-text-heading_medium">
+                                        <div class="slds-text-heading_medium"
+                                            style="text-align:center;margin:20px auto;">Applying for
+                                            <b>{!v.postingName}</b>
+                                        </div>
+                                    </td>
+                                    <td style="width:20%;"><img src="{!$Resource.MVCloudRegLogo}" width="100"
+                                            height="100" style="float:right;"></img>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div
+                            style="margin-top:1px;border:1px solid rgb(221, 219, 218);border-radius:7px;padding:2%;margin-top:10px;box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 4px 15px 0 rgba(0, 0, 0, 0.10);">
+                            <!---->
+                            <lightning:input name="input1" class="bold" required="true" value="{!v.FirstName}"
+                                aura:id="values" label="First Name" pattern="[A-Za-z- ]*"
+                                messageWhenPatternMismatch="Please Enter Valid Name" />
+                            <lightning:input name="input2" required="true" value="{!v.LastName}" aura:id="values"
+                                label="Last Name" pattern="[A-Za-z-  ]*"
+                                messageWhenPatternMismatch="Please Enter Valid Name" />
+                            <lightning:radioGroup name="radioButtonGroup" class="bold" label="Gender"
+                                options="{! v.options }" aura:id="values" value="{! v.Gender }" required="true"
+                                type="button" />
+                            <lightning:input type="email" name="email3" required="true" value="{!v.Email}"
+                                aura:id="values" label="Email" pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
+                                messageWhenPatternMismatch="Please Enter Valid Email" onchange="{!c.change}" />
+                            <lightning:input type="Date" aura:id="values" label="Date Of Birth" required="true"
+                                value="{!v.dateOfBirth}" />
+                            <lightning:input name="input4" required="true" value="{!v.Mobile}" onchange="{!c.change}"
+                                aura:id="values" label="Mobile" pattern="^[0-9]{10}$"
+                                messageWhenPatternMismatch="Please Enter Valid Mobile Number" />
+                            <lightning:select name="input6" label="Fresher/Experience" aura:id="values" value="{!v.FE}"
+                                required="true" onchange="{!c.change}">
+                                <option value="0">Choose one...</option>
+                                <option value="Fresher">Fresher</option>
+                                <option value="Experienced">Experienced</option>
+                            </lightning:select>
+
+                            <!-- <lightning:select name="input6" label="Fresher/Experience" aura:id="picklist"
+                                value="{!v.FE}" required="true">
+                                <option value="0">Choose one...</option>
+                                <option value="Fresher">Fresher</option>
+                                <option value="Experienced">Experienced</option>
+                            </lightning:select> -->
+
+                            <aura:if isTrue="{!v.exp}">
+                                <!--  <lightning:input name="input5" required="true" value="{!v.Experience}" aura:id="values" label="Experience (in years)" placeholder="ex. 1 or 1.5" pattern="\d*\.?\d*" messageWhenPatternMismatch="Please Enter Experience in Numbers" /> -->
+                                <!-- <aura:set attribute="else"></aura:set> -->
+                                <lightning:select name="input7" label="Experience" aura:id="values" value="{!v.Month}"
+                                    required="true">
+                                    <option value="0">--None--</option>
+                                    <option value="0-6 Months">0-6 Months</option>
+                                    <option value="6-12 Months">6-12 Months</option>
+                                    <option value="1-2 Years">1-2 Years</option>
+                                    <option value="2-5 Years">2-5 Years</option>
+                                    <option value="5-7 Years">5-7 Years</option>
+                                    <option value="7-10 Years">7-10 Years</option>
+                                    <option value="10 Years+">10 Years+</option>
+                                </lightning:select>
+                            </aura:if>
+
+                            <lightning:input name="State" required="true" value="{!v.state}" aura:id="values"
+                                label="State" pattern="[A-Za-z-  ]*" />
+                            <!-- <lightning:input name="City" required="true" value="{!v.city}" aura:id="values" label="City" /> -->
+                            <!-- <lightning:input name="Current City" required="true" value="{!v.currentcity}"
+                                aura:id="values12" label="Current City" pattern="[A-Za-z-  ]*" /> -->
+                            <lightning:input name="Current City" required="true" value="{!v.currentcity}"
+                                aura:id="values12" label="Current City" pattern="[A-Za-z-  ]*" />
+                            <lightning:select name="input8" label="This is your Permanent  city ?" aura:id="values"
+                                value="{!v.permanentcity}" onchange="{!c.oselect}">
+                                <option>--None--</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </lightning:select>
+
+                            <aura:if isTrue="{!v.pcity}">
+                                <!-- <aura:set attribute="else"></aura:set> 
+                            <lightning:input type="checkbox" aura:id="chkbox" value="Are you ready to relocate ?" label="Are you ready to relocate ?"                                      
+              				onchange="{!c.selectChange}"/> -->
+                                <lightning:select name="input9" label="Are You ready to Relocate?" aura:id="values"
+                                    value="{!v.relocate}">
+                                    <option>--None--</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </lightning:select>
+                            </aura:if>
+                            <aura:if isTrue="{!v.ccity}">
+                                <lightning:input name="Permnent City" value="{!v.percity}" aura:id="values"
+                                    label="Perment City" messageWhenPatternMismatch="Please Enter Currect City" />
+                                <!-- <aura:set attribute="else"></aura:set> 
+                            <lightning:input type="checkbox" aura:id="chkbox" value="Are you ready to relocate ?" label="Are you ready to relocate ?"                                      
+              				onchange="{!c.selectChange}"/>  -->
+                                <lightning:select name="input9" label="Are You ready to Relocate?" aura:id="values"
+                                    value="{!v.relocate}">
+                                    <option>--None--</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </lightning:select>
+                            </aura:if>
+
+                            <aura:if isTrue="{!v.peecity}">
+                                <lightning:input name="Permnent City" value="{!v.percity}" aura:id="values"
+                                    label="Perment City" messageWhenPatternMismatch="Please Enter Currect City" />
+                                <!-- <aura:set attribute="else"></aura:set> 
+                            <lightning:input type="checkbox" aura:id="chkbox" value="Are you ready to relocate ?" label="Are you ready to relocate ?"                                      
+              				onchange="{!c.selectChange}"/>  -->
+
+                            </aura:if>
+                            <lightning:input name="file6" type="file" aura:id="fileId" label="Upload Resume"
+                                accept="['.png', '.jpg', '.jpeg', '.pdf','.csv','.xlsx']" required="true"
+                                onchange="{! c.handleFilesChange }" />
+                            <div>{!v.fileName} </div>
+                            <lightning:button variant="brand" label="Submit" title="Brand action"
+                                onclick="{! c.submit }" class="btnSubmit" disabled="{!v.dis}" />
+                        </div>
+                    </div>
+                    <aura:set attribute="else">
+                        <aura:if isTrue="{!v.emailerror}">
+
+                            <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+                                <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100"></img>
+                            </div>
+                            <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+                                Thank you for applying
+                            </div>
+                            <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                                We will contact you shortly.
+                            </div>
+
+                            <aura:set attribute="else">
+
+                                <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+                                    <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100"></img>
+                                </div>
+                                <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+                                    You have already applied.
+                                </div>
+                                <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                                    We will contact you shortly.
+                                </div>
+
+                            </aura:set>
+                        </aura:if>
+
+                    </aura:set>
+                </aura:if>
+
+
+
+
+            </div>
+
+            <aura:set attribute="else">
+                <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+                    <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100"></img>
+                </div>
+                <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+                    Sorry, All vacancies have been filled
+                </div>
+                <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                    Keep a lookout for future vacancies
+                </div>
+            </aura:set>
+        </aura:if>
+        <aura:set attribute="else">
+            <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+                <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100"></img>
+            </div>
+            <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+                Your URL don't have any Id.
+            </div>
+            <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                Find for proper URL.
+            </div>
+        </aura:set>
+    </aura:if>
+</aura:component>

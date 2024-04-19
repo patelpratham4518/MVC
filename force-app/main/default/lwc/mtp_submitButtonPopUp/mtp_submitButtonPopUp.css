@@ -1,0 +1,39 @@
+.maindiv{
+    background-color: white;
+    max-height: 600px;
+    overflow:auto;
+    max-width: 40rem;
+    margin: auto;
+    border: 1px #828282;
+    border-radius: 2px;
+}
+
+.popup-header {
+    text-align: center;
+    background: #02ACE1;
+    color: white;
+    font-size: large;
+    font-weight: 700;
+  }
+
+  .heading{
+    text-align: center;
+    font-size: 1.2rem;  
+    margin-bottom: 2px;
+    font-weight: 700;
+  }
+  
+  .subheading{
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+  }
+
+  .footer {
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    border-top: 2px solid rgb(130, 130, 130);
+}

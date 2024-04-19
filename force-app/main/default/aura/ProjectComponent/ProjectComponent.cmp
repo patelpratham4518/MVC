@@ -1,0 +1,200 @@
+<aura:component controller="intranetController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+
+    <!-- aura attributes declared here -->
+	<aura:attribute name="projectList" type="List"/>
+	<aura:attribute name="projectCompleteDetail" type="List"/>
+    <aura:attribute name="modulesList" type="List"/>
+    <aura:attribute name="topicsList" type="List"/>
+    
+    <aura:attribute name="modalpopupProjectDetails" type="Boolean" default="false"/>
+    <aura:attribute name="modalpopupAddTopic" type="Boolean" default="false"/>
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    
+    <!--aura:handler declared here-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    
+    <aura:registerEvent name="tabSpecificEvent" type="c:IntranetLightningEvent"></aura:registerEvent>
+    
+    <div class="slds-grid slds-gutters" style="width:90%;margin: auto;">
+        <div class="slds-col slds-size_2-of-3">
+           <div style="width:85%;border:1px solid;margin-top:2%;margin-bottom:2%;height:500px;overflow-y:scroll;">
+            <table class="slds-table slds-table_bordered">
+                <tbody>
+                    <aura:iteration items="{!v.projectList}" var="project">
+                        <tr class="slds-hint-parent">
+                            <td scope="row">
+                                <div class="demo-only slds-size_3-of-4" style="padding-left:1%;">
+                                    <div class="slds-media">
+                                        <div class="slds-media__figure">
+                                            <span class="slds-icon slds-icon--small">
+                                                <div class="circleBase taskDiv"><b></b></div>
+                                            </span>
+                                        </div>
+                                        <div class="slds-media__body" style="padding-left:5%;">
+                                            <div>
+                                                <p style="font-size:17px;">{!project.Project_Name__c}</p>
+                                                <p>{!project.Client__r.Client_Name__c}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="View Details"></div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="View Details"><lightning:buttonIcon iconName="utility:preview" value="{!project.Id}" variant="bare" onclick="{!c.projectComponentCompleteDetails}"/></div>
+                            </td>
+                            <td scope="row">
+                                <div class="slds-truncate" title="Add Project"><lightning:buttonIcon iconName="utility:add" variant="bare" onclick="{!c.redirectToManageProject}"/></div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="Task Details">
+                                   <lightning:buttonIcon iconName="utility:task" variant="bare" onclick="{!c.redirectToTaskComponent}" value="{!project.Project_Name__c}"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title="Timesheet"><lightning:buttonIcon iconName="utility:dayview" variant="bare" onclick="{!c.redirectToTimesheetComponent}" value="{!project.Project_Name__c}"/></div>
+                            </td>
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+        </div>
+        </div>
+        <div class="slds-col slds-size_1-of-3" style="margin-bottom:1%;margin-top:1%;">
+            <!--<p style="color:#9da4ab;font-size:17px;font-family:cursive;height:40px;">Important Links<lightning:button label="Add Topic"/></p>-->
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col" style="color:#9da4ab;font-size:17px;font-family:cursive;">
+                    <span>Important Links</span>
+                </div>
+                <div class="slds-col" style="text-align:right;padding-bottom:2%;">
+                    <span><lightning:buttonIcon iconName="utility:edit" variant="bare" onclick="{!c.openAddTopicPopup}"/></span>
+                </div>
+            </div>
+            <div style="height:322px;;overflow-y:scroll;border:2px solid #043b6b;padding:5%;">
+                <aura:iteration items="{!v.topicsList}" var="topic" indexVar="key">
+                    <div class="demo-only slds-size_3-of-4">
+                        <div class="slds-media">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon slds-icon--small">
+                                    <div><br/><lightning:dynamicIcon type="eq" option="play" alternativeText="On a call"/></div>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <p style="font-size:17px;">{!topic.Topic_Name__c}</p>
+                                <p><a href="{!topic.URL__c}"  target="_blank">{!topic.URL__c}</a></p>
+                            </div>
+                        </div>
+                        <br/>
+                    </div>
+                </aura:iteration>
+            </div>
+            
+        </div>
+    </div>
+    <aura:renderIf isTrue="{!v.HideSpinner}">
+      <div class="slds-spinner_container">
+        <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+          <span class="slds-assistive-text">Loading, Please Wait...</span>
+          <div class="slds-spinner__dot-a"></div>
+          <div class="slds-spinner__dot-b"></div>
+        </div>
+      </div>
+    </aura:renderIf>
+    <!--Project Details here-->
+    <!-- MODAL POP UP FOR OPEN TASK DETAILS -->
+    	<aura:if isTrue="{!v.modalpopupProjectDetails}">
+    	    <aura:iteration items="{!v.projectCompleteDetail}" var="project">
+                <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+                    <div class="slds-modal__container">
+                        <!--  MODAL BOX HEADER Start -->
+                        <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                            <lightning:buttonIcon iconName="utility:close"
+                                                  onclick="{! c.closeModel }"
+                                                  alternativeText="close"
+                                                  variant="bare-inverse"
+                                                  class="slds-modal__close"/>
+                            <p id="modal-heading-01" class="slds-text-heading_medium">{!project.Project_Name__c}</p>
+                        </header>
+                        
+                        <!-- MODAL BOX BODY Part Start-->
+                        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                            <div>
+                                <table>
+                                    <tbody>
+                                        <tr scope="row">
+                                            <td><span><b>Client</b><br/>&nbsp;{!project.Client__r.Client_Name__c}</span></td>
+                                            <td><span><b>Duration</b><br/>&nbsp;{!project.Project_Duration__c}</span></td>
+                                        </tr>
+                                        <tr><td><br/></td></tr>
+                                        <tr scope="row">
+                                            <td><span><b>POC Date</b><br/>&nbsp;{!project.POC_Date__c}</span></td>
+                                            <td><span><b>Start Date</b><br/>&nbsp;{!project.Start_Date__c}</span></td>
+                                        </tr>
+                                        <tr><td><br/></td></tr>
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <b>Description</b><br/>{!project.Description__c}
+                                </div>
+                                <br/>
+                                <div>
+                                    <b>Modules</b><br/>
+                                    <div style="overflow-y:scroll;border:1px solid gray;padding:1%;height:50px;width: 55%;">
+                                        <aura:iteration items="{!v.modulesList}" var="module">
+                                            {!module.Module_Name__c}<br/>
+                                        </aura:iteration>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- MODAL BOX FOOTER Part Start -->
+                        
+                        <footer class="slds-modal__footer">
+                            <lightning:button variant="neutral" label="Close" title="View Detail" class = "slds-align_absolute-center" onclick="{! c.closeModel }"/>
+                        </footer>
+                    </div>
+                </section>
+            </aura:iteration>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+	  </aura:if>
+	<!-- MODAL POP UP FOR OPEN TASK DETAILS -->
+	
+	<!-- MODAL POP UP TO ADD TOPIC -->
+	    <aura:if isTrue="{!v.modalpopupAddTopic}">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-slide-down-cancel">
+                <div class="slds-modal__container">
+                    <!--  MODAL BOX HEADER Start -->
+                    <header class="slds-modal__header" style="background-color:#043b6b;color:#fff">
+                        <lightning:buttonIcon iconName="utility:close"
+                                              onclick="{! c.closeModel }"
+                                              alternativeText="close"
+                                              variant="bare-inverse"
+                                              class="slds-modal__close"/>
+                        <p id="modal-heading-01" class="slds-text-heading_medium">Add Topic</p>
+                    </header>
+                    
+                    <!-- MODAL BOX BODY Part Start-->
+                    <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                        <div>
+                            <lightning:input label="Topic Name" aura:id="topicNameId" required="true"/>
+                            <lightning:input label="URL" aura:id="urlId" required="true"/>
+                        </div>
+                    </div>
+                    <!-- MODAL BOX FOOTER Part Start -->
+                    
+                    <footer class="slds-modal__footer">
+                        <lightning:button variant="neutral" label="Close" title="View Detail" onclick="{! c.closeModel }"/>
+                        <lightning:button variant="brand" label="Save" onclick="{!c.addTopic}"/>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+	  </aura:if>
+	<!-- MODAL POP UP TO ADD TOPIC DETAILS -->
+              
+</aura:component>

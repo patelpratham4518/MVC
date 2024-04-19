@@ -1,0 +1,64 @@
+.THIS .pcWidth{
+    width:40% !important;
+    margin:10px auto;
+    padding:1%;
+} 
+
+.THIS .mobileWidth{
+    width:92% !important;
+    margin:10px auto;
+    padding: 0 3%;
+}
+
+.THIS .mainWidth{
+    width:98%;
+    margin-top:10px;
+   
+}    
+
+.THIS .bold fieldset legend{
+    font-weight: normal !important;
+}
+
+@media all and (max-width: 980px) {
+.THIS .mainWidth{
+        width:98% !important;
+        margin:0 auto;
+        padding:1%;
+    }
+    
+    .THIS .pcWidth{
+        width:90% !important;
+        margin:10px auto;
+        padding:1%;
+    }
+}
+
+.THIS .btnSubmit{
+    width:100%;
+    margin-top:2%;
+    /*background-color:#00ccff;*/
+    /*border-color:#00ccff;*/
+}
+
+.THIS .slds-radio_button-group{
+    width:100%;
+}
+
+.THIS .slds-radio_button{
+    width:50%;
+}
+
+.THIS .slds-radio_button__label{
+    width:100%;
+    text-align: center;
+}
+
+.THIS.hideLabel slds-form-element__label{
+    display:none;
+}
+
+.THIS .headerCard {
+    width:100%;
+    overflow:hidden;
+}

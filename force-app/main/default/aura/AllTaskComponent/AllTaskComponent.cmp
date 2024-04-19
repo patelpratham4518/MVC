@@ -1,0 +1,159 @@
+<aura:component controller="intranetController" implements="forceCommunity:availableForAllPageTypes" access="global" >
+	
+	<!--aura attributes declared here-->
+	<aura:attribute name="taskList" type="List"/>
+    <aura:attribute name="moduleList" type="List"/>
+    <aura:attribute name="projectList" type="List"/>
+    <aura:attribute name="employeeList" type="List"/>
+	<aura:attribute name="message" type="String"/>
+	<aura:attribute name="noRecords" type="Boolean" default="true"/>
+    <aura:attribute name="HideSpinner" type="Boolean" default="true"/>
+    <aura:attribute name="setvalue" type="String" />
+    
+    <aura:attribute name="page" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="total" type="integer" description="total records count store "/>
+    
+    <aura:attribute name="pageSearch" type="integer" description="using for store page Number"/>
+    <aura:attribute name="pagesSearch" type="integer" description="using for store All Pages page Number"/>
+    <aura:attribute name="totalSearch" type="integer" description="total records count store "/>
+    
+    <aura:attribute name="recordSize" type="Integer" default="10"/>
+	
+	
+	<!--aura handlers declared here-->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	<aura:handler name="intranetBasicEvent" event="c:IntranetLightningEvent" action="{!c.getAllEmployees}"/>
+	<aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+    <aura:handler event="c:ProjectEvent" action="{!c.doInit}" />
+	
+	<!--Task data displayed here -->
+	    <div style="width:90%;margin:auto;border:1px solid #043b6b;margin-top:2%;margin-bottom:2%;">
+      		<!--Search box here -->
+            <div class="slds-grid slds-gutters" style="padding:2%;">
+                <div class="slds-col">
+                	<lightning:select name="selectProject" aura:id="projectID" label="Project"  onchange="{!c.searchTasksList}">
+                        <option text=""></option>
+                        <aura:iteration items="{!v.projectList}" var="project" >
+                        	<option text="{!project.Project_Name__c}" selected="{!project.Project_Name__c==v.setvalue}" ></option>
+                        </aura:iteration>
+                	</lightning:select>
+                </div>
+                <div class="slds-col">
+                	<lightning:select name="selectModule" aura:id="moduleID" label="Modules" onchange="{!c.searchTasksList}">
+                	    <option text=""></option>
+                        <aura:iteration items="{!v.moduleList}" var="module">
+                        	<option text="{!module.Module_Name__c}"></option>
+                        </aura:iteration>
+                	</lightning:select>
+                </div>
+                <div class="slds-col">
+                	<lightning:select name="selectEmployee" aura:id="employeeID" label="Assigned To" onchange="{!c.searchTasksList}">
+                        <option text=""></option>
+                        <aura:iteration items="{!v.employeeList}" var="emp">
+                        	<option text="{!emp.Name}"></option>
+                        </aura:iteration>
+                	</lightning:select>
+                </div>
+            </div>
+            <!--Search box here-->
+            <aura:renderIf isTrue="{!v.HideSpinner}">
+              <div class="slds-spinner_container">
+                <div class="slds-spinner--brand slds-spinner slds-spinner--large" role="alert">
+                  <span class="slds-assistive-text">Loading, Please Wait...</span>
+                  <div class="slds-spinner__dot-a"></div>
+                  <div class="slds-spinner__dot-b"></div>
+                </div>
+              </div>
+            </aura:renderIf>
+            <aura:if isTrue="{!v.noRecords}">
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Employee">Assigned To</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Due Date">Due Date</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Task Number">Task Number</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Task Name">Task</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Parent Task">Main Task</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Module">Module</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Project">Project</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Completed">Status</div>
+                            </th>
+                            <th class="slds-text-title_caps" scope="col">
+                                <div class="slds-truncate" title="Desciption">Description</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.taskList}" var="task">
+                            <tr class="slds-hint-parent">
+                                <td data-label="Task Name" scope="row">
+                                    <div class="slds-truncate" title="{!task.Employee__r.Name}">{!task.Employee__r.Name}&nbsp;{!task.Employee__r.Last_Name__c}</div>
+                                </td>
+                                <td data-label="Due Date">
+                                    <div class="slds-truncate" title="{!task.Due_Date__c}">{!task.Due_Date__c}</div>
+                                </td>
+                                <td data-label="Task Number" scope="row">
+                                    <div class="slds-truncate" title="{!task.Name}">{!task.Name}</div>
+                                </td>
+                                <td data-label="Task Name" scope="row">
+                                    <div class="slds-truncate" title="{!task.Task_Name__c}">{!task.Task_Name__c}</div>
+                                </td>
+                                <td data-label="Parent Task">
+                                    <div class="slds-truncate" title="{!task.Task__c.Task_Name__c}">{!task.Task__r.Task_Name__c}</div>
+                                </td>
+                                <td data-label="Module">
+                                    <div class="slds-truncate" title="{!task.Module__c.Module_Name__c}">{!task.Module__r.Module_Name__c}</div>
+                                </td>
+                                <td data-label="Project">
+                                    <div class="slds-truncate" title="{!task.Project__r.Project_Name__c}">{!task.Project__r.Project_Name__c}</div>
+                                </td>
+                                <td data-label="Status">
+                                    <div class="slds-truncate" title="{!task.Completed__c}"><ui:outputCheckbox aura:id="output" value="{!task.Completed__c}"/></div>
+                                </td>
+                                <td data-label="Description" style="text-align:center">
+                                    <div class="slds-truncate" title="Description"><lightning:helptext iconName="utility:info" content="{!task.Description__c}" /></div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+                <div class="slds-page-header" aura:id="allRecordPagination" role="banner">
+                        <p class="slds-page-header__title slds-truncate" style="float:right;font-size:12px;color:gray;">{!v.total} Total Records • Page: {!v.page} / {!v.pages}</p>
+                        <div style="width:5%;">
+                            <ui:inputSelect aura:id="recordSize" label="" change="{!c.onSelectChange}">
+                                <ui:inputSelectOption text="10" label="10" value="true"/>
+                                <ui:inputSelectOption text="15" label="15"/>
+                                <ui:inputSelectOption text="20" label="20"/>
+                            </ui:inputSelect>
+                        </div>
+                        <div class="slds-align_absolute-center">            
+                            <lightning:button  disabled="{!v.page == 1}" variant="brand" label="Previous" onclick="{! c.navigate }" />            
+                            <lightning:button  disabled="{!v.page == v.pages}" aura:id="previousPage" variant="brand" label="Next" onclick="{! c.navigate }" />
+                        </div>
+                    </div>
+                <aura:set attribute="else">
+                    <div style="font-size:20px;text-align:center;padding:1%;">
+                        {!v.message}
+                    </div>
+                </aura:set>
+            </aura:if>
+	    </div>
+	<!-- Task data displayed here-->
+</aura:component>

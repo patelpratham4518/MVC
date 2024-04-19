@@ -1,0 +1,11 @@
+<aura:component >
+ <ltng:require scripts="{!$Resource.Highcharts}" afterScriptsLoaded="{!c.afterScriptsLoaded}"/>
+    <div aura:id="chart" class="slds-box slds-box--small"></div>
+    
+    <aura:attribute name="chartType" type="string"/>
+    <aura:attribute name="chartTitle" type="string"/>
+    <aura:attribute name="chartSubTitle" type="string"/>
+    <aura:attribute name="xAxisCategories" type="string[]"/>
+    <aura:attribute name="yAxisParameter" type="string"/>
+    <aura:attribute name="data" type="string"/>
+</aura:component>

@@ -1,0 +1,224 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="MasterPageController">
+
+    <!-- HANDLER -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <!-- CREATE ATTRIBUTE/VARIABLE-->
+    <aura:attribute name="searchResult" type="List" description="use for store and display account list return from server" />
+    <aura:attribute name="searchKeyword" type="String" description="use for store user search input" />
+    <aura:attribute name="Message" type="boolean" default="false" description="use for display no record found message" />
+    <aura:attribute name="TotalNumberOfRecord" type="integer" default="0" description="use for display Number of records" />
+
+    <!-- DISABLED BUTTON -->
+    <aura:attribute name="disabled" type="Boolean" default="True" />
+
+    <!-- IDS -->
+    <aura:attribute name="ConId" type="String" default="" />
+    <aura:attribute name="InterviewID" type="String" default="" />
+
+
+
+    <!-- IF ATTRIBUTES -->
+    <aura:attribute name="password" type="boolean" default="True" />
+    <aura:attribute name="authenticated" type="boolean" default="True" />
+    <aura:attribute name="buttons" type="boolean" default="False" />
+    <aura:attribute name="schedule" type="boolean" default="True" />
+    <aura:attribute name="ShowOrSche" type="boolean" default="false" />
+
+    <!-- WHICH SCHEDULE ROUND IS OR RE_SCHEDULE OR NOT -->
+    <aura:attribute name="RoundNumber" type="String" default="" />
+    <aura:attribute name="RescheduleOrNot" type="String" default="" />
+
+    <!-- SCHEDULER PERSON DETAIL -->
+    <aura:attribute name="NameOfContact" type="String" />
+    <aura:attribute name="PostingOfContact" type="String" />
+
+    <!-- SHOW LOADING SPINNER-->
+    <lightning:spinner variant="brand" size="large" aura:id="Id_spinner" class="slds-hide" />
+
+    <!-- FOR PDF -->
+    <aura:attribute name="pdfvalue" type="String" />
+
+    <!-- PASSWORD IF PART -->
+    <aura:if isTrue="{!v.password}">
+        <!-- IF START PART OF AUTHENTICATED -->
+        <aura:if isTrue="{!v.authenticated}">
+            <div class="slds-m-around_medium">
+                <!-- SEARCH INPUT AND SEARCH BUTTON-->
+                <lightning:layout>
+                    <lightning:layoutItem size="3" padding="around-small">
+                        <lightning:input value="{!v.searchKeyword}" placeholder="Search Contacts.." onchange="{!c.Search}" aura:id="searchField" label="Contact Name" />
+                    </lightning:layoutItem>
+                    <!-- <lightning:layoutItem size="2" padding="around-small">
+                <lightning:button onclick="{!c.Search}" variant="brand" label="Search" iconName="utility:search" />
+            </lightning:layoutItem> -->
+                </lightning:layout>
+
+                <!-- TOTAL RECORDS BADGES-->
+                <div class="slds-m-around_x-small">
+                    <lightning:badge label="{!v.TotalNumberOfRecord}" />
+                </div>
+
+                <!-- ERROR MESSAGE IF NOT RECORDS FOUND-->
+                <aura:if isTrue="{!v.Message}">
+                    <div class="slds-notify_container slds-is-relative">
+                        <div class="slds-notify slds-notify_toast slds-theme_error" role="alert">
+                            <div class="slds-notify__content">
+                                <h2 class="slds-text-heading_small">No Contacts Found...</h2>
+                            </div>
+                        </div>
+                    </div>
+                </aura:if>
+
+                <!-- TABLE CONTENT-->
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                    <thead>
+                        <tr class="slds-text-title_caps">
+                            <th scope="col">
+                                <div class="slds-truncate" title="S.no">S.no</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Contact Name">Contact Name</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Schedule 1st Round">Schedule 1st Round</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Schedule 2nd Round">Schedule 2nd Round</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Result 1st Round">Result 1st Round</div>
+                            </th>
+                            <th scope="col">
+                                <div class="slds-truncate" title="Result 2nd Round">Result 2nd Round</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--### display all records of searchResult attribute by aura:iteration ###-->
+                        <aura:iteration items="{!v.searchResult}" var="con" indexVar="count">
+                            <tr>
+                                <td>
+                                    <div class="slds-truncate">{!count + 1}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">{!con.Name}</div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning:button variant="brand" label="Schedule 1st Round" title="Schedule 1st Round" name="{!con.Id}" aura:id="1st" onclick="{!c.scheduleShowController}" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning:button variant="brand" label="Schedule 2nd Round" title="Schedule 2nd Round" name="{!con.Id}" aura:id="2nd" onclick="{!c.scheduleShowController}" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning:button variant="brand" label="Result 1st Round" title="Result 1st Round" />
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="slds-truncate">
+                                        <lightning:button variant="brand" label="Result 2nd Round" title="Result 2nd Round" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ELSE PART OF AUTHENTICATED -->
+            <aura:set attribute="else">
+
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col">
+
+                        <aura:if isTrue="{!v.buttons}">
+                            <!-- TWO BUTTONS -->
+                            <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                <lightning:button variant="brand" label="{!'Show '+v.RoundNumber+' Round'}" title="Schedule" name="Show" onclick="{!c.ShowOrSchedule}" />
+                                <lightning:button variant="Success" label="{!'Re-Schedule '+v.RoundNumber+' Round'}" title="Re-Schedule" name="Re-schedule" onclick="{!c.ShowOrSchedule}" />
+                            </div>
+                        </aura:if>
+
+
+
+
+                        <aura:if isTrue="{!v.schedule}">
+
+                            <!-- LABEL OF SCHEUDULING  -->
+                            <div class="slds-align_absolute-center slds-m-top_small slds-text-heading_medium" style="text-align:center;">
+                                <span><b>{!v.RescheduleOrNot}</b>Schedule <b>{!v.RoundNumber}</b> Round of <b>{!v.NameOfContact}</b> <br/>for <b>{!v.PostingOfContact}</b></span>
+                            </div>
+
+                            <!-- THREE INPUT FIELD FOR SCHEDULE 1ST ROUND -->
+                            <aura:if isTrue="{!v.ShowOrSche}">
+                                <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                    <lightning:select value="{!v.interviewer}" class="Widebutton" required="true" aura:id="interviewer" onchange="" label="Interviewer">
+                                        <option value=''>Choose One..</option>
+                                        <aura:iteration items="{!v.interviewerList}" var="s1">
+                                            <option value="{!s1.Id}">{!s1.Name}</option>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                </div>
+
+                                <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                    <lightning:input label="Date" class="Widebutton" required="true" type="date" aura:id="date" placeholder="Date Of Interview" onchange="{!c.validate}" value="{!v.date}" />
+                                </div>
+
+                                <div class="slds-size_1-of-2 slds-align_absolute-center">
+                                    <lightning:input label="Time" class="Widebutton genral" required="true" type="time" min="08:00:00.000Z" max="20:00:00.000Z" aura:id="time" placeholder="Time Of Interview" onchange="{!c.validate}" value="{!v.time}" />
+                                </div>
+
+                                <div class="slds-size_1-of-2 slds-align_absolute-center" style="height:4rem">
+                                    <lightning:button class="Widebutton" variant="success" disabled="{!v.disabled}" label="Schedule" onclick="{!c.schedule}" />
+                                </div>
+                                <aura:set attribute="else">
+                                    <!-- OUTPUT FIELDS OF INTERVIEW -->
+                                    <lightning:recordViewForm recordId="{!v.InterviewID}" objectApiName="Interview__c">
+                                        <lightning:outputField fieldName="Interviewer__r.Name" />
+                                        <lightning:outputField fieldName="Date__c" />
+                                        <lightning:outputField fieldName="Time__c" />
+                                        <lightning:outputField fieldName="InterviewDetail__c" />
+                                        <lightning:outputField fieldName="Interviewer_Email__c" />
+                                        <lightning:outputField fieldName="Interview_DateTime__c" />
+
+                                    </lightning:recordViewForm>
+                                </aura:set>
+                            </aura:if>
+                        </aura:if>
+                    </div>
+
+
+                    <div class="slds-col">
+
+                        <!-- PDF VIEW -->
+                        <div>
+                            <iframe src="{!v.pdfvalue}" width="100%" height="795px"></iframe>
+                        </div>
+                    </div>
+
+                </div>
+            </aura:set>
+            <!-- END OF AUTHENTICATED IF PART -->
+        </aura:if>
+
+        <!-- PASSWORD ELSE PART -->
+        <aura:set attribute="else">
+            <div style="margin:200px auto;text-align:center;margin-bottom:20px">
+                <img src="{!$Resource.MVCloudRegLogo}" width="250" height="100"></img>
+            </div>
+            <div style="font-size: 400%;font-family: verdana;text-align:center;margin-top:50px">
+                You dont know the Password
+            </div>
+            <div style="font-size: 200%;font-family: verdana;text-align:center;margin-top:20px">
+                So we dont know you.
+            </div>
+        </aura:set>
+        <!-- END OF PASSWORD IF PART -->
+    </aura:if>
+
+</aura:component>
