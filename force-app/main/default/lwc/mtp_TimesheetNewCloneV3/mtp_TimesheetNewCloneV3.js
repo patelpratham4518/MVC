@@ -20,7 +20,7 @@ export default class mtp_TimesheetNewCloneV3 extends NavigationMixin(LightningEl
     userid = USER_ID;
     @track contactData;
     @track tsMetadata;
-    @track taskTypes = [];
+    @track taskTypes = [{label:'Development',value:'Development'}];
     @track isNext = true;
     @track isSpinner = true;
     @track createSubmitButton = true;
@@ -109,6 +109,7 @@ export default class mtp_TimesheetNewCloneV3 extends NavigationMixin(LightningEl
                 this.ShowToast('Error', 'Error', 'Something Went Wrong!!!');
             });
     }
+
 
     handleDateChange(event) {
         this.isSpinner = true;
@@ -263,7 +264,7 @@ export default class mtp_TimesheetNewCloneV3 extends NavigationMixin(LightningEl
             let newTSData = {};
             newTSData.Date__c = this.date;
             newTSData.Start_Time__c = this.convetToMilliseconds(this.timeSheetObj['Start_Time__c']);
-            console.log(newTSData.Start_Time__c);
+            console.log('Start time in milliseconds ==> ',newTSData.Start_Time__c);
             newTSData.End_Time__c = this.convetToMilliseconds(this.timeSheetObj['End_Time__c']);
             newTSData.Project__c = this.allProjectMap.get(this.timeSheetObj['Project__Name']);
             newTSData.Task_Type__c = this.timeSheetObj['Task_Type__c'];

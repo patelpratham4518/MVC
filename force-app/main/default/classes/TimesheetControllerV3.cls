@@ -2,7 +2,7 @@ public without sharing class TimesheetControllerV3 {
 
     @AuraEnabled
     public static dataWrapper getRelatedData(){
-        
+
         Contact con = [SELECT Id, Name, Description, ContactType__c FROM Contact WHERE Id IN (SELECT contactId FROM User WHERE Id =: UserInfo.getUserId())];
 
         dataWrapper dataWrap = new dataWrapper();
@@ -60,7 +60,17 @@ public without sharing class TimesheetControllerV3 {
 
     @AuraEnabled
     public static List<Timesheet_Detail__c> createTimeSheetRec(String newTSData, String contactId){   
+        System.debug('json Timesheet Detail == > '+newTSData );
         TimeSheet_Detail__c timeSheetDetail = (TimeSheet_Detail__c)JSON.deserialize(newTSData, TimeSheet_Detail__c.class);
+
+        Map<String,Object> TimesheetDetailMap = (Map<String,Object>) JSON.deserializeUntyped(newTSData);
+        timeSheetDetail.Start_Time__c = Time.newInstance(0, 0, 0,Integer.valueOf(TimesheetDetailMap.get('Start_Time__c')));
+        timeSheetDetail.End_Time__c = Time.newInstance(0, 0, 0,Integer.valueOf(TimesheetDetailMap.get('End_Time__c')));
+        
+
+
+        System.debug('Parsed Timesheet Detail ==> '+ timeSheetDetail);
+        System.debug('Start time ==> '+timeSheetDetail.Start_Time__c);
         id timesheetid;
         List<Timesheet__c> tslist = [SELECT Id, Name, Date__c, isSubmitted__c FROM Timesheet__c WHERE Date__c =: timeSheetDetail.date__c AND Contact__C =: contactId];
         if (tslist.size() == 0){
